@@ -6,7 +6,7 @@ services:
       - ./public:/usr/share/nginx/html:ro
     labels:
       - traefik.enable=true
-      - traefik.docker.network=devnet
+      - traefik.docker.network=debnet
       - traefik.http.routers.devboot.rule=Host(`devboot.com.br`, `www.devboot.com.br`)
       - traefik.http.routers.devboot.entrypoints=web
       - traefik.http.routers.devboot-secure.rule=Host(`devboot.com.br`, `www.devboot.com.br`)
@@ -15,7 +15,7 @@ services:
       - traefik.http.routers.devboot-secure.tls=true
       - traefik.http.services.devboot.loadbalancer.server.port=80
     networks:
-        - devnet
+        - debnet
 
 networks:
   devnet:
