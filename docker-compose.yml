@@ -18,5 +18,5 @@ services:
         - debnet
 
 networks:
-  devnet:
+  debnet:
     external: true
