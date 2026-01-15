@@ -1,0 +1,22 @@
+services:
+  web:
+    image: nginx:stable-alpine
+    container_name: devboot-site
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=devnet
+      - traefik.http.routers.devboot.rule=Host(`devboot.com.br`, `www.devboot.com.br`)
+      - traefik.http.routers.devboot.entrypoints=web
+      - traefik.http.routers.devboot-secure.rule=Host(`devboot.com.br`, `www.devboot.com.br`)
+      - traefik.http.routers.devboot-secure.entrypoints=websecure
+      - traefik.http.routers.frotaspro.tls.certresolver=le
+      - traefik.http.routers.devboot-secure.tls=true
+      - traefik.http.services.devboot.loadbalancer.server.port=80
+    networks:
+        - devnet
+
+networks:
+  devnet:
+    external: true
