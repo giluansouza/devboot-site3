@@ -329,9 +329,6 @@ body {
     to { transform: scale(1); opacity: 1; }
 }
 
-#home-page { animation: fadeIn 0.7s ease-in-out; }
-#gestorpm-page, #frotaspro-page { animation: slideInFromRight 0.5s ease-out; }
-#custom-page { animation: slideInFromBottom 0.5s ease-out; }
 #mobile-menu { animation: zoomIn 0.3s ease-out; }
 
 /* Custom styles for buttons and icons */
@@ -342,6 +339,183 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem; /* Corresponds to gap-2 */
+}
+
+/* Landing page refinements */
+.landing-page button {
+    font: inherit;
+}
+
+.landing-page a:focus-visible,
+.landing-page button:focus-visible {
+    outline: 2px solid var(--blue-400);
+    outline-offset: 2px;
+}
+
+.landing-page .nav-link,
+.landing-page .mobile-nav-link,
+.landing-page .product-page-link,
+.landing-page .footer-page-link {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.landing-page .logo-trigger {
+    background: none;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    text-align: left;
+    text-decoration: none;
+}
+
+.landing-page .header-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0.625rem 1.3rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--white);
+    background-color: var(--blue-600);
+    box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.35);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.landing-page .header-contact-btn:hover {
+    background-color: var(--blue-700);
+    transform: translateY(-1px);
+}
+
+.landing-page .mobile-contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 240px;
+    border-radius: 999px;
+    padding: 0.75rem 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--white);
+    background-color: var(--blue-600);
+}
+
+.landing-page .hero-actions {
+    align-items: center;
+}
+
+.landing-page .landing-section {
+    scroll-margin-top: 6.5rem;
+}
+
+.landing-page .btn-main {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 0.85rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.landing-page .btn-main-primary {
+    color: var(--white);
+    background-color: var(--blue-600);
+}
+
+.landing-page .btn-main-primary:hover {
+    background-color: var(--blue-700);
+}
+
+.landing-page .btn-main-secondary {
+    color: var(--slate-300);
+    background-color: var(--slate-900);
+    border: 1px solid var(--slate-800);
+}
+
+.landing-page .btn-main-secondary:hover {
+    color: var(--white);
+    border-color: var(--blue-500);
+}
+
+.landing-page .section-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    border-radius: 0.875rem;
+    padding: 0.85rem 1.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.landing-page .section-cta:hover {
+    transform: translateY(-1px);
+}
+
+.landing-page .section-cta-blue {
+    color: var(--white);
+    background-color: var(--blue-600);
+    box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.25);
+}
+
+.landing-page .section-cta-blue:hover {
+    background-color: var(--blue-700);
+}
+
+.landing-page .section-cta-emerald {
+    color: var(--white);
+    background-color: var(--emerald-500);
+    box-shadow: 0 10px 15px -3px rgb(16 185 129 / 0.25);
+}
+
+.landing-page .section-cta-emerald:hover {
+    opacity: 0.95;
+}
+
+.landing-page .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.5rem;
+    color: var(--slate-400);
+    background-color: var(--slate-900);
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.landing-page .social-link:hover {
+    color: var(--blue-400);
+    background-color: var(--slate-800);
+}
+
+.landing-page .footer-page-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.landing-page .footer-page-link:hover {
+    color: var(--white);
 }
 /* Ensure Lucide icons have a default size and proper display */
 [data-lucide] {
@@ -384,6 +558,18 @@ i.h-8 { height: 2rem; }
     .md\:row { flex-direction: row; }
 }
 
+@media (max-width: 767px) {
+    .landing-page .hero-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .landing-page .btn-main {
+        width: 100%;
+    }
+}
+
 @media (min-width: 1024px) {
     .lg\:flex { display: flex; }
     .lg\:hidden { display: none; }
@@ -400,45 +586,10 @@ i.h-8 { height: 2rem; }
     backdrop-filter: blur(12px);
 }
 body {
-    background-color: var(--slate-50);
-}
-main > div:not(#home-page) {
-    background-color: white;
-}
-#frotaspro-page section {
-    background-color: var(--slate-950);
-}
-#home-page {
-    background-color: white;
-}
-#home-page section:first-child {
     background-color: var(--slate-950);
 }
 footer {
     background-color: var(--slate-950);
-}
-.page-content.hidden {
-    display: none;
-}
-
-li.nav-link {
-    display: block;
-}
-#main-nav button.nav-link {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-}
-#mobile-menu button.mobile-nav-link {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
 }
 
 .text-\[10px\] {
