@@ -1,0 +1,492 @@
+<!--
+This file is a HYBRID PRESENTATION DOCUMENT.
+It allows toggling between "Empresa" and "Prefeitura" modes.
+It is intended for:
+- PDF export (PORTRAIT)
+- Sales presentations
+- Institutional decks
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrotasPro - Apresentação Comercial Híbrida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-outfit { font-family: 'Outfit', sans-serif; }
+        .slide {
+            width: 794px; /* A4-like portrait width */
+            height: 1123px; /* A4-like portrait height */
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .text-blue { color: #003366; }
+        .bg-gradient-capa { background: #01356a0e;}
+        .bg-gradient-frotas { background: linear-gradient(135deg, #003366 0%, #001f3f 100%); }
+        .bg-frotas-blue { background-color: #003366; }
+        .text-frotas-blue { color: #003366; }
+        .bg-frotas-green { background-color: #00c853; }
+        .border-frotas-green { border-color: #00c853; }
+
+        .role-card {
+            transition: transform 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        .role-card:hover { transform: translateY(-5px); border-color: #00c853; }
+
+        /* Logic for toggling content */
+        body.mode-prefeitura .only-empresa { display: none !important; }
+        body.mode-empresa .only-prefeitura { display: none !important; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body {
+                background: white !important;
+                background-color: white !important;
+                padding: 0;
+                margin: 0;
+            }
+            .slide {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+                width: 100% !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+            }
+            .bg-gray-100 {
+                background: white !important;
+                background-color: white !important;
+            }
+        }
+
+        /* Floating Switcher */
+        .switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 mode-empresa">
+
+    <!-- SWITCHER (Hidden on print) -->
+    <div class="switcher no-print flex flex-col gap-3">
+        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Tipo de Apresentação</p>
+        <div class="flex gap-2">
+            <button onclick="setMode('empresa')" id="btn-empresa" class="px-4 py-2 rounded-lg font-bold transition-all bg-frotas-blue text-white">Empresas</button>
+            <button onclick="setMode('prefeitura')" id="btn-prefeitura" class="px-4 py-2 rounded-lg font-bold transition-all bg-gray-200 text-gray-700">Prefeituras</button>
+        </div>
+        <p class="text-[10px] text-gray-500 mt-1 italic">* Use Ctrl+P para gerar o PDF após alternar.</p>
+    </div>
+
+    <!-- SLIDE 1: CAPA (Geral) -->
+    <div class="slide bg-gradient-capa text-white justify-center items-center text-center p-16">
+        <h1 class="text-6xl text-blue font-bold mb-5">FROTASPRO</h1>
+        <p class="text-2xl opacity-90 text-blue max-w-3xl">Gestão Inteligente de Frotas.</p>
+    </div>
+
+    <!-- SLIDE 2: CONTRA CAPA (70% Geral / 30% Adaptado) -->
+    <div class="slide bg-gradient-frotas text-white p-16 flex flex-col">
+        <div class="absolute top-10 left-10">
+            <span class="text-2xl font-bold border-l-4 border-frotas-green pl-4">FrotasPro</span>
+        </div>
+        <div class="text-center">
+            <h1 class="text-6xl font-bold mb-6 only-empresa">Eficiência e Governança na Frota Corporativa</h1>
+            <h1 class="text-6xl font-bold mb-6 only-prefeitura">Eficiência e Transparência na Frota Municipal</h1>
+            
+            <p class="text-2xl opacity-90 max-w-3xl mx-auto only-empresa">O sistema de gestão que se paga através da economia real, controle rigoroso de custos e rastreabilidade ponta a ponta.</p>
+            <p class="text-2xl opacity-90 max-w-3xl mx-auto only-prefeitura">O sistema de gestão que se paga através da economia real e controle rigoroso de recursos públicos.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center items-center">
+            <div class="grid grid-cols-1 gap-6 w-full max-w-md">
+                <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
+                    <p class="text-4xl font-bold text-green-400">Até 40%</p>
+                    <p class="text-sm uppercase tracking-wider">Redução de Custos</p>
+                </div>
+                <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
+                    <p class="text-4xl font-bold text-green-400">100%</p>
+                    <p class="text-sm uppercase tracking-wider">Rastreabilidade</p>
+                </div>
+                <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
+                    <p class="text-4xl font-bold text-green-400">&lt; 12 meses</p>
+                    <p class="text-sm uppercase tracking-wider">Retorno (ROI)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: PROBLEMAS (30% Adaptado) -->
+    <div class="slide p-12 flex flex-col">
+        <div>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-12 border-l-8 border-frotas-green pl-6 only-empresa">O Desafio do Gestor de Frota</h2>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-12 border-l-8 border-frotas-green pl-6 only-prefeitura">O Desafio do Gestor Público</h2>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <div class="grid grid-cols-1 gap-8 items-center">
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-red-100 text-red-600 p-3 rounded-lg flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold only-empresa">Risco e Compliance</h3>
+                            <h3 class="text-3xl font-bold only-prefeitura">Insegurança Jurídica</h3>
+                            <p class="text-2xl text-gray-600">Dificuldade em auditar quem, quando e por que um veículo foi utilizado ou abastecido.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-red-100 text-red-600 p-3 rounded-lg flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold">Desperdício Financeiro</h3>
+                            <p class="text-2xl text-gray-600">Consumo de combustível acima da média e manutenções corretivas que poderiam ser evitadas.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="bg-red-100 text-red-600 p-3 rounded-lg flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold">Processos Dispersos</h3>
+                            <p class="text-2xl text-gray-600">Gestão via planilhas paralelas ou grupos de WhatsApp, sem centralização de notas e comprovantes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-inner mt-8">
+                    <img src="https://images.unsplash.com/photo-1566699270403-3f7e3f340664?q=80&w=800&auto=format&fit=crop" alt="Ineficiência" class="w-full h-80 object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: ECOSSISTEMA MOBILE (30% Adaptado) -->
+    <div class="slide p-12 flex flex-col">
+        <div>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-6 border-l-8 border-frotas-green pl-6">Ecossistema Mobile: Gestão em Tempo Real</h2>
+            <p class="text-2xl text-gray-600 mb-10">Controle toda a gestão da frota pelo celular com app mobile integrado.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Role 1: Top Level -->
+                <div class="role-card bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        </div>
+                        <div class="only-empresa">
+                            <h3 class="text-3xl font-bold mb-2">Diretoria</h3>
+                            <p class="text-2xl text-gray-600">Acompanhamento estratégico. Veja o custo da frota por unidade, centro de custo ou contrato e a posição dos veículos.</p>
+                        </div>
+                        <div class="only-prefeitura">
+                            <h3 class="text-3xl font-bold mb-2">Prefeito</h3>
+                            <p class="text-2xl text-gray-600">Acompanhamento estratégico. Veja o custo da frota por secretaria e a última posição dos veículos em segundos.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Role 2: Manager -->
+                <div class="role-card bg-white p-6 rounded-2xl shadow-sm">
+                     <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 0h6" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-2">Gestor de Frota</h3>
+                            <p class="text-2xl text-gray-600">Autorize manutenções e despache ordens de abastecimento de forma prática, direto do celular.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Role 3: Operation -->
+                <div class="role-card bg-white p-6 rounded-2xl shadow-sm">
+                     <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 bg-orange-100 text-orange-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-2">Operação</h3>
+                            <p class="text-2xl text-gray-600 only-empresa">Motoristas realizam checklists com fotos e registram viagens com identificação digital.</p>
+                            <p class="text-2xl text-gray-600 only-prefeitura">Motoristas realizam checklists, registram viagens e validam abastecimentos via QRCode/NFC.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 flex justify-center">
+                <div class="bg-blue-900 text-white px-8 py-4 rounded-full flex items-center gap-4 text-center only-prefeitura">
+                    <span class="text-lg font-bold">📱 POS Integrado:</span> Identificação instantânea no ato do abastecimento para segurança total.
+                </div>
+                <div class="bg-blue-900 text-white px-8 py-4 rounded-full flex items-center gap-4 text-center only-empresa">
+                    <span class="text-lg font-bold">💳 Cartão Integrado:</span> Gestão centralizada de gastos com integração via API.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: ABASTECIMENTO (70% Geral) -->
+    <div class="slide p-12 flex flex-col">
+        <div>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-frotas-green mb-4">Funcionalidade Core</h3>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-6">Controle de Abastecimento</h2>
+            <p class="text-2xl text-gray-600 mb-8">Digitalize o processo, da autorização à conciliação fiscal, eliminando desvios e controlando custos com precisão.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <ul class="space-y-4 text-gray-700 mb-8">
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Autorização via app com identificação do veículo e condutor.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl only-empresa">Integração com cartões de frota e conciliação de faturas.</span>
+                    <span class="text-2xl only-prefeitura">Validação no posto via QRCode ou Cartão NFC para segurança total.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Análise automática de consumo (Km/L) e alertas de desvio.</span>
+                </li>
+            </ul>
+            <div class="h-80 w-full bg-gray-200 mt-8 rounded-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1644246905181-c3753e9a82bd?q=80&w=800&auto=format&fit=crop" alt="Abastecimento" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: MANUTENÇÃO (70% Geral) -->
+    <div class="slide flex flex-col p-12">
+        <div>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-frotas-green mb-4">Eficiência Operacional</h3>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-6">Gestão Proativa de Manutenção</h2>
+            <p class="text-2xl text-gray-600 mb-8">Reduza o tempo de veículo parado com um fluxo 100% digital, da solicitação de reparo à aprovação eletrônica.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center mb-12">
+            <ul class="space-y-4 text-gray-700">
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Abertura de OS via App com fotos e descrição detalhada.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Gestão de orçamentos e aprovação remota pelo gestor.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Alertas automáticos de preventiva por Km ou data.</span>
+                </li>
+            </ul>
+            <div class="h-80 w-full bg-gray-200 mt-12 rounded-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?q=80&w=800&auto=format&fit=crop" alt="Manutenção" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: CONTROLE DE USO (70% Geral) -->
+    <div class="slide flex flex-col p-12">
+        <div>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-frotas-green mb-4">Governança</h3>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-6">Controle de Uso e Viagens</h2>
+            <p class="text-2xl text-gray-600 mb-8">Garanta que cada saída seja autorizada e documentada, criando uma trilha de auditoria completa.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <ul class="space-y-4 text-gray-700 mb-12">
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Solicitação e despacho de viagens com definição de rota.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Checklists digitais (saída/chegada) com registro fotográfico.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl only-empresa">Vínculo a Centros de Custo (Unidade, Filial ou Projeto).</span>
+                    <span class="text-2xl only-prefeitura">Vínculo a Secretarias (Saúde, Educação, Obras, etc).</span>
+                </li>
+            </ul>
+            <div class="h-80 w-full bg-gray-200 mt-12 rounded-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1748609523112-da78cb7210a2?q=80&w=800&auto=format&fit=crop" alt="Checklist" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: RASTREAMENTO (70% Geral) -->
+    <div class="slide flex flex-col p-12">
+        <div>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-frotas-green mb-4">Tecnologia</h3>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-6">Rastreamento e Visibilidade</h2>
+            <p class="text-2xl text-gray-600 mb-8">Tenha uma visão 360° em tempo real. Saiba onde cada veículo está e otimize rotas.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <ul class="space-y-4 text-gray-700 mb-12">
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Mapa ao vivo com a posição de toda a frota.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl">Cercas virtuais e alertas de desvio ou excesso de velocidade.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl"><b>Videomonitoramento:</b> Auditoria visual de viagens para segurança total.</span>
+                </li>
+            </ul>
+            <div class="h-80 w-full bg-gray-200 mt-8 rounded-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1764347923709-fc48487f2486?q=80&w=800&auto=format&fit=crop" alt="GPS" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: DASHBOARD FINANCEIRO (70% Geral) -->
+    <div class="slide flex flex-col p-12">
+        <div>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-frotas-green mb-4">Inteligência</h3>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-6">Decisões Baseadas em Dados</h2>
+            <p class="text-2xl text-gray-600 mb-8">Transforme dados operacionais em inteligência financeira para otimizar cada centavo investido.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <ul class="space-y-4 text-gray-700 mb-12">
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl"><b>Análise de Custo por Veículo:</b> Identifique ativos com maior gasto.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-green-500 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span class="text-2xl"><b>Relatórios Automáticos:</b> Exportação imediata para auditoria e prestação de contas.</span>
+                </li>
+            </ul>
+            <div class="h-80 w-full bg-gray-200 mt-12 rounded-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=800&auto=format&fit=crop" alt="Dashboard" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: DIFERENCIAIS (30% Adaptado) -->
+    <div class="slide p-12 bg-frotas-blue text-white flex flex-col">
+        <div class="text-center mt-8">
+            <h2 class="text-5xl font-bold mb-12 only-empresa">Diferenciais para Empresas</h2>
+            <h2 class="text-5xl font-bold mb-12 only-prefeitura">Diferenciais para a Gestão Pública</h2>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <div class="grid grid-cols-1 gap-8">
+                <div class="text-center">
+                    <div class="bg-white/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">Auditoria e Compliance</h3>
+                    <p class="opacity-80 max-w-sm mx-auto">Trilha de auditoria completa: saiba quem autorizou cada centavo gasto na frota.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">Padronização</h3>
+                    <p class="opacity-80 max-w-sm mx-auto only-empresa">Unifique o modo como filiais, unidades e áreas gerem seus veículos em um único padrão corporativo.</p>
+                    <p class="opacity-80 max-w-sm mx-auto only-prefeitura">Unifique o modo como a Saúde, Educação e Obras gerem seus veículos em um único padrão municipal.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">Controle</h3>
+                    <p class="opacity-80 max-w-sm mx-auto only-empresa">Relatórios automáticos prontos para auditorias internas e externas.</p>
+                    <p class="opacity-80 max-w-sm mx-auto only-prefeitura">Relatórios automáticos prontos para auditorias e fiscalizações do TCE.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: EVIDÊNCIAS E ROI (70% Geral) -->
+    <div class="slide p-12 flex flex-col">
+        <div>
+            <h2 class="text-5xl font-bold text-frotas-blue mb-10 border-l-8 border-frotas-green pl-6">Evidências: O Sistema que se Paga</h2>
+        </div>
+        <div class="flex-grow flex flex-col justify-center">
+            <div class="grid grid-cols-1 gap-8">
+                <div class="bg-green-50 p-6 rounded-xl">
+                    <p class="text-3xl font-bold text-frotas-blue">Até 40%</p>
+                    <p class="text-2xl text-gray-700 font-semibold">Redução em Despesas de Transporte</p>
+                    <p class="text-base text-gray-500 mt-2">Ao otimizar combustível, rotas e manutenção preventiva.</p>
+                </div>
+                <div class="bg-green-50 p-6 rounded-xl">
+                    <p class="text-3xl font-bold text-frotas-blue">10% a 15%</p>
+                    <p class="text-2xl text-gray-700 font-semibold">Economia em Combustível</p>
+                    <p class="text-base text-gray-500 mt-2">Dados em tempo real inibem desvios e corrigem consumos fora do padrão.</p>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xl font-bold">ROI em menos de 12 meses</p>
+                    <p class="text-gray-600">Média de mercado para implementação completa de tecnologia de frota.</p>
+                    <div class="bg-blue-50 p-4 rounded-lg italic text-gray-600 border border-blue-100 mt-4">
+                        "A gestão por indicadores contribui para a otimização do uso e redução de custos sem perda do nível de serviço."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: FECHAMENTO (30% Adaptado) -->
+    <div class="slide bg-gradient-frotas text-white p-16 flex flex-col text-center">
+        <div>
+            <h2 class="text-5xl font-bold mb-8">Modernize sua Gestão Agora</h2>
+            <p class="text-2xl opacity-80 mb-12 max-w-2xl mx-auto only-empresa">Transforme a frota da sua empresa em um modelo de eficiência, governança e economia.</p>
+            <p class="text-2xl opacity-80 mb-12 max-w-2xl mx-auto only-prefeitura">Transforme a frota municipal em um modelo de eficiência, transparência e economia.</p>
+        </div>
+        <div class="flex-grow flex flex-col justify-center items-center">
+            <div class="space-y-4">
+                <p class="text-2xl only-empresa">Solicite uma demonstração ou piloto para sua empresa:</p>
+                <p class="text-2xl only-prefeitura">Solicite uma demonstração ou piloto para sua Prefeitura:</p>
+                <p class="text-5xl font-bold text-green-400">frotaspro.com.br</p>
+                <p class="text-xl opacity-60">comercial@devboot.com.br</p>
+                <p class="text-xl opacity-60">(87) 99140-2037</p>
+            </div>
+            <div class="mt-20 flex flex-col items-center gap-4">
+                <div class="border border-white/20 p-4 rounded-lg bg-white/5 w-64">
+                    <p class="text-xs uppercase opacity-60">Implantação</p>
+                    <p class="font-bold">Em nuvem (SaaS)</p>
+                </div>
+                <div class="border border-white/20 p-4 rounded-lg bg-white/5 w-64">
+                    <p class="text-xs uppercase opacity-60">Suporte</p>
+                    <p class="font-bold">Dedicado ao Gestor</p>
+                </div>
+                <div class="border border-white/20 p-4 rounded-lg bg-white/5 w-64">
+                    <p class="text-xs uppercase opacity-60">Segurança</p>
+                    <p class="font-bold">Dados Criptografados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setMode(mode) {
+            document.body.className = 'bg-gray-100 mode-' + mode;
+            
+            const btnEmpresa = document.getElementById('btn-empresa');
+            const btnPrefeitura = document.getElementById('btn-prefeitura');
+            
+            if (mode === 'empresa') {
+                btnEmpresa.className = 'px-4 py-2 rounded-lg font-bold transition-all bg-frotas-blue text-white';
+                btnPrefeitura.className = 'px-4 py-2 rounded-lg font-bold transition-all bg-gray-200 text-gray-700';
+                document.title = "FrotasPro - Apresentação Comercial - Empresas";
+            } else {
+                btnPrefeitura.className = 'px-4 py-2 rounded-lg font-bold transition-all bg-frotas-blue text-white';
+                btnEmpresa.className = 'px-4 py-2 rounded-lg font-bold transition-all bg-gray-200 text-gray-700';
+                document.title = "FrotasPro - Apresentação Comercial - Prefeituras";
+            }
+        }
+    </script>
+</body>
+</html>

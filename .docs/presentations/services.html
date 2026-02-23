@@ -1,0 +1,365 @@
+<!--
+This file is a PRESENTATION DOCUMENT.
+It is not the official website.
+It is intended for:
+- PDF export (LANDSCAPE)
+- Sales presentations
+- Institutional decks
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devboot - Portfólio de Soluções Tecnológicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        h1, h2, h3, .font-outfit { font-family: 'Outfit', sans-serif; }
+        .slide {
+            width: 1123px; /* A4 landscape width */
+            height: 794px; /* A4 landscape height */
+            overflow: hidden;
+            position: relative;
+            background: #f8fafc; /* slate-50 */
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .text-blue { color: #1e3a8a; } /* blue-900 */
+        .text-blue-action { color: #2563eb; } /* blue-600 */
+        .bg-gradient-capa { background: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 32px 32px; }
+        .bg-gradient-devboot { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); }
+        .bg-devboot-blue { background-color: #1e3a8a; }
+        .bg-blue-600 { background-color: #2563eb; }
+        .text-devboot-blue { color: #0f172a; } /* slate-900 */
+        .bg-devboot-green { background-color: #2563eb; }
+        .border-devboot-green { border-color: #2563eb; }
+
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f1f5f9;
+            background: white;
+            border-radius: 1.5rem;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                background-color: white !important;
+                padding: 0;
+                margin: 0;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            .slide {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- SLIDE 1: CAPA INSTITUCIONAL -->
+    <div class="slide bg-gradient-capa justify-center items-center text-center p-16">
+        <div class="mb-12">
+            <h2 class="text-3xl text-blue font-black tracking-widest uppercase mb-2">Devboot Tecnologia</h2>
+            <div class="h-2 w-32 bg-blue-600 mx-auto rounded-full"></div>
+        </div>
+        <h1 class="text-8xl text-slate-900 font-black mb-8 leading-tight">Portfólio de <br><span class="gradient-text">Soluções</span></h1>
+        <p class="text-3xl font-medium text-slate-600 max-w-4xl mx-auto leading-relaxed">Tecnologia estratégica para operações que exigem eficiência, transparência e controle absoluto.</p>
+        <div class="mt-24 text-slate-400 text-base font-bold uppercase tracking-[0.3em]">
+            2026 • Inteligência em Gestão
+        </div>
+    </div>
+
+    <!-- SLIDE 2: ECOSSISTEMA DE SOLUÇÕES -->
+    <div class="slide p-12 flex flex-col">
+        <div>
+            <h2 class="text-5xl font-black text-slate-900 mb-12 border-l-8 border-blue-600 pl-6">Ecossistema Digital</h2>
+        </div>
+        <div class="flex-grow grid grid-cols-2 gap-6">
+            <div class="service-card p-6 flex items-center gap-6 border-l-4 border-l-blue-600">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-blue-600 font-black text-xl">01</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">FrotasPro</h3>
+                    <p class="text-slate-500 text-sm">Gestão inteligente e completa de frotas municipais.</p>
+                </div>
+            </div>
+            <div class="service-card p-6 flex items-center gap-6">
+                <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-slate-600 font-black text-xl">02</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">Rastreamento & Telemetria</h3>
+                    <p class="text-slate-500 text-sm">Localização em tempo real e controle de ativos.</p>
+                </div>
+            </div>
+            <div class="service-card p-6 flex items-center gap-6">
+                <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-slate-600 font-black text-xl">03</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">Assinatura Digital</h3>
+                    <p class="text-slate-500 text-sm">Documentos com validade jurídica e zero papel.</p>
+                </div>
+            </div>
+            <div class="service-card p-6 flex items-center gap-6">
+                <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-slate-600 font-black text-xl">04</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">Armazenamento em Nuvem</h3>
+                    <p class="text-slate-500 text-sm">Segurança e escalabilidade para dados críticos.</p>
+                </div>
+            </div>
+            <div class="service-card p-6 flex items-center gap-6 border-l-4 border-l-blue-600">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-blue-600 font-black text-xl">05</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">Gestão Escolar Pro</h3>
+                    <p class="text-slate-500 text-sm">Administração acadêmica e pedagógica integrada.</p>
+                </div>
+            </div>
+            <div class="service-card p-6 flex items-center gap-6">
+                <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-slate-600 font-black text-xl">06</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">Controle de Acesso Escolar</h3>
+                    <p class="text-slate-500 text-sm">Segurança máxima com integração em tempo real.</p>
+                </div>
+            </div>
+            <div class="service-card p-6 flex items-center gap-6">
+                <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-slate-600 font-black text-xl">07</div>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900">Videomonitoramento de Frotas</h3>
+                    <p class="text-slate-500 text-sm">Proteção e auditoria para frotas escolares.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: FROTASPRO -->
+    <div class="slide p-12 flex flex-col">
+        <div class="flex justify-between items-start mb-10">
+            <div class="max-w-xl">
+                <h3 class="text-xs font-black uppercase tracking-[0.2em] text-blue-600 mb-4">Módulo de Gestão</h3>
+                <h2 class="text-7xl font-black text-slate-900 leading-tight mb-6">Frotas<span class="text-blue-600">Pro</span></h2>
+                <p class="text-2xl text-slate-600 leading-relaxed">A plataforma definitiva que se paga através da economia real e do controle rigoroso de recursos.</p>
+            </div>
+            <div class="p-10 bg-slate-900 rounded-[3rem] text-white overflow-hidden relative w-80 text-center">
+                <p class="text-6xl font-black mb-2">40%</p>
+                <p class="text-blue-400 font-bold uppercase tracking-widest text-xs">Redução média <br>de custos</p>
+                <div class="absolute right-0 top-0 w-32 h-32 bg-blue-600 rounded-full blur-[80px] opacity-20"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 flex-grow">
+            <div class="flex items-start gap-6 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                <div class="w-14 h-14 bg-blue-600 text-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-black text-slate-900 mb-2">Conformidade & Auditoria</h4>
+                    <p class="text-lg text-slate-500 leading-relaxed">Trilha de auditoria completa para o TCE e controle por centro de custo/secretaria.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-6 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                <div class="w-14 h-14 bg-blue-600 text-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-black text-slate-900 mb-2">Operação em Tempo Real</h4>
+                    <p class="text-lg text-slate-500 leading-relaxed">Checklists digitais, ordens de abastecimento via App e controle de odômetro antifraude.</p>
+                </div>
+            </div>
+            <div class="col-span-2 bg-blue-50 border border-blue-100 rounded-[2.5rem] p-8 flex items-center justify-between">
+                <div class="text-blue-900 font-black text-2xl">Digitalização total: Adeus planilhas e "bloquinhos".</div>
+                <div class="bg-blue-600 text-white px-8 py-3 rounded-2xl font-bold uppercase tracking-widest text-sm">ROI garantido</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: RASTREAMENTO E VÍDEO -->
+    <div class="slide p-12 flex flex-col">
+        <div class="mb-10">
+            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-blue-600 mb-4">Visibilidade Máxima</h3>
+            <h2 class="text-7xl font-black text-slate-900 leading-tight">Vídeo & <span class="gradient-text">Telemetria</span></h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 flex-grow">
+            <div class="p-10 rounded-[3rem] bg-white border border-slate-100 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="p-4 bg-blue-100 text-blue-600 rounded-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        </div>
+                        <h4 class="text-4xl font-black text-slate-900">Videomonitoramento IA</h4>
+                    </div>
+                    <p class="text-2xl text-slate-500 leading-relaxed">Inteligência visual para frotas escolares e veículos oficiais. Gravação em nuvem e detecção de riscos.</p>
+                </div>
+                <div class="text-blue-600 font-bold uppercase tracking-widest text-sm">Streaming 1080p Full HD</div>
+            </div>
+
+            <div class="p-10 rounded-[3rem] bg-slate-900 text-white shadow-xl relative overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="p-4 bg-blue-600 text-white rounded-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <h4 class="text-4xl font-black text-white">Rastreamento 24/7</h4>
+                    </div>
+                    <p class="text-2xl text-blue-100/80 leading-relaxed">Cercas virtuais inteligentes, alertas de desvio de rota e monitoramento de ignição em tempo real.</p>
+                </div>
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-600 rounded-full blur-[100px] opacity-30"></div>
+                <div class="text-blue-400 font-bold uppercase tracking-widest text-sm relative z-10">Cobertura Nacional GPS/GPRS</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: GESTÃO ESCOLAR -->
+    <div class="slide p-12 flex flex-col">
+        <div class="mb-10">
+            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-blue-600 mb-4">Educação 4.0</h3>
+            <h2 class="text-7xl font-black text-slate-900 leading-tight">Escola <span class="gradient-text">Conectada</span></h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 flex-grow">
+            <div class="service-card p-10 bg-white border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <h4 class="text-4xl font-black text-slate-900 mb-6">Gestão Escolar Pro</h4>
+                    <p class="text-2xl text-slate-500 leading-relaxed mb-6">Matrículas online, boletim digital e diário de classe digital.</p>
+                    <ul class="space-y-4 text-xl text-slate-600">
+                        <li class="flex items-center gap-2"><div class="w-2 h-2 bg-blue-600 rounded-full"></div> Controle Pedagógico</li>
+                        <li class="flex items-center gap-2"><div class="w-2 h-2 bg-blue-600 rounded-full"></div> Portal do Professor</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card p-10 bg-blue-600 text-white border-none shadow-xl shadow-blue-200 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-8">
+                        <h4 class="text-4xl font-black">Controle de Acesso</h4>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 3v1m0 16v1m0-1a9 9 0 001.897-17.438a7 7 0 00-11.517 8.023l.144.254a9.182 9.182 0 011.083 4.735 9.181 9.181 0 00.514 4.156L3.5 20.5" /></svg>
+                    </div>
+                    <p class="text-2xl text-blue-100 leading-relaxed">Presença na catraca gera notificação instantânea via APP para os pais.</p>
+                </div>
+                <div class="bg-white/20 p-6 rounded-2xl font-bold text-center uppercase tracking-widest text-lg">
+                    Reconhecimento Facial & RFID
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: ASSINATURA E NUVEM -->
+    <div class="slide p-12 flex flex-col">
+        <div class="mb-12">
+            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-blue-600 mb-4">Transformação Administrativa</h3>
+            <h2 class="text-7xl font-black text-slate-900 leading-tight">Zero Papel. <span class="gradient-text">Máxima Agilidade.</span></h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-12 flex-grow">
+            <div class="flex flex-col justify-between p-10 bg-white rounded-[3rem] border border-slate-100 shadow-sm">
+                <div class="flex gap-8 items-start">
+                    <div class="w-20 h-20 bg-blue-600 text-white rounded-3xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-4">Assinatura Digital</h4>
+                        <p class="text-2xl text-slate-500 leading-relaxed">Validade jurídica total (ICP-Brasil). Assine portarias e processos de qualquer lugar.</p>
+                    </div>
+                </div>
+                <div class="bg-blue-50 text-blue-600 p-4 rounded-2xl text-center font-bold">Padrão de Segurança Nacional</div>
+            </div>
+
+            <div class="flex flex-col justify-between p-10 bg-slate-900 text-white rounded-[3rem] shadow-xl">
+                <div class="flex gap-8 items-start">
+                    <div class="w-20 h-20 bg-blue-600 text-white rounded-3xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-black text-white mb-4">Cloud Storage Pro</h4>
+                        <p class="text-2xl text-blue-100/60 leading-relaxed">Infraestrutura segura para dados críticos. Backup automático e total LGPD.</p>
+                    </div>
+                </div>
+                <div class="bg-white/10 text-white p-4 rounded-2xl text-center font-bold border border-white/10">99.9% Uptime Garantido</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: DIFERENCIAIS -->
+    <div class="slide p-12 bg-slate-900 text-white flex flex-col">
+        <div class="mb-16 text-center">
+            <h2 class="text-6xl font-black mb-4">A Diferença <span class="text-blue-500 text-glow">Devboot</span></h2>
+            <div class="h-2 w-32 bg-blue-600 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-8 flex-grow">
+            <div class="p-10 bg-white/5 border border-white/10 rounded-[3rem] flex flex-col items-center text-center justify-center">
+                <div class="w-24 h-24 bg-blue-600/20 text-blue-500 rounded-3xl flex items-center justify-center mb-8 border border-blue-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                </div>
+                <h3 class="text-3xl font-black mb-4">DNA Público</h3>
+                <p class="text-xl text-blue-100/60 leading-relaxed">Nativamente preparado para os desafios de auditoria e transparência.</p>
+            </div>
+
+            <div class="p-10 bg-white/5 border border-white/10 rounded-[3rem] flex flex-col items-center text-center justify-center">
+                <div class="w-24 h-24 bg-blue-600/20 text-blue-500 rounded-3xl flex items-center justify-center mb-8 border border-blue-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                </div>
+                <h3 class="text-3xl font-black mb-4">Suporte</h3>
+                <p class="text-xl text-blue-100/60 leading-relaxed">Treinamento e acompanhamento estratégico da sua operação.</p>
+            </div>
+
+            <div class="p-10 bg-white/5 border border-white/10 rounded-[3rem] flex flex-col items-center text-center justify-center">
+                <div class="w-24 h-24 bg-blue-600/20 text-blue-500 rounded-3xl flex items-center justify-center mb-8 border border-blue-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                </div>
+                <h3 class="text-3xl font-black mb-4">Segurança</h3>
+                <p class="text-xl text-blue-100/60 leading-relaxed">Dados criptografados e conformidade rigorosa com a LGPD.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: FECHAMENTO -->
+    <div class="slide bg-gradient-devboot text-white p-16 flex flex-row items-center overflow-hidden">
+        <div class="relative z-10 w-1/2 pr-12">
+            <h2 class="text-8xl font-black mb-8 leading-tight">Gestão <br><span class="text-blue-400">Inteligente</span>.</h2>
+            <p class="text-3xl text-blue-100/80 mb-12 leading-relaxed">Agende uma demonstração técnica com nossos especialistas.</p>
+            <div class="bg-blue-400/40 font-black text-[12rem] absolute -bottom-32 -left-32 select-none pointer-events-none opacity-10">DEVBOOT</div>
+        </div>
+
+        <div class="w-1/2 space-y-6 relative z-10">
+            <div class="bg-white text-slate-900 p-12 rounded-[4rem] shadow-2xl relative overflow-hidden text-center">
+                <p class="text-6xl font-black tracking-tighter mb-4">devboot.com.br</p>
+                <p class="text-2xl text-slate-500 font-medium">Inovação que gera resultados.</p>
+                <div class="absolute right-0 top-0 w-32 h-32 bg-blue-600 rounded-full blur-[80px] opacity-10"></div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-blue-900/40 border border-blue-400/20 p-8 rounded-[2.5rem] backdrop-blur-sm text-center">
+                    <p class="text-xs uppercase font-black tracking-widest opacity-60 mb-2">Comercial</p>
+                    <p class="text-xl font-bold">comercial@devboot.com.br</p>
+                </div>
+                <div class="bg-blue-900/40 border border-blue-400/20 p-8 rounded-[2.5rem] backdrop-blur-sm text-center">
+                    <p class="text-xs uppercase font-black tracking-widest opacity-60 mb-2">WhatsApp</p>
+                    <p class="text-xl font-bold">(87) 99140-2037</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

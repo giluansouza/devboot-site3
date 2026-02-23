@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrotasPro - Gestão de Frota para Prefeituras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. SETUP E DESIGN SYSTEM */
+        * { box-sizing: border-box; }
+        body {
+            background-color: #f0f2f5;
+            display: grid;
+            gap: 40px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            place-items: center;
+            padding: 40px 0;
+        }
+
+        .slide-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            height: 720px;
+            justify-content: flex-start;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            width: 1280px;
+        }
+
+        /* Elementos Decorativos de Background */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 51, 102, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        /* 2. TIPOGRAFIA */
+        h1, h2, h3 {
+            color: #003366; /* Azul Marinho Profissional */
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+        }
+
+        h1 { font-size: 64px; font-weight: 700; line-height: 1.1; }
+        .slide-title { font-size: 44px; font-weight: 700; margin-bottom: 40px; border-left: 8px solid #00c853; padding-left: 20px; text-align: left; width: 100%; }
+        h3 { font-size: 28px; margin-bottom: 10px; color: #003366; }
+        p, li, td, th { font-size: 19px; line-height: 1.5; color: #4b5563; }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* 3. LAYOUTS ESPECÍFICOS */
+        .title-layout { text-align: center; justify-content: center; align-items: center; background: linear-gradient(135deg, #003366 0%, #001f3f 100%); color: white; }
+        .title-layout h1, .title-layout p { color: white; }
+        .title-layout .subtitle { font-size: 26px; margin-top: 20px; opacity: 0.9; }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; width: 100%; }
+
+        /* Tabela */
+        .table-layout table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; }
+        .table-layout th { background-color: #003366; color: white; text-align: left; padding: 20px; font-size: 22px; }
+        .table-layout td { padding: 18px 20px; border-bottom: 1px solid #e5e7eb; }
+        .table-layout tr:nth-child(even) { background-color: #f9fafb; }
+        .table-layout .check-icon { color: #00c853; font-weight: bold; }
+
+        /* Tiles de Diferenciais */
+        .tiled-content { display: flex; gap: 20px; width: 100%; }
+        .tile { flex: 1; background: #f8fafc; border-radius: 16px; padding: 30px; border-top: 6px solid #003366; transition: transform 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .tile .icon { font-size: 32px; color: #00c853; margin-bottom: 15px; }
+
+        /* Casos de Estudo */
+        .case-studies { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .case-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 25px; }
+        .case-card h4 { color: #00c853; margin: 0 0 10px 0; font-size: 20px; }
+
+        /* Imagens e Placeholders */
+        .image-wrapper { border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #d1d5db; height: 100%; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Highlight Numbers */
+        .highlight-numbers { display: flex; justify-content: space-around; width: 100%; text-align: center; }
+        .number-box { flex: 1; }
+        .number { font-size: 72px; font-weight: 700; color: #00c853; font-family: 'Outfit'; }
+        .label { font-size: 22px; font-weight: 600; color: #003366; }
+
+        /* Bleed Image Right layout fix */
+        .slide-container.bleed-image-layout {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0;
+            align-items: start;
+        }
+        .bleed-image-layout .content-container { padding: 60px; }
+        .bleed-image-layout .image-container { height: 720px; }
+        .bleed-image-layout img.bleed-image-side { height: 720px; width: 100%; object-fit: cover; }
+
+        #formula-container { background: #f0fdf4; padding: 20px; border-radius: 10px; border: 1px dashed #00c853; margin-top: 20px; text-align: center; }
+
+        .badge-mobile {
+            background-color: #003366;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Capa -->
+    <div class="slide-container title-layout" id="slide1">
+        <div style="z-index: 2;">
+            <img src="https://placehold.co/200x60/003366/ffffff?text=FrotasPro" alt="Logo FrotasPro" style="margin-bottom: 40px;">
+            <h1>FrotasPro</h1>
+            <p class="subtitle">Gestão de Frota Pública: Decisões na Palma da Mão para Prefeitos e Gestores</p>
+            <div style="margin-top: 50px;">
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1280&auto=format&fit=crop" alt="Gestão Moderna" style="width: 800px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); height: 350px; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Problemas -->
+    <div class="slide-container" id="slide2">
+        <h2 class="slide-title">Desafios da Frota Municipal</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="margin-bottom: 25px; font-weight: 600;">O FrotasPro elimina a falta de controle que gera insegurança administrativa:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-circle-xmark" style="color:#ef4444; margin-right: 10px;"></i> Decisões lentas baseadas em papel ou planilhas.</li>
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-circle-xmark" style="color:#ef4444; margin-right: 10px;"></i> Falta de visão do Prefeito sobre o uso real dos ativos.</li>
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-circle-xmark" style="color:#ef4444; margin-right: 10px;"></i> Divergências em abastecimentos e manutenções críticas.</li>
+                        <li style="margin-bottom: 15px;"><i class="fa-solid fa-circle-xmark" style="color:#ef4444; margin-right: 10px;"></i> Dificuldade na prestação de contas imediata.</li>
+                    </ul>
+                </div>
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Dados de Gestão">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Módulos x Benefícios -->
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title">Controle Multilevel</h2>
+        <div class="content-area table-layout">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Perfil</th>
+                        <th>Uso do Sistema / App</th>
+                        <th>Impacto na Gestão</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Prefeito</strong></td>
+                        <td>Dashboard mobile em tempo real.</td>
+                        <td>Transparência total e acompanhamento de metas.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gestor de Frota</strong></td>
+                        <td>Despacho, autorização e controle financeiro.</td>
+                        <td>Agilidade operacional e redução de custos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Controladoria</strong></td>
+                        <td>Auditoria de notas e histórico técnico.</td>
+                        <td>Segurança jurídica e prestação de contas (TCE).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Motorista</strong></td>
+                        <td>Checklists, viagens e abastecimentos via App.</td>
+                        <td>Padronização e fim do erro de preenchimento.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Slide 4: Diferenciais Públicos -->
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title">Diferenciais para a Gestão Pública</h2>
+        <div class="content-area">
+            <div class="tiled-content">
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-route"></i></div>
+                    <h3>Rastreabilidade Real</h3>
+                    <p>Visão em tempo real para o Prefeito. Saiba onde cada recurso público está sendo aplicado agora.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                    <h3>Despacho Ágil</h3>
+                    <p>Gestores autorizam manutenções e abastecimentos pelo celular, sem travar a operação da Secretaria.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3>Governança Total</h3>
+                    <p>Relatórios consolidados para fiscalizações. Trilhas claras de auditoria para cada centavo gasto na frota.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Operação Dashboard e Abastecimento -->
+    <div class="slide-container" id="slide5">
+        <h2 class="slide-title">Decisão na Palma da Mão</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div class="image-wrapper" style="border: none; box-shadow: none; background: transparent; display: flex; align-items: center; justify-content: center;">
+                    <!-- Placeholder: Dashboard Mobile -->
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=400&auto=format&fit=crop" alt="Mobile Dashboard" style="width: 250px; border-radius: 30px; border: 8px solid #333;">
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <div class="badge-mobile">Visão do Prefeito / Gestor</div>
+                    <h3>Acompanhamento Estratégico</h3>
+                    <p>O Prefeito não precisa estar no pátio para saber o que acontece. O dashboard mobile entrega indicadores de custos e alertas em segundos.</p>
+                    <ul style="padding-left: 20px;">
+                        <li>Status da frota por Secretaria.</li>
+                        <li>Alertas de gastos fora do padrão.</li>
+                        <li>Localização em tempo real (GPS integrado).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Manutenção e Rastreamento -->
+    <div class="slide-container bleed-image-layout" id="slide6">
+        <div class="content-container">
+            <h2 class="slide-title">Agilidade no Despacho</h2>
+            <div class="badge-mobile">Visão do Gestor</div>
+            <h3>Gestão sem Burocracia</h3>
+            <p>O Gestor acompanha e despacha ordens de serviço e abastecimento de forma prática pelo App, garantindo que o veículo não fique parado.</p>
+            <div class="image-wrapper" style="height: 180px; margin: 20px 0;">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Operação Mobile">
+            </div>
+            <h3>Rastreamento e Controle</h3>
+            <p>Seja via serviço nativo ou integração, o Prefeito e o Gestor visualizam o mapa completo da cidade com a movimentação oficial.</p>
+        </div>
+        <div class="image-container">
+            <img class="bleed-image-side" src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=800&auto=format&fit=crop" alt="Mapa de Rastreamento">
+        </div>
+    </div>
+
+    <!-- Slide 7: Estudos de Caso -->
+    <div class="slide-container" id="slide7">
+        <h2 class="slide-title">Resultados e Mobilidade</h2>
+        <div class="content-area">
+            <div class="case-studies">
+                <div class="case-card">
+                    <h4>Gestão Descentralizada</h4>
+                    <p>Secretarias diferentes com a mesma regra, mas autonomia para o gestor de cada pasta via App.</p>
+                </div>
+                <div class="case-card">
+                    <h4>Prefeitura Transparente</h4>
+                    <p>Prefeito com acesso direto aos dados, reduzindo pedidos de relatórios manuais e aumentando a confiança.</p>
+                </div>
+                <div class="case-card">
+                    <h4>Operação de Campo</h4>
+                    <p>Motoristas enviando evidências e checklists em tempo real, gerando histórico automático para a controladoria.</p>
+                </div>
+            </div>
+            <div style="margin-top: 40px; text-align: center; background: #e0f2f1; padding: 25px; border-radius: 12px; border: 2px solid #00c853;">
+                <p style="font-size: 22px;"><strong>Destaque Tecnológico:</strong> Ecossistema mobile para <strong>Motoristas</strong> (operação), <strong>Gestores</strong> (despacho) e <strong>Prefeitos</strong> (acompanhamento real).</p>
+                <p style="font-size: 16px; margin-top: 5px;">Inclui uso de POS com QRCode/NFC para identificação e registro instantâneo.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Economia e Encerramento -->
+    <div class="slide-container" id="slide8">
+        <h2 class="slide-title">Inteligência que se paga</h2>
+        <div class="content-area">
+            <div class="highlight-numbers">
+                <div class="number-box">
+                    <div class="number">~15%</div>
+                    <div class="label">Economia em Combustível</div>
+                </div>
+                <div class="number-box">
+                    <div class="number">100%</div>
+                    <div class="label">Mobilidade na Gestão</div>
+                </div>
+            </div>
+            <div id="formula-container">
+                <p style="margin-bottom: 10px; font-weight: 600;">O FrotasPro transforma custo em investimento através do controle:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="math">
+                    <mi>Controle Total</mi>
+                    <mo>+</mo>
+                    <mi>Agilidade Mobile</mi>
+                    <mo>=</mo>
+                    <mi>Eficiência Pública</mi>
+                </math>
+            </div>
+            <div style="margin-top: 50px; text-align: center;">
+                <h3>Modernize sua Gestão</h3>
+                <p>O Prefeito no controle, o Gestor com agilidade e a Prefeitura com economia.</p>
+                <p style="font-weight: 700; color: #003366; font-size: 24px;">Solicite um piloto agora!</p>
+                <p style="margin-top: 20px; font-size: 16px;">frotaspro.com.br | contato@frotaspro.com.br</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

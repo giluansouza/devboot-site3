@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Vendas | Devboot</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --brand-blue: #3b82f6;
+            --brand-cyan: #22d3ee;
+            --bg-deep: #020617;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body.sales-page {
+            margin: 0;
+            padding: 0;
+            font-family: "Inter", sans-serif;
+            color: #cbd5e1;
+            min-height: 100vh;
+            background-color: var(--bg-deep);
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 35%);
+            background-attachment: fixed;
+        }
+
+        .sales-page main > div {
+            background: transparent;
+        }
+
+        .sales-container {
+            width: min(1280px, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .sales-nav {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(2, 6, 23, 0.65);
+            backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .sales-nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .brand-title {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .brand-title span {
+            color: var(--brand-blue);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #94a3b8;
+            transition: color 0.25s ease;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        .back-link i {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.25s ease;
+        }
+
+        .back-link:hover i {
+            transform: translateX(-4px);
+        }
+
+        .sales-main {
+            position: relative;
+            z-index: 10;
+            padding: clamp(3.5rem, 8vw, 6rem) 0;
+        }
+
+        .sales-header {
+            margin-bottom: clamp(2.5rem, 6vw, 5rem);
+        }
+
+        .access-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.75rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.68rem;
+            font-weight: 900;
+        }
+
+        .access-pill i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-title {
+            margin: 0 0 1.25rem;
+            font-size: clamp(2.3rem, 6vw, 4.5rem);
+            line-height: 0.98;
+            letter-spacing: -0.03em;
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .hero-subtitle {
+            margin: 0;
+            max-width: 760px;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            line-height: 1.65;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .cards-section {
+            margin-top: 1rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.75rem;
+            align-items: stretch;
+            background: transparent;
+        }
+
+        .proposta-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--card-border);
+            border-radius: 1.75rem;
+            padding: 2rem;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 360px;
+            isolation: isolate;
+        }
+
+        .proposta-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .proposta-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.38);
+            box-shadow: 0 26px 48px -18px rgba(0, 0, 0, 0.65);
+            background: rgba(30, 41, 59, 0.92);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1.75rem;
+            right: 1.75rem;
+            font-size: 0.62rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            padding: 0.38rem 0.72rem;
+            border-radius: 999px;
+            text-transform: uppercase;
+            border: 1px solid currentColor;
+            opacity: 0.9;
+        }
+
+        .status-blue {
+            color: #60a5fa;
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .status-emerald {
+            color: #34d399;
+            background: rgba(52, 211, 153, 0.1);
+        }
+
+        .status-indigo {
+            color: #818cf8;
+            background: rgba(129, 140, 248, 0.1);
+        }
+
+        .status-slate {
+            color: #cbd5e1;
+            background: rgba(148, 163, 184, 0.15);
+        }
+
+        .status-cyan {
+            color: #22d3ee;
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .icon-container {
+            width: 62px;
+            height: 62px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-container i {
+            width: 30px;
+            height: 30px;
+            stroke-width: 2.4px;
+        }
+
+        .icon-blue {
+            background: rgba(59, 130, 246, 0.14);
+            color: #60a5fa;
+        }
+
+        .icon-emerald {
+            background: rgba(16, 185, 129, 0.14);
+            color: #34d399;
+        }
+
+        .icon-indigo {
+            background: rgba(99, 102, 241, 0.14);
+            color: #818cf8;
+        }
+
+        .icon-slate {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .icon-cyan {
+            background: rgba(34, 211, 238, 0.14);
+            color: #22d3ee;
+        }
+
+        .card-title {
+            margin: 0 0 0.75rem;
+            font-size: 1.65rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+            max-width: 90%;
+        }
+
+        .card-description {
+            margin: 0 0 1.9rem;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: #94a3b8;
+            flex-grow: 1;
+        }
+
+        .btn-premium {
+            width: 100%;
+            padding: 1rem 1.15rem;
+            border-radius: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.83rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-premium i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-blue:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-emerald {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(5, 150, 105, 0.4);
+        }
+
+        .btn-emerald:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-indigo {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-indigo:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-slate {
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+        }
+
+        .btn-slate:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.24);
+            transform: translateY(-2px);
+        }
+
+        .glass-instruction {
+            margin-top: 4rem;
+            background: rgba(30, 41, 59, 0.45);
+            border: 1px dashed rgba(255, 255, 255, 0.13);
+            border-radius: 2rem;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+        }
+
+        .instruction-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .instruction-icon {
+            width: 78px;
+            height: 78px;
+            background: #2563eb;
+            border-radius: 1.3rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 34px rgba(59, 130, 246, 0.55);
+        }
+
+        .instruction-icon i {
+            width: 34px;
+            height: 34px;
+            color: #fff;
+        }
+
+        .instruction-text h4 {
+            margin: 0 0 0.7rem;
+            font-size: clamp(1.5rem, 4vw, 1.9rem);
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .instruction-text p {
+            margin: 0;
+            color: #94a3b8;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        kbd {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: monospace;
+            color: #3b82f6;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .sales-footer {
+            margin-top: 2rem;
+            padding: 2.5rem 1rem 2.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(2, 6, 23, 0.8);
+            text-align: center;
+        }
+
+        .footer-meta {
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.34em;
+            color: #64748b;
+        }
+
+        .footer-sep {
+            margin: 0 0.55rem;
+            color: #334155;
+        }
+
+        @media (max-width: 1024px) {
+            .sales-container {
+                width: min(1280px, calc(100% - 2rem));
+            }
+
+            .cards-grid {
+                gap: 1.4rem;
+            }
+
+            .proposta-card {
+                min-height: 330px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .sales-nav {
+                padding: 1rem 0;
+            }
+
+            .sales-nav-content {
+                flex-wrap: wrap;
+                row-gap: 0.8rem;
+            }
+
+            .brand-title {
+                font-size: 1.2rem;
+            }
+
+            .status-badge {
+                position: static;
+                align-self: flex-start;
+                margin-bottom: 1rem;
+            }
+
+            .proposta-card {
+                min-height: 0;
+                padding: 1.35rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .instruction-content {
+                flex-direction: row;
+                align-items: center;
+                gap: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="sales-page">
+
+    <nav class="sales-nav">
+        <div class="sales-container sales-nav-content">
+            <div class="brand-wrap">
+                <img src="img/new-logo-devboot.png" class="brand-logo" alt="Logo Devboot">
+                <h2 class="brand-title">
+                    Sales<span>Center</span>
+                </h2>
+            </div>
+            <a href="index.html" class="back-link">
+                <i data-lucide="arrow-left"></i> Voltar para o Site
+            </a>
+        </div>
+    </nav>
+
+    <main class="sales-main sales-container">
+        <header class="sales-header">
+            <div class="access-pill">
+                <i data-lucide="shield-check"></i> Acesso Restrito • Devboot Intranet
+            </div>
+            <h1 class="hero-title">
+                Propostas & <span class="text-gradient">Apresentações</span>
+            </h1>
+            <p class="hero-subtitle">
+                Ecossistema estratégico de vendas. Gere documentos de alto impacto visual e técnico para fechar contratos de engenharia de software.
+            </p>
+        </header>
+
+        <section class="cards-section">
+            <div class="cards-grid">
+            <!-- Portfólio Institucional -->
+            <div class="proposta-card">
+                <span class="status-badge status-blue">Slides</span>
+                <div class="icon-container icon-blue">
+                    <i data-lucide="monitor"></i>
+                </div>
+                <h3 class="card-title">Portfólio Devboot</h3>
+                <p class="card-description">Apresentação institucional horizontal com o ecossistema de soluções, incluindo FrotasPro e ofertas complementares para reuniões comerciais.</p>
+                <a href="propostas/services.html" target="_blank" rel="noopener noreferrer" class="btn-premium btn-blue">
+                    Visualizar Slides <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Nova Apresentação: Gestão + Rastreamento -->
+            <div class="proposta-card">
+                <span class="status-badge status-cyan">Novo Deck</span>
+                <div class="icon-container icon-cyan">
+                    <i data-lucide="combine"></i>
+                </div>
+                <h3 class="card-title">Gestão + Rastreamento</h3>
+                <p class="card-description">Deck comercial modular que apresenta Gestão de Frotas e Rastreamento como produtos independentes e também como solução integrada.</p>
+                <a href="propostas/template-gestao-rastreamento.html" target="_blank" rel="noopener noreferrer" class="btn-premium btn-indigo">
+                    Abrir Apresentação <i data-lucide="file-text" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Proposta Empresas -->
+            <div class="proposta-card">
+                <span class="status-badge status-emerald">PDF Retrato</span>
+                <div class="icon-container icon-emerald">
+                    <i data-lucide="briefcase"></i>
+                </div>
+                <h3 class="card-title">FrotasPro Empresas</h3>
+                <p class="card-description">Versão comercial focada no cenário corporativo, com linguagem e argumentos de governança para operação de frotas empresariais.</p>
+                <a href="propostas/template-pdf-portrait-empresas.html" target="_blank" rel="noopener noreferrer" class="btn-premium btn-emerald">
+                    Abrir Proposta <i data-lucide="file-text" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Proposta Híbrida -->
+            <div class="proposta-card">
+                <span class="status-badge status-indigo">PDF Retrato</span>
+                <div class="icon-container icon-indigo">
+                    <i data-lucide="layers"></i>
+                </div>
+                <h3 class="card-title">FrotasPro Híbrido</h3>
+                <p class="card-description">Template híbrido com variações para contextos empresarial e municipal, ideal para negociações com públicos mistos.</p>
+                <a href="propostas/template-pdf-portrait-hybrid.html" target="_blank" rel="noopener noreferrer" class="btn-premium btn-indigo">
+                    Abrir Proposta <i data-lucide="file-text" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Proposta Padrão Municipal -->
+            <div class="proposta-card">
+                <span class="status-badge status-slate">PDF Retrato</span>
+                <div class="icon-container icon-slate">
+                    <i data-lucide="building-2"></i>
+                </div>
+                <h3 class="card-title">FrotasPro Prefeitura</h3>
+                <p class="card-description">Apresentação padrão retrato orientada ao setor público, com ênfase em transparência, rastreabilidade e eficiência orçamentária.</p>
+                <a href="propostas/template-pdf-portrait.html" target="_blank" rel="noopener noreferrer" class="btn-premium btn-slate">
+                    Abrir Proposta <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Deck HTML Master -->
+            <div class="proposta-card">
+                <span class="status-badge status-cyan">HTML Master</span>
+                <div class="icon-container icon-cyan">
+                    <i data-lucide="code-2"></i>
+                </div>
+                <h3 class="card-title">Deck Master FrotasPro</h3>
+                <p class="card-description">Versão HTML completa do deck de FrotasPro para customização rápida, geração de variações e evolução do material comercial.</p>
+                <a href="propostas/template.html" target="_blank" rel="noopener noreferrer" class="btn-premium btn-slate">
+                    Abrir Template <i data-lucide="terminal" class="w-4 h-4"></i>
+                </a>
+            </div>
+            </div>
+        </section>
+
+        <section class="glass-instruction">
+            <div class="instruction-content">
+                <div class="instruction-icon">
+                    <i data-lucide="printer"></i>
+                </div>
+                <div class="instruction-text">
+                    <h4>Guia de Exportação PDF</h4>
+                    <p>
+                        Para um resultado premium: após abrir o documento, pressione <kbd>Ctrl + P</kbd>, selecione <strong>"Salvar como PDF"</strong>. Nas configurações avançadas, habilite <strong>"Gráficos de Segundo Plano"</strong> e remova as margens.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="sales-footer">
+        <p class="footer-meta">
+            Devboot Tecnologia <span class="footer-sep">•</span> v1.2.0 <span class="footer-sep">•</span> 2024 Proprietary System
+        </p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
