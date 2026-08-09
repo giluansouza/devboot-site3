@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Página de uso interno: fora dos buscadores. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Projetos — Devboot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* CSS próprio: o style.css do site é um subconjunto compilado do Tailwind e
+       não contém necessariamente as classes usadas aqui. */
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg:#020617; --card:#0f172a; --line:#1e293b;
+      --fg:#e2e8f0; --muted:#94a3b8; --dim:#64748b;
+      --accent:#38bdf8; --ok:#34d399; --warn:#fbbf24; --off:#64748b;
+    }
+    body {
+      margin:0; background:var(--bg); color:var(--fg);
+      font-family:Inter,system-ui,-apple-system,sans-serif; line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap { max-width:1100px; margin:0 auto; padding:4rem 1.5rem 6rem; }
+    header { border-bottom:1px solid var(--line); padding-bottom:2rem; margin-bottom:3rem; }
+    h1 { font-size:clamp(1.8rem,4vw,2.5rem); font-weight:900; margin:0 0 .5rem; letter-spacing:-.02em; }
+    .sub { color:var(--muted); margin:0; font-size:1rem; }
+    .stamp { color:var(--dim); font-size:.85rem; margin-top:1rem; }
+    h2 {
+      font-size:.8rem; text-transform:uppercase; letter-spacing:.12em;
+      color:var(--dim); font-weight:700; margin:3.5rem 0 1.25rem;
+    }
+    .grid { display:grid; gap:1rem; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); }
+    .card {
+      background:var(--card); border:1px solid var(--line); border-radius:.75rem;
+      padding:1.25rem 1.35rem; display:flex; flex-direction:column; gap:.6rem;
+    }
+    .card h3 { margin:0; font-size:1.05rem; font-weight:700; letter-spacing:-.01em; }
+    .card p { margin:0; color:var(--muted); font-size:.92rem; }
+    .url { font-size:.85rem; color:var(--accent); text-decoration:none; word-break:break-all; }
+    .url:hover { text-decoration:underline; }
+    .tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.2rem; }
+    .tag {
+      font-size:.72rem; color:var(--dim); background:#0b1220;
+      border:1px solid var(--line); border-radius:.35rem; padding:.15rem .5rem;
+    }
+    .badge { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+    .b-ok   { color:var(--ok); }
+    .b-soon { color:var(--warn); }
+    .b-off  { color:var(--off); }
+    .head { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
+    footer { margin-top:4rem; padding-top:2rem; border-top:1px solid var(--line); color:var(--dim); font-size:.85rem; }
+    a.back { color:var(--muted); text-decoration:none; font-size:.9rem; }
+    a.back:hover { color:var(--fg); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="back" href="/">← devboot.com.br</a>
+    <h1 style="margin-top:1rem">Projetos</h1>
+    <p class="sub">Panorama interno dos sistemas em operação, desenvolvimento e aposentados.</p>
+    <p class="stamp">Atualizado em 09/08/2026</p>
+  </header>
+
+  <h2>Em produção</h2>
+  <div class="grid">
+
+    <div class="card">
+      <div class="head"><h3>FrotasPro</h3><span class="badge b-ok">no ar</span></div>
+      <p>Gestão de frotas com rastreamento em tempo real. Consome posições e eventos
+         do servidor Traccar em ciclos contínuos.</p>
+      <a class="url" href="https://frotaspro.com.br">frotaspro.com.br</a>
+      <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">GPS</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>ConfèrePlaca</h3><span class="badge b-ok">no ar</span></div>
+      <p>Consulta e conferência de dados veiculares. Conta com ambiente de homologação
+         separado para validar mudanças antes da produção.</p>
+      <a class="url" href="https://confereplaca.com.br">confereplaca.com.br</a>
+      <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">staging</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>GreenVision</h3><span class="badge b-ok">no ar</span></div>
+      <p>Plataforma de gestão para o agronegócio, com foco em produção pecuária.</p>
+      <a class="url" href="https://greenvision.agr.br">greenvision.agr.br</a>
+      <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">agro</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>CamSeek</h3><span class="badge b-ok">no ar</span></div>
+      <p>Ferramenta para projetar layouts de CFTV e avaliar cobertura: configura
+         lente, sensor, resolução, IR e altura de instalação, e calcula o alcance real.</p>
+      <a class="url" href="https://camseek.devboot.com.br">camseek.devboot.com.br</a>
+      <div class="tags"><span class="tag">Node</span><span class="tag">PostgreSQL</span><span class="tag">CFTV</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>Traccar</h3><span class="badge b-ok">no ar</span></div>
+      <p>Servidor de rastreamento GPS auto-hospedado. Recebe telemetria dos
+         rastreadores em campo e alimenta o FrotasPro.</p>
+      <a class="url" href="https://traccar.devboot.com.br">traccar.devboot.com.br</a>
+      <div class="tags"><span class="tag">auto-hospedado</span><span class="tag">GT06</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>TakeNote</h3><span class="badge b-ok">no ar</span></div>
+      <p>Política de privacidade e termos de uso do aplicativo, exigidos pela
+         Google Play Store.</p>
+      <a class="url" href="https://takenote.devboot.com.br">takenote.devboot.com.br</a>
+      <div class="tags"><span class="tag">estático</span><span class="tag">conformidade</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>Devboot</h3><span class="badge b-ok">no ar</span></div>
+      <p>Site institucional da empresa.</p>
+      <a class="url" href="https://devboot.com.br">devboot.com.br</a>
+      <div class="tags"><span class="tag">estático</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>Giluan Souza</h3><span class="badge b-ok">no ar</span></div>
+      <p>Site pessoal.</p>
+      <a class="url" href="https://giluansouza.com.br">giluansouza.com.br</a>
+      <div class="tags"><span class="tag">estático</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>Vaultwarden</h3><span class="badge b-ok">no ar</span></div>
+      <p>Cofre de senhas auto-hospedado, compatível com os clientes Bitwarden.
+         Uso interno.</p>
+      <div class="tags"><span class="tag">auto-hospedado</span><span class="tag">interno</span></div>
+    </div>
+
+  </div>
+
+  <h2>Em lançamento</h2>
+  <div class="grid">
+
+    <div class="card">
+      <div class="head"><h3>Devboot Cities</h3><span class="badge b-soon">lançando</span></div>
+      <p>Plataforma multi-tenant white-label para serviços municipais: console de
+         gestão e API. Cada município opera no próprio subdomínio, com dados
+         isolados e recursos geográficos.</p>
+      <a class="url" href="https://admin.gestorpm.com.br">admin.gestorpm.com.br</a>
+      <div class="tags"><span class="tag">Laravel</span><span class="tag">PostGIS</span><span class="tag">multi-tenant</span></div>
+    </div>
+
+  </div>
+
+  <h2>Em desenvolvimento</h2>
+  <div class="grid">
+
+    <div class="card">
+      <div class="head"><h3>SINPOM</h3><span class="badge b-soon">desenvolvimento</span></div>
+      <p>Sistema de credenciamento e gestão de agentes.</p>
+      <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>BuscasPro</h3><span class="badge b-soon">desenvolvimento</span></div>
+      <p>Em construção.</p>
+      <div class="tags"><span class="tag">Laravel</span></div>
+    </div>
+
+  </div>
+
+  <h2>Aposentados em 2026</h2>
+  <div class="grid">
+
+    <div class="card">
+      <div class="head"><h3>Cidade Digital</h3><span class="badge b-off">aposentado</span></div>
+      <p>Primeira versão da plataforma municipal. Substituída pelo Devboot Cities.</p>
+      <div class="tags"><span class="tag">agosto/2026</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>Quiz CBISP</h3><span class="badge b-off">aposentado</span></div>
+      <p>Plataforma de quiz para treinamento. Fora de uso; dados arquivados.</p>
+      <div class="tags"><span class="tag">agosto/2026</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>GestorPM (site)</h3><span class="badge b-off">aposentado</span></div>
+      <p>Site institucional do produto. O domínio passou a servir o Devboot Cities.</p>
+      <div class="tags"><span class="tag">agosto/2026</span></div>
+    </div>
+
+  </div>
+
+  <footer>
+    Página de uso interno · Devboot Engenharia de Software
+  </footer>
+
+</div>
+</body>
+</html>
