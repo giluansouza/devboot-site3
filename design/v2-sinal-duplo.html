@@ -1,0 +1,1426 @@
+<meta charset="utf-8">
+<title>Devboot Sinal Duplo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ==========================================================================
+   Devboot — variação "Sinal Duplo"
+   Ação (CTA, marca, pulso) em #E10600; instrumento (gráfico, cone, gauge)
+   em #2563EB. Gerado a partir de v2-sinal.html trocando só --data*.
+   ========================================================================== */
+
+.page[data-palette="dual"] {
+  --ground:      #0A0D12;
+  --ground-2:    #0D1218;
+  --surface:     #121821;
+  --surface-2:   #172029;
+  --line:        #1F2733;
+  --line-strong: #2E3947;
+
+  --ink:   #E8EAED;
+  --ink-2: #9BA5B4;
+  --ink-3: #67718180;
+
+  --signal:      #E10600;
+  --signal-lift: #FF2A21;
+  --signal-soft: rgba(225, 6, 0, 0.13);
+  --signal-line: rgba(225, 6, 0, 0.34);
+
+  /* camada de instrumento — o único token que muda entre as variações */
+  --data:      #2563EB;
+  --data-soft: rgba(37, 99, 235, 0.13);
+  --data-line: rgba(37, 99, 235, 0.38);
+
+  --paper:      #F7F7F6;
+  --paper-2:    #EFEFEC;
+  --paper-ink:  #111111;
+  --paper-ink2: #55585C;
+  --paper-line: #DCDCD7;
+
+  --rail: 4.5rem;
+  --pad: clamp(1.25rem, 4vw, 3.5rem);
+  --maxw: 78rem;
+
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0A0D12;
+  color: #E8EAED;
+}
+
+.page {
+  position: relative;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page img, .page svg { max-width: 100%; }
+
+/* --------------------------------------------------------------- tipografia */
+.page h1, .page h2, .page h3, .page h4 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  margin: 0;
+}
+.page p { margin: 0; }
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--data);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--data);
+  flex: none;
+}
+.eyebrow--paper { color: var(--paper-ink); }
+.eyebrow--paper::before { background: var(--signal); }
+
+.mono {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lede {
+  font-size: clamp(1rem, 1.6vw, 1.1875rem);
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 34em;
+}
+
+/* ------------------------------------------------------------------- grade */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 5.5rem 5.5rem;
+  opacity: 0.32;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
+}
+
+/* --------------------------------------------------------------------- nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.9rem var(--pad);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+}
+.nav[data-stuck="true"] {
+  background: color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--line);
+}
+.brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+.brand-icon { height: 1.6rem; width: auto; display: block; }
+.brand-word { height: 0.85rem; width: auto; display: block; }
+
+.nav-links { display: flex; align-items: center; gap: 1.75rem; }
+.nav-link {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-link:hover, .nav-link:focus-visible { color: var(--ink); border-bottom-color: var(--signal); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.7rem 1.15rem;
+  border: 1px solid var(--signal);
+  color: var(--ground);
+  background: var(--signal);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn:hover, .btn:focus-visible {
+  background: var(--signal-lift);
+  border-color: var(--signal-lift);
+  box-shadow: 0 0 0 1px var(--signal-lift), 0 8px 28px -12px var(--signal);
+}
+.btn:active { transform: translateY(1px); }
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+  box-shadow: none;
+}
+.btn--ghost:hover, .btn--ghost:focus-visible {
+  background: transparent;
+  border-color: var(--ink-2);
+  color: var(--ink);
+  box-shadow: none;
+}
+.btn--paper { color: var(--paper); }
+.btn--paper-ghost {
+  background: transparent;
+  color: var(--paper-ink);
+  border-color: var(--paper-line);
+}
+.btn--paper-ghost:hover, .btn--paper-ghost:focus-visible {
+  border-color: var(--paper-ink);
+  background: transparent;
+  color: var(--paper-ink);
+  box-shadow: none;
+}
+.btn .arw { transition: transform 0.2s; }
+.btn:hover .arw { transform: translate(2px, -2px); }
+
+.nav-burger {
+  display: none;
+  background: none;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  padding: 0.5rem 0.7rem;
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------- rail */
+.rail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--rail);
+  z-index: 50;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 0;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--ground) 55%, transparent);
+}
+.rail-tick {
+  font-family: var(--f-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.rail-live { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 0 var(--signal-line);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 var(--signal-line); }
+  70%  { box-shadow: 0 0 0 9px rgba(225, 6, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(225, 6, 0, 0); }
+}
+.rail-progress {
+  width: 1px;
+  flex: 1;
+  margin: 1rem 0;
+  background: var(--line);
+  position: relative;
+}
+.rail-progress::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--p, 0%);
+  background: var(--signal);
+}
+
+/* ---------------------------------------------------------------- estrutura */
+.shell { position: relative; z-index: 1; padding-left: 0; }
+.section { padding: clamp(4.5rem, 9vw, 8rem) var(--pad); position: relative; }
+.wrap { max-width: var(--maxw); margin: 0 auto; width: 100%; }
+.section--paper { background: var(--paper); color: var(--paper-ink); }
+.section--paper .lede { color: var(--paper-ink2); }
+.section--edge { border-top: 1px solid var(--line); }
+
+.head { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.head h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); }
+.head--paper h2 { color: var(--paper-ink); }
+
+/* -------------------------------------------------------------------- hero */
+.hero {
+  padding-top: clamp(3rem, 8vw, 6rem);
+  padding-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.hero-copy { display: flex; flex-direction: column; gap: 1.75rem; }
+.hero h1 {
+  font-size: clamp(2.75rem, 7.2vw, 5.25rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.hero h1 .snd { color: var(--signal); display: block; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  align-self: flex-start;
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  border: 1px solid var(--line-strong);
+  padding: 0.45rem 0.8rem;
+}
+
+/* ----------------------------------------------------------------- console */
+.console {
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--ground-2) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.console::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, transparent 0 3px, rgba(0, 0, 0, 0.16) 3px 4px);
+  opacity: 0.5;
+}
+.console-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-3);
+}
+.console-bar .mono { color: var(--ink-2); }
+.console-live { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--signal); }
+
+.console-rows { display: flex; flex-direction: column; }
+.crow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+/* Estado inicial escondido SO quando o JS assumiu (.js-reveal). Sem JS, ou
+   com JS lento, o conteudo aparece normalmente em vez de ficar invisivel. */
+.page.js-reveal .crow { opacity: 0; transform: translateY(6px); }
+.page[data-booted="true"] .crow { animation: crowIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) forwards; }
+.page[data-booted="true"] .crow:nth-child(1) { animation-delay: 0.30s; }
+.page[data-booted="true"] .crow:nth-child(2) { animation-delay: 0.46s; }
+.page[data-booted="true"] .crow:nth-child(3) { animation-delay: 0.62s; }
+@keyframes crowIn { to { opacity: 1; transform: none; } }
+
+.crow-name {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+}
+.crow-sub { font-family: var(--f-mono); font-size: 0.6875rem; color: var(--ink-3); letter-spacing: 0.06em; }
+.crow-meta { display: flex; align-items: center; gap: 0.75rem; }
+.stamp {
+  font-family: var(--f-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  color: var(--signal);
+  border: 1px solid var(--signal-line);
+  background: var(--signal-soft);
+  padding: 0.2rem 0.45rem;
+}
+.crow-viz { grid-column: 1 / -1; }
+
+.spark { width: 100%; height: 30px; display: block; }
+.spark path.trail { fill: none; stroke: var(--data-line); stroke-width: 1.25; }
+.spark path.draw {
+  fill: none;
+  stroke: var(--data);
+  stroke-width: 1.75;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+}
+.page[data-booted="true"] .spark path.draw { animation: dash 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards; }
+@keyframes dash { to { stroke-dashoffset: 0; } }
+.spark .runner {
+  fill: var(--data);
+  offset-path: path("M0,22 C26,22 34,7 58,7 C80,7 88,25 112,25 C138,25 146,9 170,9 C194,9 204,20 232,20");
+  offset-distance: 0%;
+  animation: run 6s linear infinite;
+}
+@keyframes run { to { offset-distance: 100%; } }
+
+.bars { display: flex; gap: 3px; align-items: flex-end; height: 30px; }
+.bars i {
+  display: block;
+  width: 6px;
+  background: var(--data-line);
+  transform-origin: bottom;
+  transform: scaleY(0);
+}
+.page[data-booted="true"] .bars i { animation: grow 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards; }
+@keyframes grow { to { transform: scaleY(1); } }
+.bars i.on { background: var(--data); }
+
+.plate {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-2);
+  padding: 0.25rem 0.9rem 0.4rem;
+  min-width: 8.5rem;
+}
+.plate small {
+  font-family: var(--f-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.34em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+.plate strong {
+  font-family: var(--f-mono);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------ strip */
+.strip {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--ground-2);
+}
+.strip-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.stat {
+  padding: 1.6rem var(--pad);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.stat:last-child { border-right: 0; }
+.stat b {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat span {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ------------------------------------------------------------------- duas */
+.two {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.stack { display: flex; flex-direction: column; gap: 1.5rem; }
+.stack h2 { font-size: clamp(1.9rem, 4vw, 3rem); }
+
+.rows { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.rows--paper { border-top-color: var(--paper-line); }
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 1rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.rows--paper .row { border-bottom-color: var(--paper-line); }
+.row-idx {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  color: var(--data);
+  letter-spacing: 0.1em;
+  padding-top: 0.2rem;
+}
+.rows--paper .row-idx { color: var(--signal); }
+.row-t { font-family: var(--f-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; }
+.row-d { grid-column: 2; font-size: 0.9375rem; color: var(--ink-2); }
+.rows--paper .row-d { color: var(--paper-ink2); }
+
+.panel {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.panel h3 { font-size: 1.375rem; }
+.checks { display: flex; flex-direction: column; gap: 0.8rem; margin: 0; padding: 0; list-style: none; }
+.checks li { display: flex; gap: 0.7rem; align-items: baseline; font-size: 0.9375rem; color: var(--ink-2); }
+.checks li::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  border: 1px solid var(--signal);
+  background: var(--signal-soft);
+  transform: translateY(-1px);
+}
+.note {
+  border-left: 2px solid var(--signal);
+  padding: 0.75rem 0 0.75rem 1rem;
+  background: var(--signal-soft);
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+.note b {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 0.3rem;
+}
+
+/* ---------------------------------------------------------------- produtos */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
+.card {
+  background: var(--paper);
+  padding: clamp(1.5rem, 2.6vw, 2.1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-height: 20rem;
+  transition: background 0.25s;
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.card:hover { background: var(--paper-2); }
+.card:hover::before, .card:focus-within::before { transform: scaleX(1); }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.chip {
+  font-family: var(--f-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-ink2);
+  border: 1px solid var(--paper-line);
+  padding: 0.25rem 0.5rem;
+}
+.card h3 { font-size: 1.6rem; color: var(--paper-ink); }
+.card p { font-size: 0.9375rem; color: var(--paper-ink2); }
+.card-foot { margin-top: auto; display: flex; flex-direction: column; gap: 1rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tags span {
+  font-family: var(--f-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  color: var(--paper-ink2);
+  border: 1px solid var(--paper-line);
+  padding: 0.2rem 0.45rem;
+}
+.card-link {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--signal);
+  padding-bottom: 0.25rem;
+  align-self: flex-start;
+}
+.card-link:hover .arw, .card-link:focus-visible .arw { transform: translate(3px, 0); }
+.card-link .arw { transition: transform 0.2s; }
+
+/* -------------------------------------------------------------- diagramas */
+.viz {
+  border: 1px solid var(--line-strong);
+  background: var(--ground-2);
+  position: relative;
+  overflow: hidden;
+  /* faixa reservada para .viz-cap, senao a legenda cai sobre o desenho */
+  padding-bottom: 2.1rem;
+}
+.viz--paper { border-color: var(--paper-line); background: var(--paper-2); }
+.viz-cap {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.7rem;
+  font-family: var(--f-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.viz--paper .viz-cap { color: var(--paper-ink2); }
+.viz svg { display: block; width: 100%; height: auto; }
+
+.sweep { transform-origin: 60px 150px; animation: sweep 7s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+@keyframes sweep {
+  0%, 100% { transform: rotate(-18deg); }
+  50%      { transform: rotate(18deg); }
+}
+.blip { animation: blip 3.2s ease-in-out infinite; }
+.blip:nth-of-type(2) { animation-delay: 1.1s; }
+.blip:nth-of-type(3) { animation-delay: 2.2s; }
+@keyframes blip { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+.route { stroke-dasharray: 620; stroke-dashoffset: 620; }
+.is-in .route { animation: dash 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.van {
+  offset-path: path("M18,150 C70,150 74,60 140,60 C204,60 208,132 268,132 C318,132 322,52 382,52");
+  offset-distance: 0%;
+  offset-rotate: auto;
+  animation: run 9s ease-in-out infinite;
+}
+
+.gauge-track { stroke: var(--line-strong); }
+.gauge-fill { stroke: var(--data); stroke-dasharray: 126; stroke-dashoffset: 126; transition: stroke-dashoffset 1.4s cubic-bezier(0.2, 0.8, 0.3, 1); }
+.is-in .gauge-fill { stroke-dashoffset: var(--off, 40); }
+
+/* ---------------------------------------------------------------- telefone */
+.phones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.phone {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.phone:hover { border-color: var(--signal-line); transform: translateY(-3px); }
+.phone h3 { font-size: 1.5rem; }
+.phone p { color: var(--ink-2); font-size: 0.9375rem; }
+.phone ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.phone li {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  display: flex;
+  gap: 0.55rem;
+}
+.phone li::before { content: "→"; color: var(--data); }
+.play {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid var(--line-strong);
+  padding: 0.6rem 0.9rem;
+  text-decoration: none;
+  color: var(--ink);
+  align-self: flex-start;
+  transition: border-color 0.2s;
+}
+.play:hover, .play:focus-visible { border-color: var(--ink-2); }
+.play span { display: flex; flex-direction: column; line-height: 1.2; }
+.play small { font-family: var(--f-mono); font-size: 0.5625rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.play b { font-family: var(--f-display); font-size: 0.875rem; font-weight: 700; }
+
+/* --------------------------------------------------------------- especific */
+.specs { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.spec {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+.spec dt { color: var(--ink-3); letter-spacing: 0.06em; }
+.spec dd { margin: 0; color: var(--ink); }
+
+.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
+.quad-cell { background: var(--paper); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.quad-cell h4 { font-size: 1.0625rem; color: var(--paper-ink); }
+.quad-cell p { font-size: 0.875rem; color: var(--paper-ink2); }
+.quad-idx { font-family: var(--f-mono); font-size: 0.625rem; letter-spacing: 0.14em; color: var(--signal); }
+
+/* --------------------------------------------------------------- processo */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+.step { display: flex; flex-direction: column; gap: 0.7rem; padding-top: 1.1rem; border-top: 2px solid var(--line); position: relative; }
+.step::after {
+  content: "";
+  position: absolute;
+  top: -2px; left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--signal);
+  transition: width 0.7s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.is-in .step::after { width: 100%; }
+.is-in .step:nth-child(2)::after { transition-delay: 0.12s; }
+.is-in .step:nth-child(3)::after { transition-delay: 0.24s; }
+.is-in .step:nth-child(4)::after { transition-delay: 0.36s; }
+.step b { font-family: var(--f-mono); font-size: 0.6875rem; letter-spacing: 0.14em; color: var(--data); }
+.step h4 { font-size: 1.125rem; }
+.step p { font-size: 0.875rem; color: var(--ink-2); }
+
+.cta-band {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: center;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.cta-band h3 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
+.cta-band p { color: var(--ink-2); margin-top: 0.6rem; }
+
+/* ----------------------------------------------------------------- rodape */
+.foot { border-top: 1px solid var(--line); background: var(--ground-2); padding: clamp(3rem, 6vw, 4.5rem) var(--pad) 2rem; }
+.foot-grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; }
+.foot-brand { display: flex; flex-direction: column; gap: 1.1rem; }
+.foot h4 {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 1rem;
+}
+.foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.65rem; }
+.foot a { color: var(--ink-2); text-decoration: none; font-size: 0.9375rem; }
+.foot a:hover, .foot a:focus-visible { color: var(--signal); }
+.foot li.plain { color: var(--ink-2); font-size: 0.9375rem; font-family: var(--f-mono); }
+.foot-base {
+  max-width: var(--maxw);
+  margin: 2.5rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ------------------------------------------------------------------ reveal */
+.rv { transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.3, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1); }
+.page.js-reveal .rv { opacity: 0; transform: translateY(14px); }
+.page.js-reveal .rv.is-in { opacity: 1; transform: none; }
+.rv[data-d="1"] { transition-delay: 0.09s; }
+.rv[data-d="2"] { transition-delay: 0.18s; }
+.rv[data-d="3"] { transition-delay: 0.27s; }
+
+:where(a, button):focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+.section--paper :where(a, button):focus-visible { outline-color: var(--signal); }
+
+/* ---------------------------------------------------------------- resposta */
+@media (max-width: 1080px) {
+  .page { --rail: 0rem; }
+  .rail { display: none; }
+  .hero-grid, .two { grid-template-columns: minmax(0, 1fr); }
+  .cards, .quad, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(2) { border-right: 0; }
+  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .cta-band { grid-template-columns: minmax(0, 1fr); }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .nav-burger { display: block; }
+  .cards, .quad, .steps, .phones { grid-template-columns: minmax(0, 1fr); }
+  .strip-inner { grid-template-columns: 1fr; }
+  .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+  .foot-grid { grid-template-columns: 1fr; }
+  .grid-bg { background-size: 3.25rem 3.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page *, .page *::before, .page *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .rv { opacity: 1; transform: none; }
+  .crow { opacity: 1; transform: none; }
+  .spark path.draw, .route { stroke-dashoffset: 0; }
+  .bars i { transform: scaleY(1); }
+}
+</style>
+
+<div class="page" data-palette="dual">
+<div class="grid-bg"></div>
+
+<aside class="rail" aria-hidden="true">
+  <span class="rail-tick">DORMENTES · PE</span>
+  <div class="rail-progress"></div>
+  <div class="rail-live"><span class="dot"></span><span class="rail-tick">NO AR</span></div>
+</aside>
+
+<div class="shell" style="padding-left: var(--rail);">
+
+  <nav class="nav" id="nav">
+    <a class="brand" href="#inicio" aria-label="Devboot — início">
+      <svg class="brand-icon" viewBox="75 221 874 583" role="img" aria-label="Devboot"><path fill="#d1d5db" d="m75.7 221.7-.7.6V803h209.1l4.8-10.2 4.8-10.3 6.6-13.5 6.5-13.5 15.1-31.3 15.1-31.3V691l-74.2-.2-74.3-.3v-360l105.1-.3 105.1-.2 21 21.7 21 21.8 2.4 2.7 2.4 2.6 23.4 11.7 23.3 11.7 1.5 2.7 1.4 2.6 4.4 7.5 4.4 7.5 3 5.7 3.1 5.8h.9l21.2-42.8 21.1-42.7 2.4-5.3 2.4-5.3-29.9-31.2-29.8-31.2-26.9-27.3-26.9-27.3-184.1.1H76.3zm510.8 1.3-.7 1.1 38.9 39.6 38.8 39.5 14.9 15.4 14.8 15.4h108.6l3.8 4.2 3.7 4.3 13.4 13.8 13.3 13.8v57.4l-14.8 14.8-14.7 14.7H642.3l-2.6 5.7-2.6 5.8-13.2 27-13.1 27-10.9 22.4-10.9 22.4v1.7h217.6l14.7 14.8 14.7 14.9v58.8l-17 16.7-17 16.8H530.4l-6.2 12.8-6.1 12.8-16.6 33.9-16.5 34-4.5 8.8-4.5 8.7v1h186.3l186.2-.1 50.3-50 50.2-50V566.5l-26.2-26.8-26.1-26.9 26.1-26.1 26.2-26.2v-65l-.1-65-10.6-11.5-10.6-11.5-32.6-34.9-32.6-35-7-7.8-7-7.8H587.1z"/><path fill="#e10600" d="m544.3 405.7-26.1 52.8-38 76.5-38 76.5-47.5 95.5-47.4 95.5.9.6.9.6 26.2-.3 26.2-.3h5.7l5.7-.1 16.8-34.3 16.8-34.2 83.7-167.8L614 398.9v-1.1l-9.8-10.2-9.7-10.1-11.4-12.3-11.4-12.2h-1.4z"/></svg>
+      <svg class="brand-word" viewBox="123 556 1007 115" role="img" aria-label="Devboot"><path fill="#d1d5db" d="M780.5 557c-7.1 1.6-15.7 4.9-20.7 8.1-10.3 6.7-18.9 19.1-21.8 31.9-1.7 7.2-1.7 24.9-.1 32.5 6 27.7 29.2 42.7 63.6 41.2 19.3-.8 30.3-4.9 41.2-15.1 17-15.9 21.4-47.6 9.9-71.1-6-12.1-16.1-20.6-30.1-25.2-7-2.3-9.9-2.7-23-2.9-8.2-.2-16.8.1-19 .6m39.3 21.5c9 4 15.5 11.4 18.3 20.7 1.8 5.8 2.1 8.7 1.7 16.7-.8 15.4-6.1 24.8-17.5 30.8-8.2 4.4-15 5.6-27.9 5.1-14.4-.6-20.8-3-28.5-10.7-8.1-8-10.3-14.2-10.3-28.6 0-9.7.2-11.6 2.5-16.5 3.4-7.4 7.6-12 14-15.4 8.5-4.7 13.1-5.6 27.9-5.3 12.4.3 14 .5 19.8 3.2M927.2 558c-19.2 5-32.7 18.7-37.9 38.1-1 4.1-1.7 10.4-1.7 17.4 0 18.6 4.4 30.5 15.4 41.5 7.6 7.7 16 12.1 27.3 14.4 4.2.9 8.1 1.6 8.7 1.6.7 0 1-3.2.8-9.7l-.3-9.6-5.5-1.2c-19-3.9-29.4-19.5-27.6-41.2 1.4-17.8 11-29.5 26.8-32.7l6.3-1.3.3-9.6.3-9.7-2.8.1c-1.5 0-6.1.9-10.1 1.9m28.8 7.3v9.5l4.3.7c11.7 2 21.7 8.7 26.2 17.6 6.9 13.6 4.9 35.1-4.5 46.9-3.7 4.7-13.5 9.8-20.6 10.8l-4.9.7v19l5-.3c2.8-.2 8.5-1.4 12.7-2.8 15.9-5.2 28-17.6 33.1-33.9 3-9.5 3.2-31.1.3-39.5-7.3-21.8-23.8-35.4-45.6-37.7l-6-.6zm-828-7.4-4.5.6v16.8l43.1-.2c45.9-.2 52.2.2 60.3 4.4 10.8 5.5 16.1 14.7 16.9 29.2 1.1 20.4-4.6 32.7-18 38.9l-6.3 2.9-48 .5-48 .5-.3 8.8-.3 8.8 50.3-.3 50.3-.3 6.9-2.7c16.5-6.4 27.2-18.4 31.1-35 1.7-7.4 2-26.4.4-34-1.9-9.1-7.5-19.2-14.1-25.3-6.9-6.4-12.8-9.6-21.9-12.1-5.5-1.5-12.2-1.7-49.9-1.9-23.9-.1-45.5.1-48 .4m173.3-.1-7.3.3V575h6.3c3.4 0 27.4 0 53.2.1h47v-17.6h-46c-25.3 0-49.3.1-53.2.3m127.7.4c0 .4 5.7 11.4 12.7 24.5 6.9 13.1 20 37.7 28.9 54.8l16.3 31h19.5l29.3-55 29.3-55-4.2-.7c-2.4-.3-7.1-.4-10.5-.1-6.1.6-6.1.6-8.6 5.2-3.8 6.9-35.7 67.5-40.2 76.3-2.2 4.3-4.3 7.8-4.6 7.8s-11.1-20.1-24.1-44.8l-23.5-44.7h-10.1c-5.6 0-10.2.3-10.2.7m169.8-.4-6.8.3v111l46.8-.3c45.6-.3 46.8-.4 51.4-2.5 2.5-1.2 6.5-3.8 8.8-5.9 12.7-11.5 13.1-34.3.8-44.9l-4.1-3.5 2.6-3.7c4.4-6.4 6-11.3 6-18.8 0-10.2-2.5-16.8-8.7-23.1-8.7-8.6-9.7-8.8-53.1-8.8-20.3-.1-40 0-43.7.2m81.8 19.7c8.9 6.7 8 19.8-1.7 24.7-3 1.6-6.9 1.8-36.1 1.8H610v-13.8c0-7.6.3-14.2.7-14.6s15.7-.6 34-.4c31.5.3 33.3.4 35.9 2.3m3.6 47c1.4 1.1 3.3 3.2 4.2 4.7 2.3 3.7 2 11.6-.4 15.6-3.7 6-5.2 6.2-43.5 6.2H610v-29.1l35.8.3c33.9.3 35.8.4 38.4 2.3m343.5-66.7c-1.4.3-1.7 1.6-1.7 8.8v8.4l20 .1c11 .1 20.6.2 21.3.3.9.1 1.3 10.3 1.5 46.8l.2 46.8h18l.2-46.7.3-46.6 4-.2c2.2 0 11.8-.2 21.3-.3l17.3-.2-.3-8.8-.3-8.7h-50c-27.5 0-50.8.1-51.8.3M294 613v9h107v-18H294zm0 47v9h107v-18H294z"/><path fill="#e10600" d="M123 613.5c0 15.4.3 19.6 1.3 19.2 5.1-2.1 39.7-19.1 39.7-19.6s-34.1-16.7-39.2-18.7c-1.7-.6-1.8.7-1.8 19.1m816.9-8.6c-3.4 3.3-3.9 4.5-3.9 8.3 0 12.8 16.4 17.4 23 6.5 5.1-8.3-1.1-18.7-11.3-18.7-3.2 0-4.6.7-7.8 3.9"/></svg>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#desenvolvimento">Desenvolvimento</a>
+      <a class="nav-link" href="#produtos">Produtos</a>
+      <a class="nav-link" href="#cftv">Câmeras</a>
+      <a class="nav-link" href="#contato">Contato</a>
+      <a class="btn" href="#contato">Falar no WhatsApp</a>
+    </div>
+    <button class="nav-burger" type="button" id="burger" aria-expanded="false">Menu</button>
+  </nav>
+
+  <main>
+
+    <!-- ================================================================ hero -->
+    <section class="section hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="tag rv"><span class="dot"></span> Software sob medida &amp; produtos próprios em produção</span>
+          <h1 class="rv" data-d="1">Fazemos software.<span class="snd">E operamos o nosso.</span></h1>
+          <p class="lede rv" data-d="2">GestorPM, FrotasPro e ConferePlaca são produtos Devboot, no ar todo dia. A mesma engenharia que sustenta esses sistemas fica disponível para o seu projeto.</p>
+          <div class="hero-actions rv" data-d="3">
+            <a class="btn" href="#contato">Iniciar projeto <span class="arw" aria-hidden="true">↗</span></a>
+            <a class="btn btn--ghost" href="#produtos">Ver o que já está rodando</a>
+          </div>
+        </div>
+
+        <div class="console rv" data-d="2" role="img" aria-label="Painel: GestorPM, FrotasPro e ConferePlaca em operação">
+          <div class="console-bar">
+            <span class="mono">devboot://sistemas</span>
+            <span class="console-live mono"><span class="dot"></span> AO VIVO</span>
+          </div>
+          <div class="console-rows">
+            <div class="crow">
+              <div>
+                <div class="crow-name">GestorPM</div>
+                <div class="crow-sub">gestão pública · escola · transparência</div>
+              </div>
+              <div class="crow-meta"><span class="stamp">EM OPERAÇÃO</span></div>
+              <div class="crow-viz">
+                <div class="bars" aria-hidden="true">
+                  <i class="on" style="height:40%;animation-delay:.9s"></i><i class="on" style="height:62%;animation-delay:.96s"></i>
+                  <i class="on" style="height:48%;animation-delay:1.02s"></i><i class="on" style="height:80%;animation-delay:1.08s"></i>
+                  <i style="height:55%;animation-delay:1.14s"></i><i class="on" style="height:92%;animation-delay:1.2s"></i>
+                  <i style="height:44%;animation-delay:1.26s"></i><i class="on" style="height:70%;animation-delay:1.32s"></i>
+                  <i style="height:58%;animation-delay:1.38s"></i><i class="on" style="height:86%;animation-delay:1.44s"></i>
+                  <i style="height:38%;animation-delay:1.5s"></i><i class="on" style="height:64%;animation-delay:1.56s"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="crow">
+              <div>
+                <div class="crow-name">FrotasPro</div>
+                <div class="crow-sub">vídeo-rastreamento · telemetria</div>
+              </div>
+              <div class="crow-meta"><span class="stamp">EM OPERAÇÃO</span></div>
+              <div class="crow-viz">
+                <svg class="spark" viewBox="0 0 232 30" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="trail" d="M0,22 C26,22 34,7 58,7 C80,7 88,25 112,25 C138,25 146,9 170,9 C194,9 204,20 232,20"/>
+                  <path class="draw" d="M0,22 C26,22 34,7 58,7 C80,7 88,25 112,25 C138,25 146,9 170,9 C194,9 204,20 232,20"/>
+                  <circle class="runner" r="3"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="crow">
+              <div>
+                <div class="crow-name">ConferePlaca</div>
+                <div class="crow-sub">consulta veicular por placa</div>
+              </div>
+              <div class="crow-meta"><span class="stamp">EM OPERAÇÃO</span></div>
+              <div class="crow-viz">
+                <div class="plate"><small>Brasil</small><strong id="plate">·······</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================== strip -->
+    <section class="strip" aria-label="Resumo">
+      <div class="strip-inner">
+        <div class="stat"><b data-count="3">0</b><span>Produtos próprios no ar</span></div>
+        <div class="stat"><b data-count="2">0</b><span>Apps Android</span></div>
+        <div class="stat"><b>Laravel<br>React&nbsp;Native</b><span>Stack de trabalho</span></div>
+        <div class="stat"><b>Dormentes<br>PE</b><span>De onde a gente opera</span></div>
+      </div>
+    </section>
+
+    <!-- ====================================================== desenvolvimento -->
+    <section class="section" id="desenvolvimento">
+      <div class="wrap">
+        <div class="head rv">
+          <span class="eyebrow">O que fazemos</span>
+          <h2>Desenvolvimento sob medida</h2>
+        </div>
+        <div class="two">
+          <div class="stack rv">
+            <h3 style="font-size:1.5rem">O sistema segue o seu processo</h3>
+            <p class="lede">Antes da primeira linha de código, a gente senta com quem opera. O sistema nasce do jeito que a sua empresa já trabalha — não de um modelo pronto ao qual você vai ter que se adaptar.</p>
+            <div class="rows">
+              <div class="row">
+                <span class="row-idx">01</span>
+                <span class="row-t">Sistemas web com Laravel</span>
+                <span class="row-d">Painéis administrativos, APIs e integrações. É a base dos nossos próprios produtos.</span>
+              </div>
+              <div class="row">
+                <span class="row-idx">02</span>
+                <span class="row-t">Apps com React Native</span>
+                <span class="row-d">Um código, Android e iOS. Foi assim que o app do FrotasPro foi feito.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel rv" data-d="1">
+            <h3>Nossa fábrica de software</h3>
+            <p style="color:var(--ink-2);font-size:.9375rem">Todo projeto de cliente passa pelo mesmo processo dos produtos da casa: código revisado, testado e documentado.</p>
+            <ul class="checks">
+              <li>Time dedicado ao seu projeto</li>
+              <li>Apoio na hora de decidir a tecnologia</li>
+              <li>Entregas em ciclos curtos</li>
+              <li>Suporte e evolução depois de entregue</li>
+            </ul>
+            <div class="note">
+              <b>Diferencial Devboot</b>
+              O que entregamos para você é o mesmo que já roda na nossa própria operação.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ produtos -->
+    <section class="section section--paper" id="produtos">
+      <div class="wrap">
+        <div class="head head--paper rv">
+          <span class="eyebrow eyebrow--paper">Produtos da casa</span>
+          <h2>Três produtos, já em produção</h2>
+          <p class="lede">Não são protótipos. São sistemas que a Devboot mantém, atualiza e coloca no ar todo dia.</p>
+        </div>
+        <div class="cards">
+          <article class="card rv">
+            <div class="card-top"><span class="chip">Gestão pública</span><span class="mono" style="color:var(--paper-ink2)">01</span></div>
+            <h3>GestorPM</h3>
+            <p>Sistema para prefeituras: gestão escolar com biometria facial, assinatura digital ICP-Brasil e portal da transparência.</p>
+            <div class="card-foot">
+              <div class="tags"><span>Educação</span><span>Reconhecimento facial</span><span>Arquivos em nuvem</span></div>
+              <a class="card-link" href="#gestorpm">Conhecer <span class="arw" aria-hidden="true">→</span></a>
+            </div>
+          </article>
+          <article class="card rv" data-d="1">
+            <div class="card-top"><span class="chip">Frotas</span><span class="mono" style="color:var(--paper-ink2)">02</span></div>
+            <h3>FrotasPro</h3>
+            <p>Gestão de frotas com vídeo-rastreamento em tempo real, telemetria e controle de consumo.</p>
+            <div class="card-foot">
+              <div class="tags"><span>Vídeo-rastreamento</span><span>Telemetria</span><span>BI de custos</span></div>
+              <a class="card-link" href="#frotaspro">Conhecer <span class="arw" aria-hidden="true">→</span></a>
+            </div>
+          </article>
+          <article class="card rv" data-d="2">
+            <div class="card-top"><span class="chip">Veicular</span><span class="mono" style="color:var(--paper-ink2)">03</span></div>
+            <h3>ConferePlaca</h3>
+            <p>Consulta e conferência de dados veiculares por placa. Respostas rápidas para quem precisa validar um veículo antes de fechar negócio.</p>
+            <div class="card-foot">
+              <div class="tags"><span>Consulta por placa</span><span>Conferência</span></div>
+              <a class="card-link" href="#confereplaca">Conhecer <span class="arw" aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ gestorpm -->
+    <section class="section section--edge" id="gestorpm">
+      <div class="wrap two">
+        <div class="stack rv">
+          <span class="eyebrow">Produto · GestorPM</span>
+          <h2>A prefeitura inteira num sistema só</h2>
+          <p class="lede">O GestorPM tira a prefeitura do papel. Escola, documentos e transparência no mesmo sistema, com o dado sendo digitado uma vez só.</p>
+          <div class="rows">
+            <div class="row"><span class="row-idx">→</span><span class="row-t">Entrada e saída da escola por reconhecimento facial</span></div>
+            <div class="row"><span class="row-idx">→</span><span class="row-t">Assinatura digital ICP-Brasil, sem papel</span></div>
+            <div class="row"><span class="row-idx">→</span><span class="row-t">Portal da transparência alimentado pelo próprio sistema</span></div>
+          </div>
+          <a class="btn" href="#contato" style="align-self:flex-start">Agendar uma demonstração <span class="arw" aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="viz rv" data-d="1">
+          <svg viewBox="0 0 440 300" role="img" aria-label="Esquema: secretarias enviando dados a um cadastro único">
+            <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--line-strong)" stroke-width="1"/></pattern></defs>
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="0" y1="75" x2="440" y2="75"/><line x1="0" y1="150" x2="440" y2="150"/><line x1="0" y1="225" x2="440" y2="225"/>
+            </g>
+            <!-- cadastro central -->
+            <rect x="176" y="118" width="88" height="64" fill="var(--surface-2)" stroke="var(--data)" stroke-width="1.5"/>
+            <text x="220" y="145" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink)" letter-spacing="1">CADASTRO</text>
+            <text x="220" y="161" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--data)" letter-spacing="1">ÚNICO</text>
+            <!-- secretarias -->
+            <g font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-2)" letter-spacing=".5">
+              <rect x="24" y="44" width="104" height="30" fill="var(--surface)" stroke="var(--line-strong)"/><text x="76" y="63" text-anchor="middle">EDUCAÇÃO</text>
+              <rect x="24" y="134" width="104" height="30" fill="var(--surface)" stroke="var(--line-strong)"/><text x="76" y="153" text-anchor="middle">SAÚDE</text>
+              <rect x="24" y="224" width="104" height="30" fill="var(--surface)" stroke="var(--line-strong)"/><text x="76" y="243" text-anchor="middle">ADMINISTRAÇÃO</text>
+              <rect x="312" y="44" width="104" height="30" fill="var(--surface)" stroke="var(--line-strong)"/><text x="364" y="63" text-anchor="middle">TRANSPARÊNCIA</text>
+              <rect x="312" y="134" width="104" height="30" fill="var(--surface)" stroke="var(--line-strong)"/><text x="364" y="153" text-anchor="middle">ASSINATURA</text>
+              <rect x="312" y="224" width="104" height="30" fill="var(--surface)" stroke="var(--line-strong)"/><text x="364" y="243" text-anchor="middle">PAINEL</text>
+            </g>
+            <g stroke="var(--data-line)" stroke-width="1.25" fill="none">
+              <path d="M128,59 H152 V150 H176"/><path d="M128,149 H176"/><path d="M128,239 H152 V150 H176"/>
+              <path d="M264,150 H288 V59 H312"/><path d="M264,150 H312"/><path d="M264,150 H288 V239 H312"/>
+            </g>
+            <g fill="var(--data)">
+              <circle class="blip" cx="152" cy="105" r="2.5"/><circle class="blip" cx="152" cy="195" r="2.5"/><circle class="blip" cx="288" cy="105" r="2.5"/>
+            </g>
+            <rect x="0" y="0" width="440" height="300" fill="url(#hatch)" opacity="0.05"/>
+          </svg>
+          <span class="viz-cap">Dado digitado uma vez, usado em todas as pontas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================== frotaspro -->
+    <section class="section section--edge" id="frotaspro">
+      <div class="wrap two">
+        <div class="viz rv" style="order:-1">
+          <svg viewBox="0 0 400 240" role="img" aria-label="Rota de veículo com leituras de telemetria">
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="120" x2="400" y2="120"/><line x1="0" y1="180" x2="400" y2="180"/>
+              <line x1="100" y1="0" x2="100" y2="240"/><line x1="200" y1="0" x2="200" y2="240"/><line x1="300" y1="0" x2="300" y2="240"/>
+            </g>
+            <path class="route" d="M18,150 C70,150 74,60 140,60 C204,60 208,132 268,132 C318,132 322,52 382,52"
+                  fill="none" stroke="var(--data)" stroke-width="2"/>
+            <rect class="van" x="-6" y="-4" width="12" height="8" fill="var(--signal)"/>
+            <circle cx="18" cy="150" r="4" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>
+            <circle cx="382" cy="52" r="4" fill="var(--data)"/>
+            <g font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-3)" letter-spacing=".5">
+              <text x="14" y="172">ORIGEM</text><text x="352" y="40">DESTINO</text>
+            </g>
+            <!-- gauges -->
+            <g transform="translate(24,196)">
+              <g font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--ink-3)">
+                <text x="0" y="-8">VELOCIDADE</text><text x="96" y="-8">COMBUSTÍVEL</text><text x="196" y="-8">FADIGA</text>
+              </g>
+              <g fill="none" stroke-width="4" stroke-linecap="butt">
+                <path class="gauge-track" d="M0,20 h80"/><path class="gauge-fill" style="--off:24" d="M0,20 h80" stroke-dasharray="80" stroke-dashoffset="80"/>
+                <path class="gauge-track" d="M96,20 h80"/><path class="gauge-fill" style="--off:38" d="M96,20 h80" stroke-dasharray="80" stroke-dashoffset="80"/>
+                <path class="gauge-track" d="M196,20 h80"/><path class="gauge-fill" style="--off:66" d="M196,20 h80" stroke-dasharray="80" stroke-dashoffset="80"/>
+              </g>
+            </g>
+          </svg>
+          <span class="viz-cap">Rota, telemetria e alerta na mesma tela</span>
+        </div>
+
+        <div class="stack rv" data-d="1">
+          <span class="eyebrow">Produto · FrotasPro</span>
+          <h2>Gestão de frotas, vídeo e telemetria</h2>
+          <p class="lede">Muito além do ponto no mapa. O FrotasPro mostra o que acontece dentro do veículo: imagem ao vivo, comportamento do motorista e o custo real de cada quilômetro.</p>
+          <div class="rows">
+            <div class="row"><span class="row-idx">01</span><span class="row-t">Vídeo-rastreamento</span><span class="row-d">Câmeras embarcadas com streaming em tempo real.</span></div>
+            <div class="row"><span class="row-idx">02</span><span class="row-t">Telemetria</span><span class="row-d">RPM, velocidade e freada brusca, tudo registrado.</span></div>
+            <div class="row"><span class="row-idx">03</span><span class="row-t">Gestão de custos</span><span class="row-d">Controle de combustível, pneus e manutenção.</span></div>
+            <div class="row"><span class="row-idx">04</span><span class="row-t">Alerta de fadiga</span><span class="row-d">A câmera percebe sonolência e distração e avisa na hora.</span></div>
+          </div>
+          <a class="btn" href="#contato" style="align-self:flex-start">Solicitar orçamento <span class="arw" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== confereplaca -->
+    <section class="section section--paper" id="confereplaca">
+      <div class="wrap two">
+        <div class="stack rv">
+          <span class="eyebrow eyebrow--paper">Produto · ConferePlaca</span>
+          <h2>Confira a placa antes de fechar negócio</h2>
+          <p class="lede">O ConferePlaca centraliza a consulta e a conferência de dados veiculares por placa. Feito para quem precisa validar um veículo antes de comprar, vender ou colocar na frota.</p>
+          <div class="rows rows--paper">
+            <div class="row"><span class="row-idx">→</span><span class="row-t">Consulta por placa em poucos segundos</span></div>
+            <div class="row"><span class="row-idx">→</span><span class="row-t">Conferência de dados antes de fechar negócio</span></div>
+            <div class="row"><span class="row-idx">→</span><span class="row-t">Toda versão passa por homologação antes de ir ao ar</span></div>
+          </div>
+          <a class="btn btn--paper" href="#contato" style="align-self:flex-start">Acessar ConferePlaca <span class="arw" aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="viz viz--paper rv" data-d="1" style="padding:2rem">
+          <svg viewBox="0 0 360 240" role="img" aria-label="Exemplo ilustrativo da tela de consulta por placa">
+            <rect x="70" y="24" width="220" height="72" rx="4" fill="#fff" stroke="var(--paper-ink)" stroke-width="2"/>
+            <rect x="70" y="24" width="220" height="16" rx="4" fill="var(--signal)"/>
+            <text x="180" y="36" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#fff" letter-spacing="4">BRASIL</text>
+            <text x="180" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="600" font-size="34" fill="var(--paper-ink)" letter-spacing="6">ABC1D23</text>
+            <g font-family="IBM Plex Mono, monospace" font-size="10">
+              <line x1="70" y1="130" x2="290" y2="130" stroke="var(--paper-line)"/>
+              <text x="70" y="124" fill="var(--paper-ink2)">MARCA / MODELO</text><text x="290" y="124" text-anchor="end" fill="var(--paper-ink)">—</text>
+              <line x1="70" y1="164" x2="290" y2="164" stroke="var(--paper-line)"/>
+              <text x="70" y="158" fill="var(--paper-ink2)">ANO DE FABRICAÇÃO</text><text x="290" y="158" text-anchor="end" fill="var(--paper-ink)">—</text>
+              <line x1="70" y1="198" x2="290" y2="198" stroke="var(--paper-line)"/>
+              <text x="70" y="192" fill="var(--paper-ink2)">SITUAÇÃO CADASTRAL</text>
+              <text x="290" y="192" text-anchor="end" fill="var(--signal)" font-weight="600">CONFERIDA</text>
+            </g>
+            <circle class="blip" cx="278" cy="188" r="3" fill="var(--signal)"/>
+          </svg>
+          <span class="viz-cap">Exemplo ilustrativo da tela de consulta</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ apps -->
+    <section class="section section--edge" id="apps">
+      <div class="wrap">
+        <div class="head rv">
+          <span class="eyebrow">Aplicativos</span>
+          <h2>Nossos apps para Android</h2>
+          <p class="lede">Aplicativos Devboot publicados na Google Play.</p>
+        </div>
+        <div class="phones">
+          <article class="phone rv">
+            <h3>TakeNote</h3>
+            <p>Aplicativo de anotações rápidas, pensado para capturar ideias sem atrito e manter tudo organizado no dia a dia.</p>
+            <ul>
+              <li>Captura rápida de notas</li>
+              <li>Interface leve e direta</li>
+              <li>Política de privacidade publicada</li>
+            </ul>
+            <a class="play" href="#contato"><span class="mono" style="color:var(--data)">▶</span><span><small>Disponível no</small><b>Google Play</b></span></a>
+          </article>
+          <article class="phone rv" data-d="1">
+            <h3>FrotasPro</h3>
+            <p>O app da plataforma de frotas. Acompanhe a operação de onde estiver, com a mesma base de rastreamento e telemetria do sistema web.</p>
+            <ul>
+              <li>Posição dos veículos em tempo real</li>
+              <li>Alertas da operação no celular</li>
+              <li>Integrado ao vídeo-rastreamento</li>
+            </ul>
+            <a class="play" href="#contato"><span class="mono" style="color:var(--data)">▶</span><span><small>Disponível no</small><b>Google Play</b></span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ cftv -->
+    <section class="section section--paper" id="cftv">
+      <div class="wrap">
+        <div class="head head--paper rv">
+          <span class="eyebrow eyebrow--paper">Câmeras &amp; videomonitoramento</span>
+          <h2>CFTV projetado antes de instalar</h2>
+          <p class="lede">Cobertura calculada no papel, equipamento certo no lugar certo. Do projeto à operação, sem ponto cego e sem câmera desperdiçada.</p>
+        </div>
+
+        <div class="quad rv">
+          <div class="quad-cell"><span class="quad-idx">01</span><h4>Projeto de cobertura</h4><p>Lente, sensor, resolução, IR e altura de instalação calculados para saber o alcance real de cada câmera.</p></div>
+          <div class="quad-cell"><span class="quad-idx">02</span><h4>Instalação</h4><p>Câmeras IP, gravador e rede dimensionados para o ambiente, com cabeamento e energia planejados.</p></div>
+          <div class="quad-cell"><span class="quad-idx">03</span><h4>Análise por IA</h4><p>Visão computacional sobre o vídeo ao vivo para detecção e contagem — a mesma base que roda no GreenVision.</p></div>
+          <div class="quad-cell"><span class="quad-idx">04</span><h4>Acesso remoto</h4><p>Visualização das câmeras de qualquer lugar, com acesso controlado e gravação disponível quando precisar.</p></div>
+        </div>
+
+        <div class="two rv" data-d="1" style="margin-top:clamp(2rem,4vw,3.5rem)">
+          <div class="stack">
+            <span class="chip" style="align-self:flex-start">Ferramenta própria</span>
+            <h3 style="font-size:clamp(1.8rem,3.4vw,2.5rem);color:var(--paper-ink)">CamSeek</h3>
+            <p class="lede">Nossa ferramenta de projeto de CFTV. Você configura o cenário e ela calcula o alcance real da câmera — é com ela que fechamos o layout antes de encostar em qualquer equipamento.</p>
+            <a class="btn btn--paper" href="#contato" style="align-self:flex-start">Abrir o CamSeek <span class="arw" aria-hidden="true">↗</span></a>
+          </div>
+
+          <div class="viz viz--paper" style="background:#fff">
+            <svg viewBox="0 0 400 300" role="img" aria-label="Diagrama do cone de cobertura de uma câmera">
+              <g stroke="var(--paper-line)" stroke-width="1">
+                <line x1="0" y1="75" x2="400" y2="75"/><line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="225" x2="400" y2="225"/>
+                <line x1="120" y1="0" x2="120" y2="300"/><line x1="240" y1="0" x2="240" y2="300"/><line x1="360" y1="0" x2="360" y2="300"/>
+              </g>
+              <!-- aneis de distancia -->
+              <g fill="none" stroke="var(--paper-line)" stroke-dasharray="3 4">
+                <circle cx="60" cy="150" r="90"/><circle cx="60" cy="150" r="180"/><circle cx="60" cy="150" r="270"/>
+              </g>
+              <g font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--paper-ink2)">
+                <text x="146" y="146">10 m</text><text x="236" y="146">20 m</text><text x="326" y="146">30 m</text>
+              </g>
+              <!-- cone -->
+              <path d="M60,150 L370,49 A326,326 0 0,1 370,251 Z" fill="var(--data)" opacity="0.12"/>
+              <path d="M60,150 L370,49 M60,150 L370,251" stroke="var(--data)" stroke-width="1" opacity="0.5" fill="none"/>
+              <!-- varredura: mesmo meio-angulo do cone, para nao sair da caixa -->
+              <g class="sweep"><path d="M60,150 L370,150" stroke="var(--data)" stroke-width="1.5"/><circle cx="370" cy="150" r="3" fill="var(--data)"/></g>
+              <!-- camera -->
+              <rect x="40" y="138" width="34" height="24" rx="2" fill="var(--paper-ink)"/>
+              <path d="M74,144 L88,138 V162 L74,156 Z" fill="var(--paper-ink)"/>
+              <text x="30" y="182" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--paper-ink)">CAM 01</text>
+            </svg>
+            <span class="viz-cap">Alcance calculado, não estimado</span>
+          </div>
+        </div>
+
+        <dl class="specs rv" data-d="2" style="margin-top:2rem;border-top-color:var(--paper-line)">
+          <div class="spec" style="border-bottom-color:var(--paper-line)"><dt style="color:var(--paper-ink2)">Lente</dt><dd style="color:var(--paper-ink)">2.8 – 12 mm</dd></div>
+          <div class="spec" style="border-bottom-color:var(--paper-line)"><dt style="color:var(--paper-ink2)">Sensor</dt><dd style="color:var(--paper-ink)">1/2.8"</dd></div>
+          <div class="spec" style="border-bottom-color:var(--paper-line)"><dt style="color:var(--paper-ink2)">Resolução</dt><dd style="color:var(--paper-ink)">4 MP</dd></div>
+          <div class="spec" style="border-bottom-color:var(--paper-line)"><dt style="color:var(--paper-ink2)">Alcance IR</dt><dd style="color:var(--paper-ink)">30 m</dd></div>
+          <div class="spec" style="border-bottom-color:var(--paper-line)"><dt style="color:var(--paper-ink2)">Altura de instalação</dt><dd style="color:var(--paper-ink)">3.5 m</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================ processo -->
+    <section class="section section--edge" id="processo">
+      <div class="wrap">
+        <div class="head rv">
+          <span class="eyebrow">Como a gente trabalha</span>
+          <h2>Duas tecnologias, um processo só</h2>
+          <p class="lede">É o mesmo processo que usamos nos nossos produtos. Você acompanha o projeto de perto, sem precisar ficar cobrando notícia.</p>
+        </div>
+
+        <div class="steps rv">
+          <div class="step"><b>ETAPA 01</b><h4>Planejamento toda semana</h4><p>O que entra na semana é decidido junto, com prioridade clara.</p></div>
+          <div class="step"><b>ETAPA 02</b><h4>Revisão de código em tudo</h4><p>Nada vai para o repositório principal sem passar por outro par de olhos.</p></div>
+          <div class="step"><b>ETAPA 03</b><h4>Teste antes de cada entrega</h4><p>A versão passa por homologação antes de chegar em quem usa.</p></div>
+          <div class="step"><b>ETAPA 04</b><h4>Publicação contínua</h4><p>Entrega pequena e frequente em vez de um salto grande no fim.</p></div>
+        </div>
+
+        <div class="two rv" data-d="1" style="margin-top:clamp(2.5rem,5vw,4rem)">
+          <div class="panel">
+            <h3 style="font-size:1.25rem">PHP &amp; Laravel</h3>
+            <p style="color:var(--ink-2);font-size:.9375rem">Onde mora a regra de negócio: cadastro, permissão, relatório e integração. É o que roda no GestorPM e no FrotasPro.</p>
+          </div>
+          <div class="panel">
+            <h3 style="font-size:1.25rem">React Native</h3>
+            <p style="color:var(--ink-2);font-size:.9375rem">Um código-base para Android e iOS, com acesso a câmera, GPS e notificação. Foi assim que fizemos o TakeNote e o app do FrotasPro.</p>
+          </div>
+        </div>
+
+        <div class="cta-band rv" data-d="2" id="contato">
+          <div>
+            <h3>Tem um projeto em mente?</h3>
+            <p>Conta pra gente o que você precisa resolver.</p>
+          </div>
+          <a class="btn" href="#contato">Falar com a gente <span class="arw" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <svg class="brand-word" style="height:1.1rem" viewBox="123 556 1007 115" role="img" aria-label="Devboot"><path fill="#d1d5db" d="M780.5 557c-7.1 1.6-15.7 4.9-20.7 8.1-10.3 6.7-18.9 19.1-21.8 31.9-1.7 7.2-1.7 24.9-.1 32.5 6 27.7 29.2 42.7 63.6 41.2 19.3-.8 30.3-4.9 41.2-15.1 17-15.9 21.4-47.6 9.9-71.1-6-12.1-16.1-20.6-30.1-25.2-7-2.3-9.9-2.7-23-2.9-8.2-.2-16.8.1-19 .6m39.3 21.5c9 4 15.5 11.4 18.3 20.7 1.8 5.8 2.1 8.7 1.7 16.7-.8 15.4-6.1 24.8-17.5 30.8-8.2 4.4-15 5.6-27.9 5.1-14.4-.6-20.8-3-28.5-10.7-8.1-8-10.3-14.2-10.3-28.6 0-9.7.2-11.6 2.5-16.5 3.4-7.4 7.6-12 14-15.4 8.5-4.7 13.1-5.6 27.9-5.3 12.4.3 14 .5 19.8 3.2M927.2 558c-19.2 5-32.7 18.7-37.9 38.1-1 4.1-1.7 10.4-1.7 17.4 0 18.6 4.4 30.5 15.4 41.5 7.6 7.7 16 12.1 27.3 14.4 4.2.9 8.1 1.6 8.7 1.6.7 0 1-3.2.8-9.7l-.3-9.6-5.5-1.2c-19-3.9-29.4-19.5-27.6-41.2 1.4-17.8 11-29.5 26.8-32.7l6.3-1.3.3-9.6.3-9.7-2.8.1c-1.5 0-6.1.9-10.1 1.9m28.8 7.3v9.5l4.3.7c11.7 2 21.7 8.7 26.2 17.6 6.9 13.6 4.9 35.1-4.5 46.9-3.7 4.7-13.5 9.8-20.6 10.8l-4.9.7v19l5-.3c2.8-.2 8.5-1.4 12.7-2.8 15.9-5.2 28-17.6 33.1-33.9 3-9.5 3.2-31.1.3-39.5-7.3-21.8-23.8-35.4-45.6-37.7l-6-.6zm-828-7.4-4.5.6v16.8l43.1-.2c45.9-.2 52.2.2 60.3 4.4 10.8 5.5 16.1 14.7 16.9 29.2 1.1 20.4-4.6 32.7-18 38.9l-6.3 2.9-48 .5-48 .5-.3 8.8-.3 8.8 50.3-.3 50.3-.3 6.9-2.7c16.5-6.4 27.2-18.4 31.1-35 1.7-7.4 2-26.4.4-34-1.9-9.1-7.5-19.2-14.1-25.3-6.9-6.4-12.8-9.6-21.9-12.1-5.5-1.5-12.2-1.7-49.9-1.9-23.9-.1-45.5.1-48 .4m173.3-.1-7.3.3V575h6.3c3.4 0 27.4 0 53.2.1h47v-17.6h-46c-25.3 0-49.3.1-53.2.3m127.7.4c0 .4 5.7 11.4 12.7 24.5 6.9 13.1 20 37.7 28.9 54.8l16.3 31h19.5l29.3-55 29.3-55-4.2-.7c-2.4-.3-7.1-.4-10.5-.1-6.1.6-6.1.6-8.6 5.2-3.8 6.9-35.7 67.5-40.2 76.3-2.2 4.3-4.3 7.8-4.6 7.8s-11.1-20.1-24.1-44.8l-23.5-44.7h-10.1c-5.6 0-10.2.3-10.2.7m169.8-.4-6.8.3v111l46.8-.3c45.6-.3 46.8-.4 51.4-2.5 2.5-1.2 6.5-3.8 8.8-5.9 12.7-11.5 13.1-34.3.8-44.9l-4.1-3.5 2.6-3.7c4.4-6.4 6-11.3 6-18.8 0-10.2-2.5-16.8-8.7-23.1-8.7-8.6-9.7-8.8-53.1-8.8-20.3-.1-40 0-43.7.2m81.8 19.7c8.9 6.7 8 19.8-1.7 24.7-3 1.6-6.9 1.8-36.1 1.8H610v-13.8c0-7.6.3-14.2.7-14.6s15.7-.6 34-.4c31.5.3 33.3.4 35.9 2.3m3.6 47c1.4 1.1 3.3 3.2 4.2 4.7 2.3 3.7 2 11.6-.4 15.6-3.7 6-5.2 6.2-43.5 6.2H610v-29.1l35.8.3c33.9.3 35.8.4 38.4 2.3m343.5-66.7c-1.4.3-1.7 1.6-1.7 8.8v8.4l20 .1c11 .1 20.6.2 21.3.3.9.1 1.3 10.3 1.5 46.8l.2 46.8h18l.2-46.7.3-46.6 4-.2c2.2 0 11.8-.2 21.3-.3l17.3-.2-.3-8.8-.3-8.7h-50c-27.5 0-50.8.1-51.8.3M294 613v9h107v-18H294zm0 47v9h107v-18H294z"/><path fill="#e10600" d="M123 613.5c0 15.4.3 19.6 1.3 19.2 5.1-2.1 39.7-19.1 39.7-19.6s-34.1-16.7-39.2-18.7c-1.7-.6-1.8.7-1.8 19.1m816.9-8.6c-3.4 3.3-3.9 4.5-3.9 8.3 0 12.8 16.4 17.4 23 6.5 5.1-8.3-1.1-18.7-11.3-18.7-3.2 0-4.6.7-7.8 3.9"/></svg>
+        <p style="color:var(--ink-2);max-width:30ch">Software sob medida e produtos próprios para prefeituras, frotas e videomonitoramento.</p>
+      </div>
+      <div>
+        <h4>Soluções</h4>
+        <ul>
+          <li><a href="#gestorpm">GestorPM</a></li>
+          <li><a href="#frotaspro">FrotasPro</a></li>
+          <li><a href="#confereplaca">ConferePlaca</a></li>
+          <li><a href="#apps">Aplicativos</a></li>
+          <li><a href="#cftv">Videomonitoramento</a></li>
+          <li><a href="#desenvolvimento">Desenvolvimento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Conecte-se</h4>
+        <ul>
+          <li class="plain">comercial@devboot.com.br</li>
+          <li class="plain">+55 (87) 99140-2037</li>
+          <li class="plain">Dormentes, PE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Devboot Tecnologia</span>
+      <span>Variação de cor: Sinal Duplo</span>
+    </div>
+  </footer>
+
+</div>
+</div>
+
+<script>
+(function () {
+  var page = document.querySelector('.page');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* boot ------------------------------------------------------------------ */
+  requestAnimationFrame(function () { page.setAttribute('data-booted', 'true'); });
+
+  /* placa "lendo" --------------------------------------------------------- */
+  var plate = document.getElementById('plate');
+  if (plate) {
+    var alvo = 'ABC1D23';
+    if (reduce) {
+      plate.textContent = alvo;
+    } else {
+      var i = 0;
+      setTimeout(function tick() {
+        i++;
+        plate.textContent = alvo.slice(0, i).padEnd(alvo.length, '·');
+        if (i < alvo.length) setTimeout(tick, 110);
+      }, 900);
+    }
+  }
+
+  /* reveal ---------------------------------------------------------------- */
+  /* Progressive enhancement: so escondemos o conteudo DEPOIS de garantir que o
+     observer existe. Sem IntersectionObserver, ou com movimento reduzido, nada
+     e escondido e a pagina abre completa. */
+  var alvos = document.querySelectorAll('.rv, .viz, .steps');
+  if ('IntersectionObserver' in window && !reduce) {
+    page.classList.add('js-reveal');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    alvos.forEach(function (el) { io.observe(el); });
+
+    /* Rede de seguranca: o que ja esta na tela entra de qualquer jeito. Nao
+       libera o que esta abaixo da dobra — esse continua revelando na rolagem. */
+    setTimeout(function () {
+      alvos.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-in');
+      });
+    }, 2500);
+  } else {
+    alvos.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  /* contadores ------------------------------------------------------------ */
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var fim = parseInt(el.getAttribute('data-count'), 10);
+    if (reduce) { el.textContent = fim; return; }
+    var obs = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        var n = 0;
+        var id = setInterval(function () {
+          n++; el.textContent = n;
+          if (n >= fim) clearInterval(id);
+        }, 220);
+      });
+    }, { threshold: 0.5 });
+    obs.observe(el);
+  });
+
+  /* nav + progresso ------------------------------------------------------- */
+  var nav = document.getElementById('nav');
+  var rail = document.querySelector('.rail-progress');
+  function onScroll() {
+    nav.setAttribute('data-stuck', String(window.scrollY > 24));
+    if (rail) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      rail.style.setProperty('--p', (h > 0 ? (window.scrollY / h) * 100 : 0) + '%');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* menu compacto --------------------------------------------------------- */
+  var burger = document.getElementById('burger');
+  var links = document.querySelector('.nav-links');
+  if (burger && links) {
+    burger.addEventListener('click', function () {
+      var aberto = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!aberto));
+      links.style.display = aberto ? '' : 'flex';
+      links.style.position = 'absolute';
+      links.style.top = '100%';
+      links.style.right = 'var(--pad)';
+      links.style.flexDirection = 'column';
+      links.style.alignItems = 'flex-start';
+      links.style.gap = '1rem';
+      links.style.background = 'var(--surface)';
+      links.style.border = '1px solid var(--line-strong)';
+      links.style.padding = '1.25rem';
+    });
+  }
+})();
+</script>
