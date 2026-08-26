@@ -781,6 +781,57 @@ body {
   color: var(--ink-3);
 }
 
+/* -------------------------------------------------------------- formulario */
+.two--top { align-items: start; }
+.form { display: flex; flex-direction: column; gap: 1.1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field label {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.field label .req { color: var(--data); }
+.field input, .field textarea {
+  font-family: var(--f-body);
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 0.7rem 0.85rem;
+  width: 100%;
+  transition: border-color 0.2s, background 0.2s;
+}
+.field textarea { resize: vertical; min-height: 7.5rem; }
+.field input::placeholder, .field textarea::placeholder { color: var(--ink-3); }
+.field input:focus, .field textarea:focus {
+  border-color: var(--data);
+  background: var(--surface-2);
+}
+/* Anel de foco de verdade: a troca de borda de 1px sozinha nao da os 3:1 de
+   contraste que um indicador de foco precisa. */
+.field input:focus-visible, .field textarea:focus-visible {
+  outline: 2px solid var(--data);
+  outline-offset: 2px;
+}
+.field[data-erro="true"] input, .field[data-erro="true"] textarea { border-color: var(--signal); }
+.field-erro {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--signal);
+}
+/* honeypot: fora da tela, sem display:none — bot preenche, humano nao ve */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.25rem; }
+.form-status { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.04em; max-width: 34ch; }
+.form-status[data-tipo="ok"]   { color: var(--data); }
+.form-status[data-tipo="erro"] { color: var(--signal); }
+.form-status[data-tipo="info"] { color: var(--ink-3); }
+.btn[disabled] { opacity: 0.55; pointer-events: none; }
+
 /* ------------------------------------------------------------------ reveal */
 .rv { transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.3, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.3, 1); }
 .page.js-reveal .rv { opacity: 0; transform: translateY(14px); }
@@ -848,7 +899,7 @@ body {
       <a class="nav-link" href="#produtos">Produtos</a>
       <a class="nav-link" href="#cftv">Câmeras</a>
       <a class="nav-link" href="#contato">Contato</a>
-      <a class="btn" href="#contato">Falar no WhatsApp</a>
+      <a class="btn" href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Devboot%20e%20quero%20conversar." target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
     </div>
     <button class="nav-burger" type="button" id="burger" aria-expanded="false">Menu</button>
   </nav>
@@ -863,7 +914,7 @@ body {
           <h1 class="rv" data-d="1">Fazemos software.<span class="snd">E operamos o nosso.</span></h1>
           <p class="lede rv" data-d="2">GestorPM, FrotasPro e ConferePlaca são produtos Devboot, no ar todo dia. A mesma engenharia que sustenta esses sistemas fica disponível para o seu projeto.</p>
           <div class="hero-actions rv" data-d="3">
-            <a class="btn" href="#contato">Iniciar projeto <span class="arw" aria-hidden="true">↗</span></a>
+            <a class="btn" href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20iniciar%20um%20projeto%20com%20a%20Devboot." target="_blank" rel="noopener noreferrer">Iniciar projeto <span class="arw" aria-hidden="true">↗</span></a>
             <a class="btn btn--ghost" href="#produtos">Ver o que já está rodando</a>
           </div>
         </div>
@@ -1027,7 +1078,7 @@ body {
             <div class="row"><span class="row-idx">→</span><span class="row-t">Assinatura digital ICP-Brasil, sem papel</span></div>
             <div class="row"><span class="row-idx">→</span><span class="row-t">Portal da transparência alimentado pelo próprio sistema</span></div>
           </div>
-          <a class="btn" href="#contato" style="align-self:flex-start">Agendar uma demonstração <span class="arw" aria-hidden="true">↗</span></a>
+          <a class="btn" href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GestorPM." target="_blank" rel="noopener noreferrer" style="align-self:flex-start">Agendar uma demonstração <span class="arw" aria-hidden="true">↗</span></a>
         </div>
 
         <div class="viz rv" data-d="1">
@@ -1105,7 +1156,7 @@ body {
             <div class="row"><span class="row-idx">03</span><span class="row-t">Gestão de custos</span><span class="row-d">Controle de combustível, pneus e manutenção.</span></div>
             <div class="row"><span class="row-idx">04</span><span class="row-t">Alerta de fadiga</span><span class="row-d">A câmera percebe sonolência e distração e avisa na hora.</span></div>
           </div>
-          <a class="btn" href="#contato" style="align-self:flex-start">Solicitar orçamento <span class="arw" aria-hidden="true">↗</span></a>
+          <a class="btn" href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20uma%20proposta%20do%20FrotasPro." target="_blank" rel="noopener noreferrer" style="align-self:flex-start">Solicitar orçamento <span class="arw" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -1122,7 +1173,7 @@ body {
             <div class="row"><span class="row-idx">→</span><span class="row-t">Conferência de dados antes de fechar negócio</span></div>
             <div class="row"><span class="row-idx">→</span><span class="row-t">Toda versão passa por homologação antes de ir ao ar</span></div>
           </div>
-          <a class="btn btn--paper" href="#contato" style="align-self:flex-start">Acessar ConferePlaca <span class="arw" aria-hidden="true">↗</span></a>
+          <a class="btn btn--paper" href="https://confereplaca.com.br" target="_blank" rel="noopener noreferrer" style="align-self:flex-start">Acessar ConferePlaca <span class="arw" aria-hidden="true">↗</span></a>
         </div>
 
         <div class="viz viz--paper rv" data-d="1" style="padding:2rem">
@@ -1164,7 +1215,8 @@ body {
               <li>Interface leve e direta</li>
               <li>Política de privacidade publicada</li>
             </ul>
-            <a class="play" href="#contato"><span class="mono" style="color:var(--data)">▶</span><span><small>Disponível no</small><b>Google Play</b></span></a>
+            <!-- TODO: trocar pelo link da Play Store -->
+                        <a class="play" href="#"><span class="mono" style="color:var(--data)">▶</span><span><small>Disponível no</small><b>Google Play</b></span></a>
           </article>
           <article class="phone rv" data-d="1">
             <h3>FrotasPro</h3>
@@ -1174,7 +1226,8 @@ body {
               <li>Alertas da operação no celular</li>
               <li>Integrado ao vídeo-rastreamento</li>
             </ul>
-            <a class="play" href="#contato"><span class="mono" style="color:var(--data)">▶</span><span><small>Disponível no</small><b>Google Play</b></span></a>
+            <!-- TODO: trocar pelo link da Play Store -->
+                        <a class="play" href="#"><span class="mono" style="color:var(--data)">▶</span><span><small>Disponível no</small><b>Google Play</b></span></a>
           </article>
         </div>
       </div>
@@ -1201,7 +1254,7 @@ body {
             <span class="chip" style="align-self:flex-start">Ferramenta própria</span>
             <h3 style="font-size:clamp(1.8rem,3.4vw,2.5rem);color:var(--paper-ink)">CamSeek</h3>
             <p class="lede">Nossa ferramenta de projeto de CFTV. Você configura o cenário e ela calcula o alcance real da câmera — é com ela que fechamos o layout antes de encostar em qualquer equipamento.</p>
-            <a class="btn btn--paper" href="#contato" style="align-self:flex-start">Abrir o CamSeek <span class="arw" aria-hidden="true">↗</span></a>
+            <a class="btn btn--paper" href="https://camseek.devboot.com.br" target="_blank" rel="noopener noreferrer" style="align-self:flex-start">Abrir o CamSeek <span class="arw" aria-hidden="true">↗</span></a>
           </div>
 
           <div class="viz viz--paper" style="background:#fff">
@@ -1268,12 +1321,62 @@ body {
           </div>
         </div>
 
-        <div class="cta-band rv" data-d="2" id="contato">
-          <div>
-            <h3>Tem um projeto em mente?</h3>
-            <p>Conta pra gente o que você precisa resolver.</p>
-          </div>
-          <a class="btn" href="#contato">Falar com a gente <span class="arw" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <!-- ============================================================= contato -->
+    <section class="section section--edge" id="contato">
+      <div class="wrap">
+        <div class="head rv">
+          <span class="eyebrow">Contato</span>
+          <h2>Tem um projeto em mente?</h2>
+          <p class="lede">Conta pra gente o que você precisa resolver.</p>
+        </div>
+
+        <div class="two two--top">
+          <form class="form rv" id="form-contato" novalidate>
+            <div class="field">
+              <label for="c-nome">Nome <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-nome" name="nome" type="text" required autocomplete="name" placeholder="Como podemos te chamar">
+              <span class="field-erro"></span>
+            </div>
+            <div class="field">
+              <label for="c-email">E-mail <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-email" name="email" type="email" required autocomplete="email" placeholder="voce@suaempresa.com.br">
+              <span class="field-erro"></span>
+            </div>
+            <div class="field">
+              <label for="c-whatsapp">WhatsApp <span style="text-transform:none;letter-spacing:0">(opcional)</span></label>
+              <input id="c-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="(87) 9 0000-0000">
+              <span class="field-erro"></span>
+            </div>
+            <div class="field">
+              <label for="c-mensagem">Mensagem <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="c-mensagem" name="mensagem" required placeholder="Conta o que você precisa resolver."></textarea>
+              <span class="field-erro"></span>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="c-botcheck">Não preencha este campo</label>
+              <input id="c-botcheck" name="botcheck" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-foot">
+              <button class="btn" type="submit" id="form-enviar">Enviar mensagem <span class="arw" aria-hidden="true">↗</span></button>
+              <p class="form-status" id="form-status" role="status" aria-live="polite" data-tipo="info"></p>
+            </div>
+          </form>
+
+          <aside class="panel rv" data-d="1">
+            <h3>Prefere falar direto?</h3>
+            <p style="color:var(--ink-2);font-size:.9375rem">O formulário cai no nosso e-mail. Se quiser resposta mais rápida, chama no WhatsApp.</p>
+            <a class="btn btn--ghost" href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Devboot%20e%20quero%20conversar." target="_blank" rel="noopener noreferrer" style="align-self:flex-start">Abrir o WhatsApp <span class="arw" aria-hidden="true">↗</span></a>
+            <dl class="specs">
+              <div class="spec"><dt>E-mail</dt><dd>comercial@devboot.com.br</dd></div>
+              <div class="spec"><dt>Telefone</dt><dd>+55 (87) 99140-2037</dd></div>
+              <div class="spec"><dt>Cidade</dt><dd>Dormentes, PE</dd></div>
+            </dl>
+          </aside>
         </div>
       </div>
     </section>
@@ -1395,6 +1498,104 @@ body {
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+
+  /* formulario ------------------------------------------------------------ */
+  /* Cole aqui a access key do Web3Forms. Gere a chave usando
+     comercial@devboot.com.br — e para esse endereco que os envios vao.
+     Enquanto estiver vazia, o formulario roda em modo preview: valida e
+     mostra os estados, mas nao envia nada. */
+  var CHAVE_WEB3FORMS = '';
+
+  var form = document.getElementById('form-contato');
+  if (form) {
+    var statusEl = document.getElementById('form-status');
+    var botao = document.getElementById('form-enviar');
+    var campos = [].slice.call(form.querySelectorAll('input, textarea'))
+      .filter(function (c) { return c.name !== 'botcheck'; });
+
+    function dizer(msg, tipo) {
+      statusEl.textContent = msg;
+      statusEl.setAttribute('data-tipo', tipo);
+    }
+
+    function erroDe(c) {
+      var v = c.value.trim();
+      if (c.hasAttribute('required') && !v) return 'Preencha este campo.';
+      if (c.type === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'E-mail invalido.';
+      return '';
+    }
+
+    function valida(c) {
+      var msg = erroDe(c);
+      var wrap = c.closest('.field');
+      wrap.setAttribute('data-erro', msg ? 'true' : 'false');
+      wrap.querySelector('.field-erro').textContent = msg;
+      c.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      return !msg;
+    }
+
+    campos.forEach(function (c) {
+      c.addEventListener('blur', function () { valida(c); });
+      /* so revalida enquanto digita se o campo ja estava marcado como errado,
+         para nao acusar erro no meio da digitacao */
+      c.addEventListener('input', function () {
+        if (c.closest('.field').getAttribute('data-erro') === 'true') valida(c);
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var ok = campos.map(valida).every(Boolean);
+      if (!ok) {
+        dizer('Confira os campos marcados.', 'erro');
+        var primeiro = form.querySelector('.field[data-erro="true"] input, .field[data-erro="true"] textarea');
+        if (primeiro) primeiro.focus();
+        return;
+      }
+      if (form.botcheck.value) return;  /* honeypot preenchido: e bot */
+
+      botao.disabled = true;
+      dizer('Enviando...', 'info');
+
+      if (!CHAVE_WEB3FORMS) {
+        setTimeout(function () {
+          dizer('Modo preview: falta a access key do Web3Forms, entao nada foi enviado.', 'info');
+          botao.disabled = false;
+        }, 700);
+        return;
+      }
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: CHAVE_WEB3FORMS,
+          subject: 'Contato pelo site - ' + form.nome.value.trim(),
+          from_name: 'Site Devboot',
+          nome: form.nome.value.trim(),
+          email: form.email.value.trim(),
+          whatsapp: form.whatsapp.value.trim() || 'nao informado',
+          mensagem: form.mensagem.value.trim()
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.success) {
+            form.reset();
+            campos.forEach(function (c) { c.closest('.field').setAttribute('data-erro', 'false'); });
+            dizer('Recebido. A gente responde no seu e-mail ou WhatsApp.', 'ok');
+          } else {
+            dizer('Nao deu para enviar agora. Chama no WhatsApp que a gente responde.', 'erro');
+          }
+        })
+        .catch(function () {
+          dizer('Nao deu para enviar agora. Chama no WhatsApp que a gente responde.', 'erro');
+        })
+        .then(function () { botao.disabled = false; });
+    });
+  }
 
   /* menu compacto --------------------------------------------------------- */
   var burger = document.getElementById('burger');
