@@ -11,8 +11,9 @@ As duas diferem em um único token (`--data`) no bloco `.page[data-palette=...]`
 
 ## Relação com produção
 
-`public/index.html` **foi gerada a partir de `v2-sinal-duplo.html`**: mesmo CSS,
-mesmo markup, mesmo script — o que muda é só o envelope. O arquivo daqui é um
+`v2-sinal-duplo.html` **é derivada de `public/index.html`**: mesmo CSS, mesmo
+markup, mesmo script — o que muda é só o envelope. A produção é a fonte; o
+arquivo daqui existe para dar um link de preview (útil para abrir no celular). O arquivo daqui é um
 fragmento (sem `<!DOCTYPE>`, `<head>` ou `<body>`) porque é publicado como
 Artifact, que injeta o próprio envelope; a versão de produção recebe um `<head>`
 completo com favicons, Open Graph e canonical.

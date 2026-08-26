@@ -39,7 +39,6 @@
   --paper-ink2: #55585C;
   --paper-line: #DCDCD7;
 
-  --rail: 4.5rem;
   --pad: clamp(1.25rem, 4vw, 3.5rem);
   --maxw: 78rem;
 
@@ -50,11 +49,20 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+html {
+  -webkit-text-size-adjust: 100%;   /* iOS nao infla o texto em paisagem */
+  scroll-behavior: smooth;
+  /* a barra do topo e fixa: sem isso o titulo da secao para debaixo dela */
+  scroll-padding-top: 5rem;
+}
+
 body {
   margin: 0;
   background: #0A0D12;
   color: #E8EAED;
 }
+
+.page { --rail: 0rem; }          /* trilho so existe no desktop (min-width abaixo) */
 
 .page {
   position: relative;
@@ -124,7 +132,7 @@ body {
   background-image:
     linear-gradient(to right, var(--line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-  background-size: 5.5rem 5.5rem;
+  background-size: 3.25rem 3.25rem;
   opacity: 0.32;
   mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 78%);
 }
@@ -132,6 +140,7 @@ body {
 /* --------------------------------------------------------------------- nav */
 .nav {
   position: sticky;
+  /* referencia para o painel do menu no telefone */
   top: 0;
   z-index: 60;
   display: flex;
@@ -148,11 +157,33 @@ body {
   backdrop-filter: blur(14px);
   border-bottom-color: var(--line);
 }
-.brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+.brand { display: flex; align-items: center; min-height: 44px; gap: 0.7rem; text-decoration: none; }
 .brand-icon { height: 1.6rem; width: auto; display: block; }
 .brand-word { height: 0.85rem; width: auto; display: block; }
 
-.nav-links { display: flex; align-items: center; gap: 1.75rem; }
+.nav-links {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: var(--pad);
+  right: var(--pad);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+}
+.nav[data-menu="aberto"] .nav-links { display: flex; }
+.nav-links .nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.nav-links .nav-link:last-of-type { border-bottom: 0; }
+.nav-links .btn { margin-top: 0.5rem; justify-content: center; }
 .nav-link {
   font-family: var(--f-mono);
   font-size: 0.75rem;
@@ -176,6 +207,8 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
+  min-height: 44px;
+  justify-content: center;
   padding: 0.7rem 1.15rem;
   border: 1px solid var(--signal);
   /* branco sobre #E10600 da ~5:1 de contraste; var(--ground) deixava o texto
@@ -218,11 +251,13 @@ body {
 .btn:hover .arw { transform: translate(2px, -2px); }
 
 .nav-burger {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   background: none;
   border: 1px solid var(--line-strong);
   color: var(--ink);
-  padding: 0.5rem 0.7rem;
+  padding: 0 0.85rem;
   font-family: var(--f-mono);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
@@ -231,6 +266,7 @@ body {
 
 /* -------------------------------------------------------------------- rail */
 .rail {
+  display: none;
   position: fixed;
   left: 0;
   top: 0;
@@ -238,7 +274,6 @@ body {
   width: var(--rail);
   z-index: 50;
   border-right: 1px solid var(--line);
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -276,7 +311,7 @@ body {
 
 /* ---------------------------------------------------------------- estrutura */
 .shell { position: relative; z-index: 1; padding-left: 0; }
-.section { padding: clamp(4.5rem, 9vw, 8rem) var(--pad); position: relative; }
+.section { padding: clamp(3.25rem, 9vw, 8rem) var(--pad); position: relative; }
 .wrap { max-width: var(--maxw); margin: 0 auto; width: 100%; }
 .section--paper { background: var(--paper); color: var(--paper-ink); }
 .section--paper .lede { color: var(--paper-ink2); }
@@ -293,7 +328,7 @@ body {
 }
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
 }
@@ -449,16 +484,17 @@ body {
   max-width: var(--maxw);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--line);
 }
 .stat {
   padding: 1.6rem var(--pad);
-  border-right: 1px solid var(--line);
+  background: var(--ground-2);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
 }
-.stat:last-child { border-right: 0; }
 .stat b {
   font-family: var(--f-display);
   font-weight: 900;
@@ -478,7 +514,7 @@ body {
 /* ------------------------------------------------------------------- duas */
 .two {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
 }
@@ -545,7 +581,7 @@ body {
 }
 
 /* ---------------------------------------------------------------- produtos */
-.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
+.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
 .card {
   background: var(--paper);
   padding: clamp(1.5rem, 2.6vw, 2.1rem);
@@ -591,6 +627,7 @@ body {
   padding: 0.2rem 0.45rem;
 }
 .card-link {
+  min-height: 44px;
   font-family: var(--f-mono);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
@@ -654,7 +691,7 @@ body {
 .is-in .gauge-fill { stroke-dashoffset: var(--off, 40); }
 
 /* ---------------------------------------------------------------- telefone */
-.phones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.phones { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
 .phone {
   border: 1px solid var(--line-strong);
   background: var(--surface);
@@ -709,14 +746,14 @@ body {
 .spec dt { color: var(--ink-3); letter-spacing: 0.06em; }
 .spec dd { margin: 0; color: var(--ink); }
 
-.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
+.quad { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; background: var(--paper-line); border: 1px solid var(--paper-line); }
 .quad-cell { background: var(--paper); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
 .quad-cell h4 { font-size: 1.0625rem; color: var(--paper-ink); }
 .quad-cell p { font-size: 0.875rem; color: var(--paper-ink2); }
 .quad-idx { font-family: var(--f-mono); font-size: 0.625rem; letter-spacing: 0.14em; color: var(--signal); }
 
 /* --------------------------------------------------------------- processo */
-.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+.steps { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
 .step { display: flex; flex-direction: column; gap: 0.7rem; padding-top: 1.1rem; border-top: 2px solid var(--line); position: relative; }
 .step::after {
   content: "";
@@ -750,7 +787,7 @@ body {
 
 /* ----------------------------------------------------------------- rodape */
 .foot { border-top: 1px solid var(--line); background: var(--ground-2); padding: clamp(3rem, 6vw, 4.5rem) var(--pad) 2rem; }
-.foot-grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; }
+.foot-grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
 .foot-brand { display: flex; flex-direction: column; gap: 1.1rem; }
 .foot h4 {
   font-family: var(--f-mono);
@@ -761,8 +798,15 @@ body {
   color: var(--ink-3);
   margin: 0 0 1rem;
 }
-.foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.65rem; }
-.foot a { color: var(--ink-2); text-decoration: none; font-size: 0.9375rem; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.foot a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
 .foot a:hover, .foot a:focus-visible { color: var(--signal); }
 .foot li.plain { color: var(--ink-2); font-size: 0.9375rem; font-family: var(--f-mono); }
 .foot-base {
@@ -795,7 +839,8 @@ body {
 .field label .req { color: var(--data); }
 .field input, .field textarea {
   font-family: var(--f-body);
-  font-size: 0.9375rem;
+  /* 1rem = 16px: abaixo disso o Safari do iOS da zoom ao focar o campo */
+  font-size: 1rem;
   color: var(--ink);
   background: var(--surface);
   border: 1px solid var(--line-strong);
@@ -826,6 +871,7 @@ body {
 /* honeypot: fora da tela, sem display:none — bot preenche, humano nao ve */
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.25rem; }
+.form-foot .btn { width: 100%; }
 .form-status { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.04em; max-width: 34ch; }
 .form-status[data-tipo="ok"]   { color: var(--data); }
 .form-status[data-tipo="erro"] { color: var(--signal); }
@@ -843,30 +889,57 @@ body {
 :where(a, button):focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
 .section--paper :where(a, button):focus-visible { outline-color: var(--signal); }
 
-/* ---------------------------------------------------------------- resposta */
-@media (max-width: 1080px) {
-  .page { --rail: 0rem; }
-  .rail { display: none; }
-  .hero-grid, .two { grid-template-columns: minmax(0, 1fr); }
-  .cards, .quad, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* -------------------------------------------------------------- ampliacao
+   Tudo acima e o estilo do telefone. Daqui para baixo so ampliamos, nunca
+   reduzimos — por isso `min-width`. */
+@media (min-width: 720px) {
+  .cards, .quad, .steps, .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .strip-inner { grid-template-columns: repeat(2, 1fr); }
-  .stat:nth-child(2) { border-right: 0; }
-  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .cta-band { grid-template-columns: minmax(0, 1fr); }
   .foot-grid { grid-template-columns: 1fr 1fr; }
   .foot-brand { grid-column: 1 / -1; }
+  .grid-bg { background-size: 5.5rem 5.5rem; }
+  .form-foot .btn { width: auto; }
 }
-@media (max-width: 720px) {
-  .nav-links { display: none; }
-  .nav-burger { display: block; }
-  .cards, .quad, .steps, .phones { grid-template-columns: minmax(0, 1fr); }
-  .strip-inner { grid-template-columns: 1fr; }
-  .stat { border-right: 0; border-bottom: 1px solid var(--line); }
-  .foot-grid { grid-template-columns: 1fr; }
-  .grid-bg { background-size: 3.25rem 3.25rem; }
+
+/* A barra de navegacao ja cabe antes do layout largo, entao ela tem ponto de
+   quebra proprio — segurar o botao "Menu" ate 1081px incomoda no notebook. */
+@media (min-width: 900px) {
+  .nav-burger { display: none; }
+  .nav-links {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+  .nav-links .nav-link {
+    min-height: 0;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-links .btn { margin-top: 0; }
+}
+
+@media (min-width: 1081px) {
+  .page { --rail: 4.5rem; }
+  .rail { display: flex; }
+  .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+  .two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .quad, .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .strip-inner { grid-template-columns: repeat(4, 1fr); }
+  .foot-grid { grid-template-columns: 2fr 1fr 1fr; }
+  .foot-brand { grid-column: auto; }
+  .foot ul { gap: 0.65rem; }
+  .foot a { min-height: 0; }
+  .card-link { min-height: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .page *, .page *::before, .page *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
@@ -1597,24 +1670,46 @@ body {
     });
   }
 
-  /* menu compacto --------------------------------------------------------- */
+  /* menu do telefone ------------------------------------------------------ */
+  /* O estado vive num atributo no <nav> e quem desenha e o CSS. A versao
+     anterior escrevia estilo inline a cada clique e nunca os removia. */
   var burger = document.getElementById('burger');
   var links = document.querySelector('.nav-links');
-  if (burger && links) {
+  if (burger && links && nav) {
+    var abrirMenu = function (abrir) {
+      nav.setAttribute('data-menu', abrir ? 'aberto' : 'fechado');
+      burger.setAttribute('aria-expanded', String(abrir));
+      burger.textContent = abrir ? 'Fechar' : 'Menu';
+    };
+
     burger.addEventListener('click', function () {
-      var aberto = burger.getAttribute('aria-expanded') === 'true';
-      burger.setAttribute('aria-expanded', String(!aberto));
-      links.style.display = aberto ? '' : 'flex';
-      links.style.position = 'absolute';
-      links.style.top = '100%';
-      links.style.right = 'var(--pad)';
-      links.style.flexDirection = 'column';
-      links.style.alignItems = 'flex-start';
-      links.style.gap = '1rem';
-      links.style.background = 'var(--surface)';
-      links.style.border = '1px solid var(--line-strong)';
-      links.style.padding = '1.25rem';
+      abrirMenu(nav.getAttribute('data-menu') !== 'aberto');
     });
+
+    /* escolher um destino fecha o painel */
+    links.addEventListener('click', function (e) {
+      if (e.target.closest('a')) abrirMenu(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.getAttribute('data-menu') === 'aberto') {
+        abrirMenu(false);
+        burger.focus();
+      }
+    });
+
+    /* clicar fora fecha */
+    document.addEventListener('click', function (e) {
+      if (nav.getAttribute('data-menu') !== 'aberto') return;
+      if (!e.target.closest('.nav')) abrirMenu(false);
+    });
+
+    /* ao alargar para o desktop o painel deixa de existir; zera o estado
+       para o botao nao voltar escrito "Fechar" numa proxima reducao */
+    var largo = window.matchMedia('(min-width: 1081px)');
+    var sincronizar = function (m) { if (m.matches) abrirMenu(false); };
+    if (largo.addEventListener) largo.addEventListener('change', sincronizar);
+    sincronizar(largo);
   }
 })();
 </script>
