@@ -178,7 +178,9 @@ body {
   text-decoration: none;
   padding: 0.7rem 1.15rem;
   border: 1px solid var(--signal);
-  color: var(--ground);
+  /* branco sobre #E10600 da ~5:1 de contraste; var(--ground) deixava o texto
+     quase preto e sujava o vermelho */
+  color: #fff;
   background: var(--signal);
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
@@ -200,7 +202,7 @@ body {
   color: var(--ink);
   box-shadow: none;
 }
-.btn--paper { color: var(--paper); }
+.btn--paper { color: #fff; }
 .btn--paper-ghost {
   background: transparent;
   color: var(--paper-ink);
@@ -244,15 +246,7 @@ body {
   pointer-events: none;
   background: color-mix(in srgb, var(--ground) 55%, transparent);
 }
-.rail-tick {
-  font-family: var(--f-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.14em;
-  color: var(--ink-3);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-.rail-live { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.rail-live { display: flex; align-items: center; }
 .dot {
   width: 6px; height: 6px;
   border-radius: 50%;
@@ -268,7 +262,7 @@ body {
 .rail-progress {
   width: 1px;
   flex: 1;
-  margin: 1rem 0;
+  margin: 0 0 1.1rem;
   background: var(--line);
   position: relative;
 }
@@ -838,9 +832,8 @@ body {
 <div class="grid-bg"></div>
 
 <aside class="rail" aria-hidden="true">
-  <span class="rail-tick">DORMENTES · PE</span>
   <div class="rail-progress"></div>
-  <div class="rail-live"><span class="dot"></span><span class="rail-tick">NO AR</span></div>
+  <div class="rail-live"><span class="dot"></span></div>
 </aside>
 
 <div class="shell" style="padding-left: var(--rail);">
@@ -935,7 +928,7 @@ body {
         <div class="stat"><b data-count="3">0</b><span>Produtos próprios no ar</span></div>
         <div class="stat"><b data-count="2">0</b><span>Apps Android</span></div>
         <div class="stat"><b>Laravel<br>React&nbsp;Native</b><span>Stack de trabalho</span></div>
-        <div class="stat"><b>Dormentes<br>PE</b><span>De onde a gente opera</span></div>
+        <div class="stat"><b>CFTV</b><span>Projeto e instalação</span></div>
       </div>
     </section>
 
