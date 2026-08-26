@@ -4,30 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devboot - Engenharia de Software</title>
+    <meta name="description" content="Engenharia de software premium e produtos SaaS de alto impacto para empresas e prefeituras.">
+    <link rel="canonical" href="https://www.devboot.com.br/">
+
+    <!-- Favicons -->
+    <link rel="icon" href="img/favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="img/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+    <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#e10600">
+    <link rel="manifest" href="img/favicon/site.webmanifest">
+    <meta name="theme-color" content="#0a0d12">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Devboot">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:url" content="https://www.devboot.com.br/">
+    <meta property="og:title" content="Devboot - Engenharia de Software">
+    <meta property="og:description" content="Engenharia de software premium e produtos SaaS de alto impacto para empresas e prefeituras.">
+    <meta property="og:image" content="https://www.devboot.com.br/img/devboot-share-dark-1200x630.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Devboot - Engenharia de Software">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Devboot - Engenharia de Software">
+    <meta name="twitter:description" content="Engenharia de software premium e produtos SaaS de alto impacto para empresas e prefeituras.">
+    <meta name="twitter:image" content="https://www.devboot.com.br/img/devboot-share-dark-1200x630.png">
+
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        /* Habilita o estado inicial do reveal antes do primeiro paint (evita flash
+           de conteúdo). Se o script.js não assumir em 3s, libera tudo. */
+        document.documentElement.classList.add('reveal-enabled');
+        setTimeout(function () {
+            if (!document.documentElement.dataset.revealReady) {
+                document.documentElement.classList.remove('reveal-enabled');
+            }
+        }, 3000);
+    </script>
 </head>
 <body class="bg-slate-950 font-sans landing-page">
 
+    <div id="scroll-progress" aria-hidden="true"></div>
+
     <nav id="main-nav" class="fixed w-full z-[100] transition-all duration-300 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a id="logo" href="#inicio" class="logo-trigger flex items-center gap-2 cursor-pointer group" aria-label="Ir para início">
-                <div class="p-1.5 rounded-lg group-hover:rotate-12 transition-transform">
-                    <img src="img/new-logo-devboot.png" class="w-8 h-8" alt="Logo Devboot">
-                </div>
-                <span class="text-xl font-black tracking-tight text-white">
-                    DEVBOOT<span class="text-blue-500">.</span>
+            <a id="logo" href="#inicio" class="logo-trigger flex items-center gap-3 cursor-pointer group" aria-label="Ir para início">
+                <span class="brand-icon-wrap group-hover:rotate-12 transition-transform">
+                    <img src="img/devboot-icon.svg" class="brand-icon brand-on-dark" alt="" aria-hidden="true">
+                    <img src="img/devboot-icon-dark.svg" class="brand-icon brand-on-light" alt="" aria-hidden="true">
                 </span>
+                <img src="img/devboot-wordmark.svg" class="brand-wordmark brand-on-dark" alt="Devboot">
+                <img src="img/devboot-wordmark-dark.svg" class="brand-wordmark brand-on-light" alt="Devboot">
             </a>
 
             <div class="hidden lg:flex items-center gap-10">
                 <a href="#inicio" class="nav-link text-sm font-bold uppercase tracking-widest transition-colors text-white/70 hover:text-white">Início</a>
                 <a href="#software-house" class="nav-link text-sm font-bold uppercase tracking-widest transition-colors text-white/70 hover:text-white">Software House</a>
-                <a href="#gestorpm" class="nav-link text-sm font-bold uppercase tracking-widest transition-colors text-white/70 hover:text-white">GestorPM</a>
-                <a href="#frotaspro" class="nav-link text-sm font-bold uppercase tracking-widest transition-colors text-white/70 hover:text-white">FrotasPro</a>
+                <a href="#nossos-produtos" class="nav-link text-sm font-bold uppercase tracking-widest transition-colors text-white/70 hover:text-white">Produtos</a>
+                <a href="#contato" class="nav-link text-sm font-bold uppercase tracking-widest transition-colors text-white/70 hover:text-white">Contato</a>
                 <a id="contact-header-button" href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20falar%20sobre%20uma%20solu%C3%A7%C3%A3o%20Devboot." target="_blank" rel="noopener noreferrer" class="header-contact-btn">
                     Falar no WhatsApp
                 </a>
@@ -42,9 +83,9 @@
     <div id="mobile-menu" class="hidden fixed inset-0 z-[100] bg-slate-950 p-12 flex-col items-center justify-center gap-8">
         <a href="#inicio" class="mobile-nav-link text-3xl font-black text-white uppercase tracking-tighter italic hover:text-blue-500 transition-colors">Início</a>
         <a href="#software-house" class="mobile-nav-link text-3xl font-black text-white uppercase tracking-tighter italic hover:text-blue-500 transition-colors">Software House</a>
-        <a href="#gestorpm" class="mobile-nav-link text-3xl font-black text-white uppercase tracking-tighter italic hover:text-blue-500 transition-colors">GestorPM</a>
-        <a href="#frotaspro" class="mobile-nav-link text-3xl font-black text-white uppercase tracking-tighter italic hover:text-blue-500 transition-colors">FrotasPro</a>
-        <a href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20falar%20sobre%20uma%20solu%C3%A7%C3%A3o%20Devboot." target="_blank" rel="noopener noreferrer" class="mobile-contact-link">Contato</a>
+        <a href="#nossos-produtos" class="mobile-nav-link text-3xl font-black text-white uppercase tracking-tighter italic hover:text-blue-500 transition-colors">Produtos</a>
+        <a href="#contato" class="mobile-nav-link text-3xl font-black text-white uppercase tracking-tighter italic hover:text-blue-500 transition-colors">Contato</a>
+        <a href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20falar%20sobre%20uma%20solu%C3%A7%C3%A3o%20Devboot." target="_blank" rel="noopener noreferrer" class="mobile-contact-link">WhatsApp</a>
         <button id="close-mobile-menu" type="button" class="mt-8 text-slate-500 font-bold uppercase text-xs tracking-widest underline">Fechar Menu</button>
     </div>
 
@@ -52,7 +93,7 @@
         <section id="inicio" class="landing-section relative pt-40 pb-24 px-6 overflow-hidden bg-slate-950">
             <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 blur-[120px] rounded-full"></div>
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="max-w-3xl space-y-8">
+                <div class="max-w-3xl space-y-8 reveal">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold tracking-widest uppercase">
                         <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Engenharia de Software de Alta Performance
                     </div>
@@ -77,13 +118,13 @@
 
         <section id="software-house" class="landing-section py-24 bg-white px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16 space-y-4">
+                <div class="text-center mb-16 space-y-4 reveal">
                     <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm italic">O Que Fazemos</h2>
                     <h3 class="text-3xl md:text-5xl font-black text-slate-900">Desenvolvimento Customizado</h3>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-6">
+                    <div class="space-y-6 reveal reveal-left">
                         <h4 class="text-2xl font-bold text-slate-900 italic">Arquitetura Sob Medida</h4>
                         <p class="text-slate-600 text-lg">
                             Não usamos soluções genéricas. Analisamos seu fluxo de negócio para criar tecnologias que realmente impulsionam o seu faturamento.
@@ -107,7 +148,7 @@
                         </div>
                     </div>
 
-                    <div class="relative">
+                    <div class="relative reveal reveal-right">
                         <div class="absolute -inset-4 bg-blue-100/50 blur-3xl rounded-full"></div>
                         <div class="relative bg-slate-950 p-10 rounded-[3rem] text-white shadow-2xl border border-white/5">
                             <h4 class="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -146,14 +187,14 @@
 
         <section id="nossos-produtos" class="landing-section py-24 bg-slate-50 px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16 space-y-4">
+                <div class="text-center mb-16 space-y-4 reveal">
                     <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm italic">Soluções Proprietárias</h2>
                     <h3 class="text-3xl md:text-5xl font-black text-slate-900">Produtos Prontos para Implementar</h3>
                     <p class="text-slate-500 max-w-2xl mx-auto">Sistemas consolidados e testados, prontos para modernizar sua gestão hoje mesmo.</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
-                    <article class="group bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-2xl hover:border-blue-200 transition-all">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="reveal group bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-2xl hover:border-blue-200 transition-all">
                         <div class="flex justify-between items-start mb-12">
                             <div class="bg-blue-600 p-4 rounded-2xl text-white shadow-lg shadow-blue-200"><i data-lucide="building-2" class="w-8 h-8"></i></div>
                             <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-3 py-1 rounded-full uppercase tracking-tighter">Public Tech</span>
@@ -172,7 +213,7 @@
                         </a>
                     </article>
 
-                    <article class="group bg-slate-900 p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-800 hover:shadow-2xl transition-all text-white">
+                    <article class="reveal group bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-slate-800 hover:shadow-2xl transition-all text-white" style="--reveal-delay: 120ms">
                         <div class="flex justify-between items-start mb-12">
                             <div class="bg-emerald-500 p-4 rounded-2xl text-white shadow-lg shadow-emerald-900/40"><i data-lucide="truck" class="w-8 h-8"></i></div>
                             <span class="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full uppercase tracking-tighter">Logistics Tech</span>
@@ -190,13 +231,32 @@
                             Conhecer FrotasPro <i data-lucide="chevron-right"></i>
                         </a>
                     </article>
+
+                    <article class="reveal group bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-2xl hover:border-amber-200 transition-all" style="--reveal-delay: 240ms">
+                        <div class="flex justify-between items-start mb-12">
+                            <div class="bg-amber-500 p-4 rounded-2xl text-white shadow-lg shadow-amber-200"><i data-lucide="scan-search" class="w-8 h-8"></i></div>
+                            <span class="text-[10px] font-bold bg-amber-50 text-amber-600 px-3 py-1 rounded-full uppercase tracking-tighter">Auto Tech</span>
+                        </div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-4">ConferePlaca</h4>
+                        <p class="text-slate-600 mb-8 leading-relaxed">
+                            Consulta e conferência de dados veiculares por placa. Respostas rápidas para quem precisa validar um veículo antes de fechar negócio.
+                        </p>
+                        <div class="flex gap-2 flex-wrap mb-8">
+                            <span class="text-xs font-bold text-slate-400 border border-slate-200 px-3 py-1 rounded-lg">Consulta por Placa</span>
+                            <span class="text-xs font-bold text-slate-400 border border-slate-200 px-3 py-1 rounded-lg">Conferência</span>
+                            <span class="text-xs font-bold text-slate-400 border border-slate-200 px-3 py-1 rounded-lg">Homologação</span>
+                        </div>
+                        <a href="#confereplaca" class="product-page-link flex items-center gap-2 font-bold text-amber-600 group-hover:translate-x-2 transition-transform">
+                            Conhecer ConferePlaca <i data-lucide="chevron-right"></i>
+                        </a>
+                    </article>
                 </div>
             </div>
         </section>
 
         <section id="gestorpm" class="landing-section pt-32 pb-20 bg-gradient-to-b from-blue-50 to-white px-6">
             <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
+                <div class="space-y-6 reveal reveal-left">
                     <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Produto GestorPM</span>
                     <h2 class="text-4xl md:text-5xl font-black text-slate-900 leading-tight">Gestão Pública Inteligente e Integrada</h2>
                     <p class="text-slate-600 text-lg leading-relaxed">
@@ -214,7 +274,7 @@
                     </div>
                     <a href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GestorPM." target="_blank" rel="noopener noreferrer" class="section-cta section-cta-blue">Agendar Demonstração Técnica</a>
                 </div>
-                <div class="bg-slate-200 rounded-3xl h-[400px] overflow-hidden shadow-2xl relative">
+                <div class="bg-slate-200 rounded-3xl h-[400px] overflow-hidden shadow-2xl relative reveal reveal-right">
                     <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dee93?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover opacity-80" alt="Gestão Pública" />
                     <div class="absolute inset-0 bg-blue-900/30 flex items-center justify-center p-8">
                         <div class="bg-white/95 p-8 rounded-3xl backdrop-blur-md shadow-2xl border border-white">
@@ -231,7 +291,7 @@
 
         <section id="frotaspro" class="landing-section pt-32 pb-20 bg-slate-950 text-white px-6">
             <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
+                <div class="space-y-6 reveal reveal-left">
                     <span class="bg-emerald-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Produto FrotasPro</span>
                     <h2 class="text-4xl md:text-5xl font-black leading-tight italic">Gestão de Frotas, Vídeo &amp; Telemetria</h2>
                     <p class="text-slate-400 text-lg leading-relaxed">
@@ -261,7 +321,7 @@
                     </div>
                     <a href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20uma%20proposta%20do%20FrotasPro." target="_blank" rel="noopener noreferrer" class="section-cta section-cta-emerald">Solicitar Orçamento</a>
                 </div>
-                <div class="relative">
+                <div class="relative reveal reveal-right">
                     <div class="absolute -inset-10 bg-emerald-500/10 blur-[100px] rounded-full"></div>
                     <div class="relative bg-slate-900 p-3 rounded-[3rem] border border-slate-800 overflow-hidden shadow-2xl">
                         <div class="absolute top-8 left-8 z-10 bg-red-600 px-3 py-1 rounded-full text-[10px] font-black animate-pulse flex items-center gap-1">
@@ -273,25 +333,198 @@
             </div>
         </section>
 
+        <section id="confereplaca" class="landing-section pt-32 pb-20 bg-gradient-to-b from-amber-50 to-white px-6">
+            <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 reveal reveal-left">
+                    <span class="bg-amber-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Produto ConferePlaca</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 leading-tight">Consulta Veicular Rápida e Confiável</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed">
+                        O ConferePlaca centraliza a consulta e a conferência de dados veiculares por placa. Feito para quem precisa validar um veículo antes de comprar, vender ou colocar na frota.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-slate-700 p-4 bg-white rounded-2xl border border-slate-100">
+                            <i data-lucide="search" class="text-amber-600 w-6 h-6"></i>
+                            <span class="font-bold">Consulta por placa em poucos segundos</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-700 p-4 bg-white rounded-2xl border border-slate-100">
+                            <i data-lucide="file-check" class="text-amber-600 w-6 h-6"></i>
+                            <span class="font-bold">Conferência de dados antes de fechar negócio</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-700 p-4 bg-white rounded-2xl border border-slate-100">
+                            <i data-lucide="shield-check" class="text-amber-600 w-6 h-6"></i>
+                            <span class="font-bold">Ambiente de homologação antes de cada release</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 flex-wrap pt-4">
+                        <a href="https://confereplaca.com.br" target="_blank" rel="noopener noreferrer" class="section-cta section-cta-amber">Acessar ConferePlaca</a>
+                    </div>
+                </div>
+
+                <div class="relative reveal reveal-right">
+                    <div class="absolute -inset-10 bg-amber-500/10 blur-[120px] rounded-full"></div>
+                    <div class="relative bg-white p-8 rounded-[3rem] border border-slate-100 shadow-2xl space-y-6">
+                        <div class="flex justify-center">
+                            <div class="plate-mock">
+                                <small>Brasil</small>
+                                <strong>ABC1D23</strong>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="result-row">
+                                <span>Marca / Modelo</span>
+                                <span>—</span>
+                            </div>
+                            <div class="result-row">
+                                <span>Ano de fabricação</span>
+                                <span>—</span>
+                            </div>
+                            <div class="result-row">
+                                <span>Situação cadastral</span>
+                                <span class="text-emerald-500">Conferida</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 text-center">Exemplo ilustrativo da tela de consulta.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="apps" class="landing-section pt-32 pb-20 bg-slate-950 text-white px-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-violet-500/10 blur-[120px] rounded-full"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-16 space-y-4 reveal">
+                    <h2 class="text-violet-400 font-bold uppercase tracking-widest text-sm italic">Aplicativos</h2>
+                    <h3 class="text-3xl md:text-5xl font-black">Nossos Apps para Android</h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Produtos Devboot que saem do navegador e vão para o bolso do usuário, publicados na Google Play.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <article class="app-card reveal">
+                        <div class="app-card-icon bg-violet-500"><i data-lucide="sticky-note" class="w-7 h-7"></i></div>
+                        <div>
+                            <h4 class="text-3xl font-black mb-3">TakeNote</h4>
+                            <p class="text-slate-400 leading-relaxed">
+                                Aplicativo de anotações rápidas, pensado para capturar ideias sem atrito e manter tudo organizado no dia a dia.
+                            </p>
+                        </div>
+                        <ul class="app-feature-list">
+                            <li><i data-lucide="zap" class="w-4 h-4 text-violet-400"></i> Captura rápida de notas</li>
+                            <li><i data-lucide="smartphone" class="w-4 h-4 text-violet-400"></i> Interface leve e direta</li>
+                            <li><i data-lucide="shield-check" class="w-4 h-4 text-violet-400"></i> Política de privacidade publicada</li>
+                        </ul>
+                        <!-- TODO: trocar href pelo link da Play Store do TakeNote -->
+                        <a href="#" class="play-badge" aria-label="TakeNote na Google Play">
+                            <i data-lucide="play" class="w-6 h-6 text-violet-400"></i>
+                            <span class="play-badge-text">
+                                <small>Disponível no</small>
+                                <strong>Google Play</strong>
+                            </span>
+                        </a>
+                    </article>
+
+                    <article class="app-card reveal" style="--reveal-delay: 140ms">
+                        <div class="app-card-icon bg-emerald-500"><i data-lucide="truck" class="w-7 h-7"></i></div>
+                        <div>
+                            <h4 class="text-3xl font-black mb-3">FrotasPro</h4>
+                            <p class="text-slate-400 leading-relaxed">
+                                O app da plataforma de frotas. Acompanhe a operação de onde estiver, com a mesma base de rastreamento e telemetria do sistema web.
+                            </p>
+                        </div>
+                        <ul class="app-feature-list">
+                            <li><i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> Posição dos veículos em tempo real</li>
+                            <li><i data-lucide="bell" class="w-4 h-4 text-emerald-400"></i> Alertas da operação no celular</li>
+                            <li><i data-lucide="video" class="w-4 h-4 text-emerald-400"></i> Integrado ao vídeo-rastreamento</li>
+                        </ul>
+                        <!-- TODO: trocar href pelo link da Play Store do FrotasPro -->
+                        <a href="#" class="play-badge" aria-label="FrotasPro na Google Play">
+                            <i data-lucide="play" class="w-6 h-6 text-emerald-400"></i>
+                            <span class="play-badge-text">
+                                <small>Disponível no</small>
+                                <strong>Google Play</strong>
+                            </span>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="videomonitoramento" class="landing-section py-24 bg-gradient-to-b from-cyan-50 to-white px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16 space-y-4 reveal">
+                    <h2 class="text-cyan-600 font-bold uppercase tracking-widest text-sm italic">Câmeras &amp; Videomonitoramento</h2>
+                    <h3 class="text-3xl md:text-5xl font-black text-slate-900">CFTV Projetado Antes de Instalar</h3>
+                    <p class="text-slate-500 max-w-2xl mx-auto">
+                        Cobertura calculada no papel, equipamento certo no lugar certo. Do projeto à operação, sem ponto cego e sem câmera desperdiçada.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="cctv-card reveal">
+                        <div class="cctv-card-icon"><i data-lucide="ruler" class="w-6 h-6"></i></div>
+                        <h4 class="text-lg font-bold text-slate-900">Projeto de Cobertura</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed">Lente, sensor, resolução, IR e altura de instalação calculados para saber o alcance real de cada câmera.</p>
+                    </div>
+                    <div class="cctv-card reveal" style="--reveal-delay: 100ms">
+                        <div class="cctv-card-icon"><i data-lucide="camera" class="w-6 h-6"></i></div>
+                        <h4 class="text-lg font-bold text-slate-900">Instalação</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed">Câmeras IP, gravador e rede dimensionados para o ambiente, com cabeamento e energia planejados.</p>
+                    </div>
+                    <div class="cctv-card reveal" style="--reveal-delay: 200ms">
+                        <div class="cctv-card-icon"><i data-lucide="cpu" class="w-6 h-6"></i></div>
+                        <h4 class="text-lg font-bold text-slate-900">Análise por IA</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed">Visão computacional sobre o vídeo ao vivo para detecção e contagem — a mesma base que roda no GreenVision.</p>
+                    </div>
+                    <div class="cctv-card reveal" style="--reveal-delay: 300ms">
+                        <div class="cctv-card-icon"><i data-lucide="cloud" class="w-6 h-6"></i></div>
+                        <h4 class="text-lg font-bold text-slate-900">Acesso Remoto</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed">Visualização das câmeras de qualquer lugar, com acesso controlado e gravação disponível quando precisar.</p>
+                    </div>
+                </div>
+
+                <div class="camseek-box reveal reveal-zoom">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-3xl"></div>
+                    <div class="relative z-10">
+                        <span class="text-[10px] font-bold bg-cyan-500/10 text-cyan-500 px-3 py-1 rounded-full uppercase tracking-widest">Ferramenta Própria</span>
+                        <h4 class="text-3xl font-black mt-4 mb-4 italic">CamSeek</h4>
+                        <p class="text-slate-400 leading-relaxed mb-8">
+                            Nossa ferramenta de projeto de CFTV. Você configura o cenário e ela calcula o alcance real da câmera — é com ela que fechamos o layout antes de encostar em qualquer equipamento.
+                        </p>
+                        <a href="https://camseek.devboot.com.br" target="_blank" rel="noopener noreferrer" class="section-cta section-cta-cyan">Abrir o CamSeek</a>
+                    </div>
+                    <div class="relative z-10 space-y-4">
+                        <div class="camseek-spec"><span>Lente</span><span>2.8 – 12 mm</span></div>
+                        <div class="camseek-spec"><span>Sensor</span><span>1/2.8"</span></div>
+                        <div class="camseek-spec"><span>Resolução</span><span>4 MP</span></div>
+                        <div class="camseek-spec"><span>Alcance IR</span><span>30 m</span></div>
+                        <div class="camseek-spec"><span>Altura</span><span>3.5 m</span></div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-16 reveal">
+                    <a href="https://wa.me/5587991402037?text=Ol%C3%A1%2C%20quero%20um%20projeto%20de%20CFTV%20com%20a%20Devboot." target="_blank" rel="noopener noreferrer" class="section-cta section-cta-cyan">Solicitar Projeto de CFTV</a>
+                </div>
+            </div>
+        </section>
+
         <section id="software-factory" class="landing-section py-24 px-6 bg-slate-50">
             <div class="max-w-4xl mx-auto text-center space-y-8">
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900">Software Factory Premium</h2>
                 <p class="text-slate-600 text-xl">Transformamos sua visão de negócio em sistemas digitais escaláveis com tecnologias de ponta.</p>
 
                 <div class="grid md:grid-cols-2 gap-8 text-left">
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:border-blue-500 transition-colors">
+                    <div class="reveal bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:border-blue-500 transition-colors">
                         <div class="bg-blue-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="code-2" class="text-blue-600 w-7 h-7"></i></div>
                         <h3 class="text-2xl font-bold mb-3 text-slate-900">PHP &amp; Laravel</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Nossa stack preferida para sistemas que exigem alta segurança, integridade de dados e complexidade de regras de negócio.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:border-indigo-500 transition-colors">
+                    <div class="reveal bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:border-indigo-500 transition-colors" style="--reveal-delay: 120ms">
                         <div class="bg-indigo-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="smartphone" class="text-indigo-600 w-7 h-7"></i></div>
                         <h3 class="text-2xl font-bold mb-3 text-slate-900">React Native</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Desenvolvemos aplicativos fluidos para Android e iOS, aproveitando o melhor de cada plataforma com performance otimizada.</p>
                     </div>
                 </div>
 
-                <div class="bg-slate-950 p-12 rounded-[3.5rem] mt-16 text-white text-left relative overflow-hidden">
+                <div class="reveal reveal-zoom bg-slate-950 p-12 rounded-[3.5rem] mt-16 text-white text-left relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-3xl"></div>
                     <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                         <div>
@@ -327,9 +560,9 @@
     <footer id="contato" class="bg-slate-950 text-slate-400 py-20 px-6 border-t border-slate-900">
         <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 text-center md:text-left">
             <div class="col-span-2 space-y-6">
-                <div class="flex items-center gap-2 text-white justify-center md:justify-start">
-                    <i data-lucide="code-2" class="text-blue-500"></i>
-                    <span class="text-2xl font-black">DEVBOOT</span>
+                <div class="flex items-center gap-3 justify-center md:justify-start">
+                    <img src="img/devboot-icon.svg" class="footer-brand-icon" alt="" aria-hidden="true">
+                    <img src="img/devboot-wordmark.svg" class="footer-brand-wordmark" alt="Devboot">
                 </div>
                 <p class="max-w-sm text-lg text-slate-500 mx-auto md:mx-0">
                     Engenharia de software premium e produtos SaaS de alto impacto para empresas e prefeituras.
@@ -344,6 +577,9 @@
                 <ul class="space-y-4 text-sm">
                     <li><a href="#gestorpm" class="footer-page-link">GestorPM</a></li>
                     <li><a href="#frotaspro" class="footer-page-link">FrotasPro</a></li>
+                    <li><a href="#confereplaca" class="footer-page-link">ConferePlaca</a></li>
+                    <li><a href="#apps" class="footer-page-link">Aplicativos</a></li>
+                    <li><a href="#videomonitoramento" class="footer-page-link">Videomonitoramento</a></li>
                     <li><a href="#software-house" class="footer-page-link">Software Factory</a></li>
                 </ul>
             </div>
