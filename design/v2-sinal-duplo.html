@@ -1505,7 +1505,7 @@ body {
      comercial@devboot.com.br — e para esse endereco que os envios vao.
      Enquanto estiver vazia, o formulario roda em modo preview: valida e
      mostra os estados, mas nao envia nada. */
-  var CHAVE_WEB3FORMS = '';
+  var CHAVE_WEB3FORMS = '2672bcd1-5b42-45ef-9fad-99537be95535';
 
   var form = document.getElementById('form-contato');
   if (form) {
@@ -1574,10 +1574,10 @@ body {
           access_key: CHAVE_WEB3FORMS,
           subject: 'Contato pelo site - ' + form.nome.value.trim(),
           from_name: 'Site Devboot',
-          nome: form.nome.value.trim(),
+          name: form.nome.value.trim(),
           email: form.email.value.trim(),
           whatsapp: form.whatsapp.value.trim() || 'nao informado',
-          mensagem: form.mensagem.value.trim()
+          message: form.mensagem.value.trim()
         })
       })
         .then(function (r) { return r.json(); })
