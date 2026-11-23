@@ -93,12 +93,34 @@
         ]
       ],
       "pictograma": "bullet",
-      "fotos": [],
+      "fotos": [
+        {
+          "arquivo": "1.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-12/vip-5440-ia-persp-dir-1_0.png"
+        },
+        {
+          "arquivo": "2.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-12/vip-5440-ia-persp-esq-1.png"
+        },
+        {
+          "arquivo": "3.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-12/vip-5440-ia-front-2.png"
+        },
+        {
+          "arquivo": "4.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-12/vip-5440-ia-lat-1.png"
+        },
+        {
+          "arquivo": "5.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-12/vip-5440-ia-persp-dir-2.png"
+        }
+      ],
       "fonte": [
         "https://backend.intelbras.com/sites/default/files/2026-05/Ficha%20t%C3%A9cnica%20VIP%205440%20IA%20-%20VIP%205440%20D%20IA%20(V9).pdf",
         "https://www.intelbras.com/pt-br/camera-bullet-com-inteligencia-artificial-vip-5440-ia"
       ],
-      "destaque": true
+      "destaque": true,
+      "og": "og.jpg"
     },
     {
       "slug": "dome-full-color-vip-3230-d-fc-ia",
@@ -158,12 +180,26 @@
         ]
       ],
       "pictograma": "dome",
-      "fotos": [],
+      "fotos": [
+        {
+          "arquivo": "1.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-06/VIP%203230%20D%20Full%20Color+_frontal-2.png"
+        },
+        {
+          "arquivo": "2.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-06/VIP%203230%20D%20Full%20Color+_persp-dir-1.png"
+        },
+        {
+          "arquivo": "3.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-06/VIP%203230%20D%20Full%20Color+_persp-esq-1.png"
+        }
+      ],
       "fonte": [
         "https://backend.intelbras.com/sites/default/files/2025-07/datasheet-vip-3230-fc+-ia-vip-3230-d-fc+-ia-pt.pdf",
         "https://www.intelbras.com/pt-br/camera-dome-com-full-color-inteligente-vip-3230-d-fc-ia"
       ],
-      "destaque": true
+      "destaque": true,
+      "og": "og.jpg"
     },
     {
       "slug": "speed-dome-vip-5232-sd-ia-g2",
@@ -283,12 +319,30 @@
         ]
       ],
       "pictograma": "nvr",
-      "fotos": [],
+      "fotos": [
+        {
+          "arquivo": "1.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-07/invd-5232-16-p-frente.png"
+        },
+        {
+          "arquivo": "2.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-07/invd-5232-16-p-dir.png"
+        },
+        {
+          "arquivo": "3.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-07/invd-5232-16-p-esq.png"
+        },
+        {
+          "arquivo": "4.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-11/iNVD%205232-16P_tras.png"
+        }
+      ],
       "fonte": [
         "https://backend.intelbras.com/sites/default/files/2024-07/datasheet-invd-5232-16-p-pt.pdf",
         "https://www.intelbras.com/pt-br/gravador-digital-de-video-com-32-canais-ip-invd-5232-16p"
       ],
-      "destaque": true
+      "destaque": true,
+      "og": "og.jpg"
     },
     {
       "slug": "controlador-facial-ss-3542-mf",
@@ -350,7 +404,8 @@
       "pictograma": "face",
       "fotos": [],
       "fonte": [
-        "https://backend.intelbras.com/sites/default/files/2026-04/Datasheet%20SS%203542%20MF.pdf"
+        "https://backend.intelbras.com/sites/default/files/2026-04/Datasheet%20SS%203542%20MF.pdf",
+        "https://www.intelbras.com/pt-br/controlador-de-acesso-facial-com-biometria-digital-ss-3542-mf"
       ],
       "destaque": true
     },
@@ -408,11 +463,21 @@
         ]
       ],
       "pictograma": "face",
-      "fotos": [],
+      "fotos": [
+        {
+          "arquivo": "1.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-03/SS%203541_persp-dir-Foto_sombra.png"
+        },
+        {
+          "arquivo": "2.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-03/SS-3541_persp-esq-FOTO_GRAFISMO.png"
+        }
+      ],
       "fonte": [
         "https://backend.intelbras.com/sites/default/files/2025-11/Datasheet%20SS%203541%20MF%20Lite.pdf",
         "https://www.intelbras.com/pt-br/controlador-de-acesso-facial-ss-3541-mf-lite"
-      ]
+      ],
+      "og": "og.jpg"
     }
   ]
 }
