@@ -176,12 +176,45 @@ class McpBase(unittest.TestCase):
             json=dict(jsonrpc="2.0", id=1, method=method, params=params or {}))
 
 
+class ValidationDetail(ApiBase):
+    """A 422 must say which field failed and why, so a scheduled task can fix its payload."""
+
+    def test_rest_422_names_the_field_and_the_reason(self):
+        response = self.create(title="abc", excerpt="curto")
+        self.assertEqual(response.status_code, 422)
+        fields = {item["field"]: item["reason"] for item in response.json()["fields"]}
+        self.assertIn("title", fields)
+        self.assertIn("excerpt", fields)
+        self.assertIn("5", fields["title"])  # "at least 5 characters"
+
+    def test_rest_422_reports_the_control_character_reason_without_echoing_content(self):
+        response = self.create(title="Título com\x0bcontrole")
+        fields = {item["field"]: item["reason"] for item in response.json()["fields"]}
+        self.assertEqual(fields["title"], "Caracteres de controle não são permitidos")
+        self.assertNotIn("Título com", response.text)
+
+    def test_rest_422_for_unknown_field_and_malformed_json(self):
+        unknown = self.create(unknown="x").json()["fields"]
+        self.assertEqual(unknown[0]["field"], "unknown")
+        broken = self.client.post("/api/blog/articles", content="{", headers=self.headers)
+        self.assertEqual(broken.status_code, 422)
+        self.assertEqual(broken.json()["fields"][0]["field"], "body")
+
+
 class McpHardening(McpBase):
     def test_list_valued_scope_claim_is_401_not_500(self):
         response = self.rpc("tools/list", token=self.token(scope=["blog:write"]))
         self.assertEqual(response.status_code, 401)
         self.assertEqual(self.rpc("tools/list", token=self.token(scope=None)).status_code, 401)
         self.assertEqual(self.rpc("tools/list", token=self.token(scope=7)).status_code, 401)
+
+    def test_mcp_tool_error_names_the_field_and_the_reason(self):
+        response = self.rpc("tools/call", dict(name="create_article", arguments=dict(article=article(title="abc"))))
+        result = response.json()["result"]
+        self.assertTrue(result["isError"])
+        text = result["content"][0]["text"]
+        self.assertIn("title", text)
+        self.assertIn("at least 5 characters", text)
 
     def test_string_scope_with_several_values_still_works(self):  # characterization
         self.assertEqual(self.rpc("tools/list", token=self.token(scope="openid blog:write")).status_code, 200)
@@ -191,6 +224,17 @@ class McpHardening(McpBase):
             with self.subTest(host=host):
                 response = self.rpc("tools/list", headers={"Host": host})
                 self.assertEqual(response.status_code, 200, response.text)
+
+    def test_bare_base_url_also_accepts_www(self):
+        app = create_app(replace(self.settings, base_url="https://devboot.com.br"))
+        with TestClient(app) as client, patch.object(app.state.auth.jwks, "get_signing_key_from_jwt",
+                return_value=SimpleNamespace(key=self.key.public_key())):
+            for host in ("devboot.com.br", "www.devboot.com.br"):
+                with self.subTest(host=host):
+                    response = client.post("/mcp", headers={"Authorization": "Bearer " + self.token(aud="https://devboot.com.br/mcp"),
+                        "Accept": "application/json, text/event-stream", "Host": host},
+                        json=dict(jsonrpc="2.0", id=1, method="tools/list"))
+                    self.assertEqual(response.status_code, 200, response.text)
 
     def test_foreign_host_is_still_refused(self):  # characterization
         for host in ("evil.example.com", "devboot.com.br.evil.example.com", "wwwdevboot.com.br"):

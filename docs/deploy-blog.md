@@ -100,7 +100,7 @@ umask                                            # must print 0022 (or 0002), ne
 git pull --ff-only
 
 #    Nothing the web server serves may be unreadable. This must print nothing:
-find public nginx -type f ! -perm -o+r
+find public nginx \( -type f ! -perm -o+r \) -o \( -type d ! -perm -o+x \)
 
 # 3. Build and start the blog first; wait until it is healthy.
 #    The image build fails (instead of the container crash-looping) if the runtime user cannot
@@ -108,8 +108,14 @@ find public nginx -type f ! -perm -o+r
 docker compose up -d --build --wait blog
 
 # 4. Recreate web so it mounts nginx/default.conf and joins blog-internal (a second or two).
-docker compose up -d --no-deps web
+#    --force-recreate is REQUIRED, not optional. Compose sees no change in its own file and would
+#    leave `web` running; and `git pull` replaces nginx/default.conf by rename, so the container's
+#    single-file bind mount keeps pointing at the OLD inode (found in production: /blog kept
+#    redirecting to http://...). Do this on every deploy that changes nginx/default.conf.
+docker compose up -d --no-deps --force-recreate web
 docker compose logs --tail 20 web                # no "[emerg]"
+# Prove the running conf is the committed one (must print "conf matches"):
+docker compose exec -T web cat /etc/nginx/conf.d/default.conf | diff - nginx/default.conf && echo "conf matches"
 ```
 
 `BLOG_OAUTH_ISSUER` / `BLOG_OAUTH_JWKS_URL` stay empty here: publishing through the API with the
@@ -134,6 +140,9 @@ for p in / /blog/ /blog/sitemap.xml /blog/feed.xml; do
   printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "https://www.devboot.com.br$p"
 done                                              # expect 200 four times
 
+# the running nginx config is the committed one: /blog redirects relatively (keeps https)
+curl -sI https://www.devboot.com.br/blog | grep -i '^location: /blog/'      # must print the line
+
 for p in sitemap.xml feed.xml; do                  # well-formed XML
   curl -s "https://www.devboot.com.br/blog/$p" | python3 -c 'import sys,xml.dom.minidom as m; m.parseString(sys.stdin.buffer.read()); print("well-formed")'
 done
@@ -154,7 +163,7 @@ Full rollback to the previous release:
 ```sh
 cd /opt/apps/devboot-site3
 git checkout --detach "$PREV"                    # the sha from step 0
-docker compose up -d --remove-orphans web        # removes the now-undeclared blog container
+docker compose up -d --remove-orphans --force-recreate web   # removes the now-undeclared blog container
                                                  # and recreates web without the conf mount
 ```
 

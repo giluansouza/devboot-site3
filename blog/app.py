@@ -138,9 +138,10 @@ def create_app(settings=None):
     auth = Auth(settings)
     base = urlparse(settings.base_url)
     host = base.netloc
-    # Traefik routes both www and the bare domain to this service; accept both.
+    # Traefik routes both www and the bare domain to this service; accept both, whichever the
+    # configured base URL names.
     bare = host.removeprefix("www.")
-    hosts = [host] + ([bare] if bare != host else [])
+    hosts = [bare, "www." + bare]
     mcp = BlogMCP("Devboot Blog", stateless_http=True, json_response=True,
         streamable_http_path="/mcp", transport_security=TransportSecuritySettings(
             enable_dns_rebinding_protection=True, allowed_hosts=[*hosts, "testserver", "localhost:*", "127.0.0.1:*"],
@@ -243,8 +244,12 @@ def create_app(settings=None):
             article = ArticleInput.model_validate_json(body)
             saved, created = store.save(article, settings.allow_auto_publish)
             return JSONResponse(outcome(saved, created), 201 if created else 200)
-        except ValidationError:
-            return JSONResponse({"error": "JSON ou campos inválidos. Consulte docs/blog.md."}, 422)
+        except ValidationError as exc:
+            # Name each failing field and why, never the submitted values.
+            fields = [{"field": ".".join(str(part) for part in error["loc"]) or "body",
+                       "reason": error["msg"].removeprefix("Value error, ")}
+                      for error in exc.errors(include_url=False, include_input=False, include_context=False)]
+            return JSONResponse({"error": "JSON ou campos inválidos. Consulte docs/blog.md.", "fields": fields}, 422)
         except Conflict as exc:
             return JSONResponse({"error": str(exc)}, 409)
 
