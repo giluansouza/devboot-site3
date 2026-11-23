@@ -25,10 +25,10 @@ class OfflineAccessIsAdvertisedNotRequired(McpBase):
         challenge = self.client.post("/mcp", json={}).headers["www-authenticate"]
         self.assertIn('scope="blog:write offline_access"', challenge)
 
-    def test_token_with_only_blog_write_is_still_accepted(self):
+    def test_token_with_only_blog_write_is_still_accepted(self):  # @covers-existing
         self.assertEqual(self.rpc("tools/list", token=self.token(scope="blog:write")).status_code, 200)
 
-    def test_token_with_only_offline_access_is_refused(self):
+    def test_token_with_only_offline_access_is_refused(self):  # @covers-existing
         self.assertEqual(self.rpc("tools/list", token=self.token(scope="offline_access")).status_code, 401)
 
 
@@ -45,7 +45,7 @@ class FlagFlipRetry(ApiBase):
             self.assertEqual((body["status"], body["awaiting_approval"]), ("published", False))
             self.assertEqual(len(off.get("/api/blog/articles", headers=self.headers).json()["articles"]), 1)
 
-    def test_a_different_payload_after_the_flip_still_conflicts(self):
+    def test_a_different_payload_after_the_flip_still_conflicts(self):  # @covers-existing
         self.create(status="published")
         with TestClient(create_app(replace(self.settings, allow_auto_publish=False))) as off:
             changed = off.post("/api/blog/articles", headers=self.headers, json=article(status="published", title="Outro título aqui"))
