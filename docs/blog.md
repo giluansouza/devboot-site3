@@ -13,11 +13,14 @@ não lê nem altera automaticamente os agendamentos da conta do usuário.
 
 ChatGPT executa a pesquisa → gera o resumo → envia esse mesmo resumo, sem edição,
 à ferramenta `create_article` pelo MCP
-→ o blog publica e retorna a URL. Não há exportação de histórico, cópia de
+→ o blog guarda a matéria como **rascunho** e responde `awaiting_approval: true`;
+o editor aprova depois, fora do ChatGPT. Não há exportação de histórico, cópia de
 matérias, captura de navegador ou login automatizado na conta ChatGPT.
 
 Para novas execuções, a tarefa deve usar a conexão Devboot Blog e enviar
-`status=published`. A instalação e a autorização da conexão são feitas uma vez.
+`status=draft` e informar ao final que a matéria aguarda aprovação. Nada é
+publicado pela tarefa: a publicação automática está desligada por decisão do
+dono. A instalação e a autorização da conexão são feitas uma vez.
 As permissões de escrita do ChatGPT precisam permitir essa ação recorrente;
 se a plataforma exigir aprovação por execução, a automação ficará pendente.
 O teste com um cliente MCP valida o servidor, mas não substitui o teste de
@@ -116,8 +119,12 @@ uv run python -m unittest discover -s tests -v
 4. Confirme a landing, `/blog/`, `/blog/feed.xml` e `/blog/sitemap.xml`.
    Não foi incluído artigo de exemplo no banco de produção.
 
-`BLOG_ALLOW_AUTO_PUBLISH=false` é o padrão inicial: aceita rascunhos e impede
-que as ferramentas publiquem diretamente. Para permitir publicação automática,
+`BLOG_ALLOW_AUTO_PUBLISH=false` é o padrão e a decisão vigente: as ferramentas
+nunca publicam diretamente. Um pedido com `status=published` **não é recusado nem
+perdido**: a matéria é guardada como rascunho e a resposta traz `status: "draft"`,
+`awaiting_approval: true` e a mensagem "Recebida como rascunho; aguarda aprovação
+do editor.". O mesmo vale para o MCP e para `POST /api/blog/articles`. O reenvio
+da mesma edição continua idempotente. Para permitir publicação automática,
 configure `BLOG_ALLOW_AUTO_PUBLISH=true` e recrie o serviço `blog`. O endpoint
 manual de aprovação continua disponível com a credencial administrativa da API.
 
@@ -132,7 +139,7 @@ O MCP é implementado com o SDK oficial e usa Streamable HTTP. Há três ferrame
 
 - `list_articles`: consulta edições e títulos para evitar repetição de pautas;
 - `read_article`: consulta o conteúdo de uma matéria ou rascunho existente;
-- `create_article`: recebe o objeto `article` descrito abaixo e retorna status e URL.
+- `create_article`: recebe o objeto `article` descrito abaixo e retorna `status`, `awaiting_approval`, `message` e, se publicada, a URL.
 
 ### Autenticação OAuth
 
@@ -160,8 +167,8 @@ podem publicar na Devboot. A API key administrativa **não** é uma credencial M
 No ChatGPT, adicione uma conexão MCP personalizada apontando para
 `https://www.devboot.com.br/mcp`, escolha OAuth e conclua o login.
 Instale/habilite a ferramenta no chat dos agendamentos e faça um teste manual
-com `status=draft`. Após conferir, teste uma publicação e a primeira execução
-agendada. As permissões da conta/workspace podem exigir confirmação de escrita:
+com `status=draft`. Após conferir, teste a primeira execução agendada e
+confirme que a resposta indica `awaiting_approval`. As permissões da conta/workspace podem exigir confirmação de escrita:
 valide o funcionamento sem intervenção antes de considerar a automação ativa.
 
 Sem OAuth configurado, `/mcp` retorna 503. Tokens sem assinatura válida, issuer,
@@ -220,7 +227,7 @@ MCP para preservar a opção de revisão manual.
 ## Instrução para acrescentar aos dois agendamentos
 
 Preserve a pauta original e acrescente o texto abaixo. Ajuste `terca` para o
-identificador fixo de cada agendamento e use `published` para o fluxo automático autorizado. Os horários e as pautas originais precisam ser
+identificador fixo de cada agendamento e mantenha `status=draft`: a publicação é aprovada pelo editor. Os horários e as pautas originais precisam ser
 informados pelo usuário; este projeto não os conhece.
 
 > Ao terminar a pesquisa e gerar o resumo desta execução, publique no blog da
@@ -233,8 +240,9 @@ informados pelo usuário; este projeto não os conhece.
 > hoje já existe. Use edition_key terca-AAAA-MM-DD, com a data de America/Recife.
 > Se a edição já existir, consulte-a e informe seu status; não crie outra chave
 > para a mesma execução. Envie o resumo à ferramenta create_article com
-> status=published. Só informe que foi salva ou publicada após a ferramenta confirmar.
-> Para publicação, informe a URL retornada. Se houver erro, reporte-o claramente
+> status=draft. Só informe que a matéria foi recebida após a ferramenta confirmar,
+> e informe o resultado de `awaiting_approval`: a matéria aguarda aprovação do
+> editor e ainda não está publicada. Nunca diga que foi publicada. Se houver erro, reporte-o claramente
 > e preserve o conteúdo nesta conversa para nova tentativa.
 
 Uma execução avulsa usa a mesma edição da data se for uma repetição daquela
