@@ -649,7 +649,9 @@ class _Texto(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag in ("script", "style", "svg"):
             self.pula += 1
-        elif tag in ("h1", "h2", "h3", "li", "p", "div", "section", "dt", "dd"):
+        elif tag == "dd":
+            self.partes.append(" : ")
+        elif tag in ("h1", "h2", "h3", "li", "p", "div", "section", "dt", "span", "a", "b", "button"):
             self.partes.append("\n")
 
     def handle_endtag(self, tag):
@@ -675,6 +677,7 @@ def texto_para_revisao(arquivos):
         p = _Texto()
         p.feed(corpo)
         linhas = [" ".join(x.split()) for x in "".join(p.partes).split("\n")]
+        linhas = [x for x in linhas if x not in ("↗", "→")]
         saida += [f"## /loja/{k[:-len('index.html')] if k.endswith('index.html') else k}",
                   f"- Título: {_html.unescape(titulo)}", f"- Descrição (Google): {_html.unescape(desc)}", "",
                   *[f"- {_html.unescape(x)}" for x in linhas if x], ""]
