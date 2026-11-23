@@ -1,0 +1,396 @@
+# Loja: texto de todas as páginas
+
+Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edite.
+
+## /loja/
+- Título: Loja Devboot: câmeras, gravadores e controle de acesso
+- Descrição (Google): Câmeras, gravadores e controle de acesso Intelbras. Compre no Mercado Livre; instalamos em Petrolina, Juazeiro, Dormentes e região.
+
+- Loja Devboot
+- Equipamento que a gente instala.
+- Compra segura no Mercado Livre.
+- Câmeras, gravadores e controle de acesso escolhidos por quem projeta e instala segurança no sertão. Você compra no Mercado Livre; se quiser, a instalação é com a gente.
+- Revenda autorizada Intelbras · Instalamos em Petrolina, Juazeiro, Dormentes e região
+- Câmeras e gravadores
+- 4 produtos · câmeras, gravadores
+- Ver a linha
+- Controle de acesso
+- 2 produtos · controladores faciais
+- Ver a linha
+- Destaques
+- 4 produtos
+- Câmera bullet 4 MP com IR de 40 m
+- Intelbras VIP 5440 IA
+- 4 MP (2688×1520) · 3,6 mm fixa
+- Câmera dome Full Color 2 MP
+- Intelbras VIP 3230 D FC+ IA
+- 2 MP (1920×1080) · 2,8 mm fixa
+- Gravador NVR 32 canais com 16 PoE
+- Intelbras iNVD 5232-16P
+- 32 IP · 16 (802.3af/at)
+- Imagem ilustrativa
+- Controlador facial interno e externo
+- Intelbras SS 3542 MF
+- até 10.000 · IP55 (interno e externo)
+- Como a compra funciona
+- PASSO 1
+- Escolha aqui
+- Cada produto tem foto, ficha técnica e para que serve.
+- PASSO 2
+- Compre no Mercado Livre
+- O botão abre o anúncio da Devboot no ML. Preço, pagamento e entrega ficam por lá.
+- PASSO 3
+- Precisa instalar?
+- Chame no WhatsApp. Instalamos em Petrolina, Juazeiro, Dormentes e região.
+- Precisa de um projeto completo?
+- Calculamos a cobertura de cada câmera antes de instalar, com o CamSeek.
+- Pedir orçamento
+- Abrir o CamSeek
+- (abre em nova aba)
+
+## /loja/404.html
+- Título: Produto não encontrado | Loja Devboot
+- Descrição (Google): Esse endereço não está na vitrine da Devboot. Veja as linhas da loja ou pergunte no WhatsApp.
+
+- 404 · produto não encontrado
+- Esse produto não está na vitrine.
+- O endereço pode ter mudado, ou o produto saiu da loja. Veja as linhas abaixo ou pergunte direto.
+- Câmeras e gravadores
+- 4 produtos · câmeras, gravadores
+- Ver a linha
+- Controle de acesso
+- 2 produtos · controladores faciais
+- Ver a linha
+- Procurando um modelo? Pergunte
+- Ir para o início da loja
+
+## /loja/bullet-4mp-vip-5440-ia/
+- Título: Câmera bullet 4 MP com IR de 40 m Intelbras VIP 5440 IA | Loja Devboot
+- Descrição (Google): Câmera de 4 MP para uso interno e externo, com visão noturna de 40 m, microfone embutido e IA para linha e cerca virtual.
+
+- Loja
+- /
+- Câmeras e gravadores
+- 1 / 5
+- Câmera bullet 4 MP com IR de 40 m
+- Intelbras VIP 5440 IA
+- Câmera de 4 MP para uso interno e externo, com visão noturna de 40 m, microfone embutido e IA para linha e cerca virtual.
+- Ver no Mercado Livre
+- (abre o Mercado Livre em nova aba)
+- Pedir orçamento no WhatsApp
+- Vendido por
+- DEVBOOT_TECNOLOGIA no Mercado Livre.
+- Preço, pagamento e entrega ficam no anúncio.
+- Revenda autorizada Intelbras.
+- Visão noturna por infravermelho de até 40 m
+- Microfone embutido, com entrada e saída de áudio
+- Liga por cabo de rede (PoE) ou fonte de 12 V
+- Ficha técnica
+- Resolução : 4 MP (2688×1520)
+- Lente : 3,6 mm fixa
+- Ângulo de visão : 88° (horizontal)
+- Alcance IR : 40 m
+- Proteção : IP67
+- Alimentação : 12 Vdc ou PoE 802.3af
+- Áudio : microfone embutido, entrada e saída
+- Cartão micro-SD : até 256 GB
+- Compressão : H.265 e H.264
+- IA embarcada : detecção de face, linha e cerca virtual
+- Precisa instalar?
+- Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
+- Mais câmeras
+- Câmera dome Full Color 2 MP
+- Intelbras VIP 3230 D FC+ IA
+- 2 MP (1920×1080) · 2,8 mm fixa
+- Imagem ilustrativa
+- Câmera speed dome com zoom 32x
+- Intelbras VIP 5232 SD IA G2
+- 2 MP (1080p) · 32x
+
+## /loja/cameras-e-gravadores/
+- Título: Câmeras e gravadores | Loja Devboot
+- Descrição (Google): Câmeras IP internas e externas e gravadores de rede (NVR) para CFTV.
+
+- Loja
+- /
+- Câmeras e gravadores
+- Câmeras e gravadores
+- Câmeras IP internas e externas e gravadores de rede (NVR) para CFTV.
+- Câmeras
+- 3
+- Gravadores
+- 1
+- câmeras
+- 3
+- Câmera bullet 4 MP com IR de 40 m
+- Intelbras VIP 5440 IA
+- 4 MP (2688×1520) · 3,6 mm fixa
+- Câmera dome Full Color 2 MP
+- Intelbras VIP 3230 D FC+ IA
+- 2 MP (1920×1080) · 2,8 mm fixa
+- Imagem ilustrativa
+- Câmera speed dome com zoom 32x
+- Intelbras VIP 5232 SD IA G2
+- 2 MP (1080p) · 32x
+- gravadores
+- 1
+- Gravador NVR 32 canais com 16 PoE
+- Intelbras iNVD 5232-16P
+- 32 IP · 16 (802.3af/at)
+- Não achou o que precisa?
+- Trabalhamos com outros modelos sob encomenda.
+- Perguntar no WhatsApp
+- Controle de acesso
+- 2 produtos · controladores faciais
+- Ver a linha
+
+## /loja/controlador-facial-ss-3541-mf-lite/
+- Título: Controlador facial para uso interno Intelbras SS 3541 MF LITE | Loja Devboot
+- Descrição (Google): Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Versão para áreas internas, com tela de 4,3 polegadas.
+
+- Loja
+- /
+- Controle de acesso
+- 1 / 2
+- Controlador facial para uso interno
+- Intelbras SS 3541 MF LITE
+- Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Versão para áreas internas, com tela de 4,3 polegadas.
+- Ver no Mercado Livre
+- (abre o Mercado Livre em nova aba)
+- Pedir orçamento no WhatsApp
+- Vendido por
+- DEVBOOT_TECNOLOGIA no Mercado Livre.
+- Preço, pagamento e entrega ficam no anúncio.
+- Revenda autorizada Intelbras.
+- Abre a porta pelo rosto, digital, cartão, QR Code ou senha
+- Impede o acesso com foto ou vídeo do rosto (anti-fake)
+- Guarda até 6 mil usuários e 300 mil registros de acesso
+- Ficha técnica
+- Usuários : até 6.000
+- Ambiente : somente interno
+- Reconhecimento facial : 0,2 s
+- Tela : 4,3 pol, sensível ao toque
+- Autenticação : rosto, digital, cartão, QR Code, senha
+- Rede : Ethernet 10/100
+- Alimentação : 12 Vdc 2 A (fonte não inclusa)
+- Temperatura : -10 °C a 55 °C
+- Aciona : fechadura elétrica, eletroímã ou solenoide
+- Precisa instalar?
+- Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
+- Mais controladores faciais
+- Imagem ilustrativa
+- Controlador facial interno e externo
+- Intelbras SS 3542 MF
+- até 10.000 · IP55 (interno e externo)
+
+## /loja/controlador-facial-ss-3542-mf/
+- Título: Controlador facial interno e externo Intelbras SS 3542 MF | Loja Devboot
+- Descrição (Google): Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Para áreas internas e externas, com tela de 4,3 polegadas.
+
+- Loja
+- /
+- Controle de acesso
+- Imagem ilustrativa
+- Controlador facial interno e externo
+- Intelbras SS 3542 MF
+- Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Para áreas internas e externas, com tela de 4,3 polegadas.
+- Ver no Mercado Livre
+- (abre o Mercado Livre em nova aba)
+- Pedir orçamento no WhatsApp
+- Vendido por
+- DEVBOOT_TECNOLOGIA no Mercado Livre.
+- Preço, pagamento e entrega ficam no anúncio.
+- Revenda autorizada Intelbras.
+- Abre a porta pelo rosto, digital, cartão, QR Code ou senha
+- Impede o acesso com foto ou vídeo do rosto (anti-fake)
+- Guarda até 10 mil usuários e 300 mil registros de acesso
+- Ficha técnica
+- Usuários : até 10.000
+- Proteção : IP55 (interno e externo)
+- Reconhecimento facial : 0,2 s
+- Tela : 4,3 pol, sensível ao toque
+- Precisão facial : acima de 99,5%
+- Autenticação : rosto, digital, cartão, QR Code, senha
+- Rede : Ethernet 10/100
+- Alimentação : 12 Vdc 2 A (fonte não inclusa)
+- Temperatura : -30 °C a 60 °C
+- Aciona : fechadura elétrica, eletroímã ou solenoide
+- Precisa instalar?
+- Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
+- Mais controladores faciais
+- Controlador facial para uso interno
+- Intelbras SS 3541 MF LITE
+- até 6.000 · somente interno
+
+## /loja/controle-de-acesso/
+- Título: Controle de acesso | Loja Devboot
+- Descrição (Google): Controladores de acesso por reconhecimento facial para portaria, empresa e condomínio.
+
+- Loja
+- /
+- Controle de acesso
+- Controle de acesso
+- Controladores de acesso por reconhecimento facial para portaria, empresa e condomínio.
+- controladores faciais
+- 2
+- Imagem ilustrativa
+- Controlador facial interno e externo
+- Intelbras SS 3542 MF
+- até 10.000 · IP55 (interno e externo)
+- Controlador facial para uso interno
+- Intelbras SS 3541 MF LITE
+- até 6.000 · somente interno
+- Não achou o que precisa?
+- Trabalhamos com outros modelos sob encomenda.
+- Perguntar no WhatsApp
+- Câmeras e gravadores
+- 4 produtos · câmeras, gravadores
+- Ver a linha
+
+## /loja/dome-full-color-vip-3230-d-fc-ia/
+- Título: Câmera dome Full Color 2 MP Intelbras VIP 3230 D FC+ IA | Loja Devboot
+- Descrição (Google): Câmera dome de 2 MP que filma em cores à noite (luz de até 20 m), com microfone embutido e detecção de pessoas e veículos.
+
+- Loja
+- /
+- Câmeras e gravadores
+- 1 / 3
+- Câmera dome Full Color 2 MP
+- Intelbras VIP 3230 D FC+ IA
+- Câmera dome de 2 MP que filma em cores à noite (luz de até 20 m), com microfone embutido e detecção de pessoas e veículos.
+- Ver no Mercado Livre
+- (abre o Mercado Livre em nova aba)
+- Pedir orçamento no WhatsApp
+- Vendido por
+- DEVBOOT_TECNOLOGIA no Mercado Livre.
+- Preço, pagamento e entrega ficam no anúncio.
+- Revenda autorizada Intelbras.
+- Imagem colorida à noite, com alcance de 20 m
+- Microfone embutido grava o som do ambiente
+- Detecta pessoas e veículos e marca linha e cerca virtual
+- Ficha técnica
+- Resolução : 2 MP (1920×1080)
+- Lente : 2,8 mm fixa
+- Ângulo de visão : 107° (horizontal)
+- Alcance IR : 30 m
+- Alcance Full Color : 20 m
+- Microfone : embutido
+- Proteção : IP67
+- Alimentação : 12 Vdc ou PoE 802.3af
+- Cartão micro-SD : até 256 GB (vendido separadamente)
+- Compressão : H.265 e H.264
+- Precisa instalar?
+- Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
+- Mais câmeras
+- Câmera bullet 4 MP com IR de 40 m
+- Intelbras VIP 5440 IA
+- 4 MP (2688×1520) · 3,6 mm fixa
+- Imagem ilustrativa
+- Câmera speed dome com zoom 32x
+- Intelbras VIP 5232 SD IA G2
+- 2 MP (1080p) · 32x
+
+## /loja/nvr-32-canais-invd-5232-16p/
+- Título: Gravador NVR 32 canais com 16 PoE Intelbras iNVD 5232-16P | Loja Devboot
+- Descrição (Google): Gravador de rede com 32 canais e 16 portas PoE, que liga as câmeras pelo cabo de rede. Detecta pessoas e veículos e reconhece rostos.
+
+- Loja
+- /
+- Câmeras e gravadores
+- 1 / 4
+- Gravador NVR 32 canais com 16 PoE
+- Intelbras iNVD 5232-16P
+- Gravador de rede com 32 canais e 16 portas PoE, que liga as câmeras pelo cabo de rede. Detecta pessoas e veículos e reconhece rostos.
+- Ver no Mercado Livre
+- (abre o Mercado Livre em nova aba)
+- Pedir orçamento no WhatsApp
+- Vendido por
+- DEVBOOT_TECNOLOGIA no Mercado Livre.
+- Preço, pagamento e entrega ficam no anúncio.
+- Revenda autorizada Intelbras.
+- Grava até 32 câmeras IP em um único aparelho
+- 16 portas PoE: um cabo só leva rede e energia à câmera
+- IA: detecta pessoas e veículos e reconhece rostos
+- Ficha técnica
+- Canais : 32 IP
+- Portas PoE : 16 (802.3af/at)
+- Potência PoE : 130 W no total
+- Resolução : até 16 MP
+- Discos (HD) : 4 SATA
+- Compressão : H.265+, H.265, H.264+, H.264
+- Vazão : 165 Mbps
+- Saídas de vídeo : 1 HDMI e 1 VGA
+- Faces cadastráveis : até 20 mil
+- App : iSIC e Guardian (Android e iOS)
+- Precisa instalar?
+- Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
+- Mais em Câmeras e gravadores
+- Câmera bullet 4 MP com IR de 40 m
+- Intelbras VIP 5440 IA
+- 4 MP (2688×1520) · 3,6 mm fixa
+- Câmera dome Full Color 2 MP
+- Intelbras VIP 3230 D FC+ IA
+- 2 MP (1920×1080) · 2,8 mm fixa
+- Imagem ilustrativa
+- Câmera speed dome com zoom 32x
+- Intelbras VIP 5232 SD IA G2
+- 2 MP (1080p) · 32x
+
+## /loja/speed-dome-vip-5232-sd-ia-g2/
+- Título: Câmera speed dome com zoom 32x Intelbras VIP 5232 SD IA G2 | Loja Devboot
+- Descrição (Google): Câmera giratória Full HD com zoom óptico de 32x e rastreio automático, para ambientes internos e externos.
+
+- Loja
+- /
+- Câmeras e gravadores
+- Imagem ilustrativa
+- Câmera speed dome com zoom 32x
+- Intelbras VIP 5232 SD IA G2
+- Câmera giratória Full HD com zoom óptico de 32x e rastreio automático, para ambientes internos e externos.
+- Ver no Mercado Livre
+- (abre o Mercado Livre em nova aba)
+- Pedir orçamento no WhatsApp
+- Vendido por
+- DEVBOOT_TECNOLOGIA no Mercado Livre.
+- Preço, pagamento e entrega ficam no anúncio.
+- Revenda autorizada Intelbras.
+- Zoom óptico de 32x para ver detalhes de longe
+- Gira 360° e acompanha quem se move (autotracking)
+- Resiste a chuva, poeira e impacto (IP67 e IK10)
+- Ficha técnica
+- Resolução : 2 MP (1080p)
+- Zoom óptico : 32x
+- Lente : 4,5 a 144 mm
+- Giro (pan) : 0° a 360°
+- Inclinação (tilt) : 0° a 90°
+- Proteção : IP67 e IK10
+- Alimentação : PoE 802.3at ou 24 Vdc
+- Temperatura : -40 °C a +60 °C
+- Cartão micro-SD : até 256 GB (vendido separadamente)
+- Precisa instalar?
+- Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
+- Mais câmeras
+- Câmera bullet 4 MP com IR de 40 m
+- Intelbras VIP 5440 IA
+- 4 MP (2688×1520) · 3,6 mm fixa
+- Câmera dome Full Color 2 MP
+- Intelbras VIP 3230 D FC+ IA
+- 2 MP (1920×1080) · 2,8 mm fixa
+
+## Mensagens de WhatsApp (já escritas quando o visitante toca no botão)
+
+- Olá, vim pelo site da Devboot e quero conversar.  (todas as páginas)
+- Olá, tentei abrir uma página da loja no site da Devboot e não encontrei.  (/loja/404.html)
+- Olá, vi no site da Devboot: Câmera bullet 4 MP com IR de 40 m (Intelbras VIP 5440 IA). Quero um orçamento.  (/loja/bullet-4mp-vip-5440-ia/)
+- Olá, vim pela loja da Devboot e procuro um equipamento de câmeras e gravadores.  (/loja/cameras-e-gravadores/)
+- Olá, vi no site da Devboot: Controlador facial para uso interno (Intelbras SS 3541 MF LITE). Quero um orçamento.  (/loja/controlador-facial-ss-3541-mf-lite/)
+- Olá, vi no site da Devboot: Controlador facial interno e externo (Intelbras SS 3542 MF). Quero um orçamento.  (/loja/controlador-facial-ss-3542-mf/)
+- Olá, vim pela loja da Devboot e procuro um equipamento de controle de acesso.  (/loja/controle-de-acesso/)
+- Olá, vi no site da Devboot: Câmera dome Full Color 2 MP (Intelbras VIP 3230 D FC+ IA). Quero um orçamento.  (/loja/dome-full-color-vip-3230-d-fc-ia/)
+- Olá, vim pela loja da Devboot e quero um orçamento de projeto completo.  (/loja/)
+- Olá, vi no site da Devboot: Gravador NVR 32 canais com 16 PoE (Intelbras iNVD 5232-16P). Quero um orçamento.  (/loja/nvr-32-canais-invd-5232-16p/)
+- Olá, vi no site da Devboot: Câmera speed dome com zoom 32x (Intelbras VIP 5232 SD IA G2). Quero um orçamento.  (/loja/speed-dome-vip-5232-sd-ia-g2/)
+- Olá, tentei abrir {endereço que falhou} no site da Devboot e não encontrei.  (/loja/404.html: o endereço digitado entra no lugar)
+- Olá, vi no site da Devboot: {nome} ({marca} {modelo}). O anúncio está pausado: tem previsão ou um equivalente?  (modelo: página de um produto pausado)
+- Olá, vi no site da Devboot: {nome} ({marca} {modelo}). Ele saiu de linha: podem me indicar um similar?  (modelo: página de um produto que saiu de linha)
+

@@ -1,0 +1,6 @@
+[project]
+name = "devboot-loja"
+version = "0.1.0"
+description = "Static generator for devboot.com.br/loja/ (standard library only)"
+requires-python = ">=3.12"
+dependencies = []
