@@ -77,6 +77,7 @@ class Store:
 
     def save(self, article: ArticleInput, allow_auto_publish: bool):
         data = article.model_dump()
+        requested = hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
         # With auto-publish off a `published` request is never refused and never lost: it is stored
         # as a draft awaiting the editor. The fingerprint uses the effective status, so a retry of
         # the same edition (as draft or as published) stays idempotent instead of conflicting.
@@ -88,7 +89,10 @@ class Store:
             db.execute("BEGIN IMMEDIATE")
             existing = db.execute("SELECT * FROM articles WHERE edition_key = ?", (article.edition_key,)).fetchone()
             if existing:
-                if existing["fingerprint"] != fingerprint:
+                # Match what was asked as well as what would be stored now: a row published while
+                # auto-publish was on, retried identically after it was turned off, is the same
+                # request, not a conflict.
+                if existing["fingerprint"] not in (fingerprint, requested):
                     raise Conflict("Esta edição já existe com outro conteúdo. Consulte-a antes de tentar novamente.")
                 return dict(existing), False
             try:
