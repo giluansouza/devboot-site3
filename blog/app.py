@@ -23,7 +23,7 @@ from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse, Re
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
-from store import ArticleInput, Conflict, Store
+from store import ArticleInput, Conflict, Store, xml_safe
 
 ROOT = Path(__file__).parent
 templates = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape())
@@ -204,7 +204,7 @@ def create_app(settings=None):
             url = settings.base_url + "/blog/" + article["slug"] + "/"
             for key, value in {"title": article["title"], "link": url, "guid": url,
                 "description": article["excerpt"], "pubDate": datetime.fromisoformat(article["published_at"]).strftime("%a, %d %b %Y %H:%M:%S GMT")}.items():
-                SubElement(item, key).text = value
+                SubElement(item, key).text = xml_safe(value)
         return Response(tostring(rss, encoding="utf-8", xml_declaration=True), media_type="application/rss+xml")
 
     async def sitemap(request):

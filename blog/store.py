@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -9,6 +10,15 @@ from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+
+# Characters XML 1.0 cannot carry (C0 controls except tab/newline/CR, surrogates, U+FFFE/FFFF).
+XML_INVALID = re.compile("[\x00-\x08\x0b\x0c\x0e-\x1f\ud800-\udfff\ufffe\uffff]")
+
+
+def xml_safe(value):
+    """Drop what XML cannot carry. Used when rendering feeds, for rows stored before validation."""
+    return XML_INVALID.sub("", value) if isinstance(value, str) else value
 
 
 class ArticleInput(BaseModel):
@@ -20,6 +30,14 @@ class ArticleInput(BaseModel):
     content_markdown: str = Field(min_length=100, max_length=100_000)
     category: str = Field(default="Tecnologia", min_length=2, max_length=60)
     status: Literal["draft", "published"] = "draft"
+
+    @field_validator("title", "excerpt", "category")
+    @classmethod
+    def no_control_characters(cls, value):
+        # A C0 control in a title made /blog/feed.xml unparseable for every article.
+        if XML_INVALID.search(value):
+            raise ValueError("Caracteres de controle não são permitidos")
+        return value
 
     @field_validator("slug")
     @classmethod
