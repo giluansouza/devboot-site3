@@ -34,8 +34,13 @@ class GitIgnore(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             subprocess.run(["git", "init", "-q", tmp], check=True)
             (Path(tmp) / ".gitignore").write_text((ROOT / ".gitignore").read_text() + ".claude/\n")
-            self.assertTrue(ignored(".claude/settings.json", root=tmp))
-            self.assertTrue(ignored(".claude/agents/change-reviewer.md", root=tmp))
+            # The harness files are TRACKED in the real repo. check-ignore without --no-index
+            # skips tracked paths and would call these "not ignored": the very blind spot to catch.
+            agent = Path(tmp) / ".claude" / "agents" / "x.md"
+            agent.parent.mkdir(parents=True)
+            agent.write_text("x\n")
+            subprocess.run(["git", "-C", tmp, "add", "-f", ".claude/agents/x.md"], check=True)
+            self.assertTrue(ignored(".claude/agents/x.md", root=tmp))
 
 
 class DockerIgnore(unittest.TestCase):

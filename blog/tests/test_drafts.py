@@ -27,6 +27,11 @@ class ApiFlagOff(ApiBase):
     def stored(self):
         return self.client.get("/api/blog/articles", headers=self.headers).json()["articles"]
 
+    def assertNotPublished(self):
+        """The point of the rule: whatever was retried, nothing went public."""
+        self.assertEqual(self.client.get("/blog/software-para-negocios/").status_code, 404)
+        self.assertEqual([a["status"] for a in self.stored()], ["draft"])
+
     def test_published_request_is_stored_as_a_draft_with_a_clear_outcome(self):
         response = self.create(status="published")
         self.assertEqual(response.status_code, 201)
@@ -47,12 +52,26 @@ class ApiFlagOff(ApiBase):
         self.assertFalse(retry.json()["created"])
         self.assertTrue(retry.json()["awaiting_approval"])
         self.assertEqual(len(self.stored()), 1)
+        self.assertNotPublished()
 
     def test_published_request_after_a_draft_of_the_same_content_is_idempotent(self):
         self.assertEqual(self.create(status="draft").status_code, 201)
         again = self.create(status="published")
         self.assertEqual(again.status_code, 200)
         self.assertFalse(again.json()["created"])
+        self.assertTrue(again.json()["awaiting_approval"])
+        self.assertEqual(len(self.stored()), 1)
+        self.assertNotPublished()
+
+    def test_retry_after_manual_publish_returns_the_honest_published_response(self):  # @covers-existing
+        self.create(status="published")
+        self.client.post("/api/blog/articles/software-para-negocios/publish", headers=self.headers)
+        retry = self.create(status="published")
+        self.assertEqual(retry.status_code, 200)
+        body = retry.json()
+        self.assertFalse(body["created"])
+        self.assertEqual((body["status"], body["awaiting_approval"]), ("published", False))
+        self.assertTrue(body["article"]["url"])
         self.assertEqual(len(self.stored()), 1)
 
     def test_different_content_for_an_existing_edition_still_conflicts(self):
@@ -89,13 +108,17 @@ class ApiFlagOn(ApiBase):
         body = self.create().json()
         self.assertEqual((body["status"], body["awaiting_approval"]), ("draft", True))
 
-    def test_published_request_after_a_draft_conflicts(self):  # characterization
+    def test_published_request_after_a_draft_conflicts(self):  # @covers-existing
         self.create()
         self.assertEqual(self.create(status="published").status_code, 409)
 
 
 class McpFlagOff(McpBase):
     auto_publish = False
+
+    def assertNotPublished(self):
+        self.assertEqual(self.client.get("/blog/software-para-negocios/").status_code, 404)
+        self.assertEqual([a["status"] for a in self.app.state.store.list(public=False)], ["draft"])
 
     def call(self, **changes):
         response = self.rpc("tools/call", dict(name="create_article", arguments=dict(article=article(**changes))))
@@ -121,13 +144,25 @@ class McpFlagOff(McpBase):
         self.assertFalse(body["created"])
         self.assertTrue(body["awaiting_approval"])
         self.assertEqual(len(self.app.state.store.list(public=False)), 1)
+        self.assertNotPublished()
 
     def test_published_request_after_a_draft_of_the_same_content_is_idempotent(self):
         self.call(status="draft")
         result, body = self.call(status="published")
         self.assertFalse(result.get("isError", False), result)
         self.assertFalse(body["created"])
+        self.assertTrue(body["awaiting_approval"])
         self.assertEqual(len(self.app.state.store.list(public=False)), 1)
+        self.assertNotPublished()
+
+    def test_retry_after_manual_publish_returns_the_honest_published_response(self):  # @covers-existing
+        self.call(status="published")
+        self.app.state.store.publish("software-para-negocios")
+        result, body = self.call(status="published")
+        self.assertFalse(result.get("isError", False), result)
+        self.assertFalse(body["created"])
+        self.assertEqual((body["status"], body["awaiting_approval"]), ("published", False))
+        self.assertTrue(body["article"]["url"])
 
     def test_different_content_for_an_existing_edition_is_a_tool_error(self):
         self.call(status="published")

@@ -1,6 +1,6 @@
 """Review findings F2-F4 and F9: each test is one row of the branch table.
 
-Tests marked `characterization` cover behaviour that already held when they were written
+Tests declared as covers-existing cover behaviour that already held when they were written
 (they pass on the base by definition); the others failed before the fix they accompany.
 """
 import json
@@ -81,14 +81,14 @@ class FeedStaysWellFormed(ApiBase):
         root = ElementTree.fromstring(feed.content)
         self.assertIn("Título comcontrole", [e.text for e in root.iter("title")])
 
-    def test_tab_newline_and_accents_are_still_accepted(self):  # characterization
+    def test_tab_newline_and_accents_are_still_accepted(self):  # @covers-existing
         self.assertEqual(self.create(excerpt="Resumo com acentuação e\nquebra de linha válida aqui").status_code, 201)
 
 
 class BranchTableRows(ApiBase):
     """F9, API side."""
 
-    def test_xss_in_excerpt_category_and_json_ld(self):  # characterization
+    def test_xss_in_excerpt_category_and_json_ld(self):  # @covers-existing
         self.create(status="published", title="Título comum aqui",
             excerpt='</script><script>alert(1)</script> "><img src=x onerror=alert(2)> resumo',
             category='"><img src=x onerror=alert(3)>')
@@ -101,7 +101,7 @@ class BranchTableRows(ApiBase):
         self.assertIn("alert(1)", json.loads(data)["description"])  # kept as data, inert inside JSON
         self.assertNotIn("</script>", data)
 
-    def test_paths_variants_do_not_bypass_authentication(self):  # characterization
+    def test_paths_variants_do_not_bypass_authentication(self):  # @covers-existing
         self.create(status="published")
         self.create(edition_key="rascunho-2026-10-24", slug="rascunho-secreto", title="Rascunho secreto aqui")
         for path in ("//mcp", "/mcp/", "/api//blog/articles", "//api/blog/articles", "/api/blog/articles/",
@@ -114,18 +114,18 @@ class BranchTableRows(ApiBase):
                     self.assertNotIn(response.status_code, (200, 201), response.text[:200])
                     self.assertNotIn("rascunho-secreto", response.text)
 
-    def test_publish_unknown_slug_is_404(self):  # characterization
+    def test_publish_unknown_slug_is_404(self):  # @covers-existing
         response = self.client.post("/api/blog/articles/nao-existe/publish", headers=self.headers)
         self.assertEqual(response.status_code, 404)
 
-    def test_publishing_twice_keeps_the_first_published_at(self):  # characterization
+    def test_publishing_twice_keeps_the_first_published_at(self):  # @covers-existing
         self.create()
         first = self.client.post("/api/blog/articles/software-para-negocios/publish", headers=self.headers).json()["article"]
         second = self.client.post("/api/blog/articles/software-para-negocios/publish", headers=self.headers).json()["article"]
         self.assertTrue(first["published_at"])
         self.assertEqual(first["published_at"], second["published_at"])
 
-    def test_empty_blog_renders_index_feed_and_sitemap(self):  # characterization
+    def test_empty_blog_renders_index_feed_and_sitemap(self):  # @covers-existing
         response = self.client.get("/blog/")
         self.assertEqual(response.status_code, 200)
         self.assertIn("Boas ideias estão a caminho", response.text)
@@ -135,7 +135,7 @@ class BranchTableRows(ApiBase):
 
 
 class AutoPublishOnResubmit(ApiBase):
-    def test_resubmitting_a_draft_as_published_conflicts_instead_of_overwriting(self):  # characterization
+    def test_resubmitting_a_draft_as_published_conflicts_instead_of_overwriting(self):  # @covers-existing
         self.assertEqual(self.create().status_code, 201)
         self.assertEqual(self.create(status="published").status_code, 409)
         self.assertEqual(self.client.get("/blog/software-para-negocios/").status_code, 404)
@@ -216,7 +216,7 @@ class McpHardening(McpBase):
         self.assertIn("title", text)
         self.assertIn("at least 5 characters", text)
 
-    def test_string_scope_with_several_values_still_works(self):  # characterization
+    def test_string_scope_with_several_values_still_works(self):  # @covers-existing
         self.assertEqual(self.rpc("tools/list", token=self.token(scope="openid blog:write")).status_code, 200)
 
     def test_bare_domain_host_is_accepted_alongside_www(self):
@@ -236,12 +236,12 @@ class McpHardening(McpBase):
                         json=dict(jsonrpc="2.0", id=1, method="tools/list"))
                     self.assertEqual(response.status_code, 200, response.text)
 
-    def test_foreign_host_is_still_refused(self):  # characterization
+    def test_foreign_host_is_still_refused(self):  # @covers-existing
         for host in ("evil.example.com", "devboot.com.br.evil.example.com", "wwwdevboot.com.br"):
             with self.subTest(host=host):
                 self.assertEqual(self.rpc("tools/list", headers={"Host": host}).status_code, 421)
 
-    def test_jwks_unreachable_is_401(self):  # characterization
+    def test_jwks_unreachable_is_401(self):  # @covers-existing
         self.jwks_patch.stop()
         try:
             app = create_app(replace(self.settings, oauth_jwks_url="https://127.0.0.1:1/jwks.json"))
