@@ -160,6 +160,9 @@ class LandingIndependentOfBlog(unittest.TestCase):
 
 @unittest.skipUnless(DOCKER, "docker is required to probe nginx")
 class ProbeCleansUpAfterItself(unittest.TestCase):
+    # @covers-existing: the cleanup code under test lives in this same file, so on the base commit
+    # (which receives the new test file) the case cannot fail. Its red was shown against the old
+    # setUpClass/tearDownClass: it leaked one network and one container.
     def test_network_and_containers_are_removed_when_setup_or_a_test_fails(self):
         seen = {}
 
