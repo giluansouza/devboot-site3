@@ -1,0 +1,8 @@
+# .githooks/config — this project's answers (the factory never overwrites this file).
+
+# The blog suite, run through pytest so check-red-green can read per-case JUnit (it cannot
+# read unittest's exit code per case). `{dir}` is the app directory being tested (blog/): the
+# gate builds a throwaway worktree of the base commit and expands it there. pytest collects the
+# unittest classes unchanged; cwd on sys.path makes `import app` work. Needs Docker for the
+# nginx and image-permission probes (~30 s). The loja suite is not on master yet: blog only.
+TEST_CMD="cd {dir} && uv run --with pytest python -m pytest -q -p no:cacheprovider"
