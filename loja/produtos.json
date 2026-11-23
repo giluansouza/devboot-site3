@@ -1,0 +1,418 @@
+{
+  "loja": {
+    "site": "https://www.devboot.com.br",
+    "whatsapp": "5587991402037",
+    "vendedor_ml": "DEVBOOT_TECNOLOGIA",
+    "perfil_ml": "https://perfil.mercadolivre.com.br/DEVBOOT_TECNOLOGIA",
+    "revenda": "Revenda autorizada Intelbras",
+    "instalacao": "Petrolina, Juazeiro, Dormentes e região",
+    "ano": 2026
+  },
+  "linhas": {
+    "cameras-e-gravadores": {
+      "nome": "Câmeras e gravadores",
+      "descricao": "Câmeras IP internas e externas e gravadores de rede (NVR) para CFTV.",
+      "vazio": "A Devboot projeta e instala CFTV: câmera, gravador, HD e rede. Diga o que você quer monitorar e mandamos o orçamento com o equipamento certo.",
+      "pictograma": "bullet",
+      "tipos": [
+        "câmeras",
+        "kits",
+        "gravadores",
+        "HDs"
+      ]
+    },
+    "controle-de-acesso": {
+      "nome": "Controle de acesso",
+      "descricao": "Controladores de acesso por reconhecimento facial para portaria, empresa e condomínio.",
+      "vazio": "A Devboot já projeta e instala controle de acesso: leitor facial, fechadura e videoporteiro. Diga o que você precisa e mandamos o orçamento com o equipamento certo.",
+      "pictograma": "face",
+      "tipos": [
+        "controladores faciais",
+        "fechaduras",
+        "videoporteiros",
+        "catracas"
+      ]
+    }
+  },
+  "produtos": [
+    {
+      "slug": "bullet-4mp-vip-5440-ia",
+      "nome": "Câmera bullet 4 MP com IR de 40 m",
+      "marca": "Intelbras",
+      "modelo": "VIP 5440 IA",
+      "linha": "cameras-e-gravadores",
+      "tipo": "câmeras",
+      "status": "ativo",
+      "link_ml": "https://www.mercadolivre.com.br/camera-ip-intelbras-vip-5440-ia-4mp-ir-40m-poe-microfone/up/MLBU6022880264",
+      "resumo": "Câmera de 4 MP para uso interno e externo, com visão noturna de 40 m, microfone embutido e IA para linha e cerca virtual.",
+      "beneficios": [
+        "Visão noturna por infravermelho de até 40 m",
+        "Microfone embutido, com entrada e saída de áudio",
+        "Liga por cabo de rede (PoE) ou fonte de 12 V"
+      ],
+      "specs": [
+        [
+          "Resolução",
+          "4 MP (2688×1520)"
+        ],
+        [
+          "Lente",
+          "3,6 mm fixa"
+        ],
+        [
+          "Ângulo de visão",
+          "88° (horizontal)"
+        ],
+        [
+          "Alcance IR",
+          "40 m"
+        ],
+        [
+          "Proteção",
+          "IP67"
+        ],
+        [
+          "Alimentação",
+          "12 Vdc ou PoE 802.3af"
+        ],
+        [
+          "Áudio",
+          "microfone embutido, entrada e saída"
+        ],
+        [
+          "Cartão micro-SD",
+          "até 256 GB"
+        ],
+        [
+          "Compressão",
+          "H.265 e H.264"
+        ],
+        [
+          "IA embarcada",
+          "detecção de face, linha e cerca virtual"
+        ]
+      ],
+      "pictograma": "bullet",
+      "fotos": [],
+      "fonte": [
+        "https://backend.intelbras.com/sites/default/files/2026-05/Ficha%20t%C3%A9cnica%20VIP%205440%20IA%20-%20VIP%205440%20D%20IA%20(V9).pdf",
+        "https://www.intelbras.com/pt-br/camera-bullet-com-inteligencia-artificial-vip-5440-ia"
+      ],
+      "destaque": true
+    },
+    {
+      "slug": "dome-full-color-vip-3230-d-fc-ia",
+      "nome": "Câmera dome Full Color 2 MP",
+      "marca": "Intelbras",
+      "modelo": "VIP 3230 D FC+ IA",
+      "linha": "cameras-e-gravadores",
+      "tipo": "câmeras",
+      "status": "ativo",
+      "link_ml": "https://www.mercadolivre.com.br/camera-ip-dome-intelbras-vip-3230-d-fc-ia-full-color-2mp/up/MLBU5965091417",
+      "resumo": "Câmera dome de 2 MP que filma em cores à noite (luz de até 20 m), com microfone embutido e detecção de pessoas e veículos.",
+      "beneficios": [
+        "Imagem colorida à noite, com alcance de 20 m",
+        "Microfone embutido grava o som do ambiente",
+        "Detecta pessoas e veículos e marca linha e cerca virtual"
+      ],
+      "specs": [
+        [
+          "Resolução",
+          "2 MP (1920×1080)"
+        ],
+        [
+          "Lente",
+          "2,8 mm fixa"
+        ],
+        [
+          "Ângulo de visão",
+          "107° (horizontal)"
+        ],
+        [
+          "Alcance IR",
+          "30 m"
+        ],
+        [
+          "Alcance Full Color",
+          "20 m"
+        ],
+        [
+          "Microfone",
+          "embutido"
+        ],
+        [
+          "Proteção",
+          "IP67"
+        ],
+        [
+          "Alimentação",
+          "12 Vdc ou PoE 802.3af"
+        ],
+        [
+          "Cartão micro-SD",
+          "até 256 GB (vendido separadamente)"
+        ],
+        [
+          "Compressão",
+          "H.265 e H.264"
+        ]
+      ],
+      "pictograma": "dome",
+      "fotos": [],
+      "fonte": [
+        "https://backend.intelbras.com/sites/default/files/2025-07/datasheet-vip-3230-fc+-ia-vip-3230-d-fc+-ia-pt.pdf",
+        "https://www.intelbras.com/pt-br/camera-dome-com-full-color-inteligente-vip-3230-d-fc-ia"
+      ],
+      "destaque": true
+    },
+    {
+      "slug": "speed-dome-vip-5232-sd-ia-g2",
+      "nome": "Câmera speed dome com zoom 32x",
+      "marca": "Intelbras",
+      "modelo": "VIP 5232 SD IA G2",
+      "linha": "cameras-e-gravadores",
+      "tipo": "câmeras",
+      "status": "ativo",
+      "link_ml": "https://www.mercadolivre.com.br/camera-speed-dome-intelbras-vip-5232-sd-ia-g2-zoom-32x/up/MLBU6022797126",
+      "resumo": "Câmera giratória Full HD com zoom óptico de 32x e rastreio automático, para ambientes internos e externos.",
+      "beneficios": [
+        "Zoom óptico de 32x para ver detalhes de longe",
+        "Gira 360° e acompanha quem se move (autotracking)",
+        "Resiste a chuva, poeira e impacto (IP67 e IK10)"
+      ],
+      "specs": [
+        [
+          "Resolução",
+          "2 MP (1080p)"
+        ],
+        [
+          "Zoom óptico",
+          "32x"
+        ],
+        [
+          "Lente",
+          "4,5 a 144 mm"
+        ],
+        [
+          "Giro (pan)",
+          "0° a 360°"
+        ],
+        [
+          "Inclinação (tilt)",
+          "0° a 90°"
+        ],
+        [
+          "Proteção",
+          "IP67 e IK10"
+        ],
+        [
+          "Alimentação",
+          "PoE 802.3at ou 24 Vdc"
+        ],
+        [
+          "Temperatura",
+          "-40 °C a +60 °C"
+        ],
+        [
+          "Cartão micro-SD",
+          "até 256 GB (vendido separadamente)"
+        ]
+      ],
+      "pictograma": "dome",
+      "fotos": [],
+      "fonte": [
+        "https://backend.intelbras.com/sites/default/files/2024-12/Datasheet%20%20-%20VIP%205232%20SD%20IA%20G2%20-%20V3.pdf",
+        "https://www.intelbras.com/pt-br/camera-ip-speed-dome-com-32x-de-zoom-optico-vip-5232-sd-ia-g2"
+      ]
+    },
+    {
+      "slug": "nvr-32-canais-invd-5232-16p",
+      "nome": "Gravador NVR 32 canais com 16 PoE",
+      "marca": "Intelbras",
+      "modelo": "iNVD 5232-16P",
+      "linha": "cameras-e-gravadores",
+      "tipo": "gravadores",
+      "status": "ativo",
+      "link_ml": "https://www.mercadolivre.com.br/nvr-intelbras-invd-523216p-32-canais-16-poe-ia-facial/up/MLBU6022724770",
+      "resumo": "Gravador de rede com 32 canais e 16 portas PoE, que liga as câmeras pelo cabo de rede. Detecta pessoas e veículos e reconhece rostos.",
+      "beneficios": [
+        "Grava até 32 câmeras IP em um único aparelho",
+        "16 portas PoE: um cabo só leva rede e energia à câmera",
+        "IA: detecta pessoas e veículos e reconhece rostos"
+      ],
+      "specs": [
+        [
+          "Canais",
+          "32 IP"
+        ],
+        [
+          "Portas PoE",
+          "16 (802.3af/at)"
+        ],
+        [
+          "Potência PoE",
+          "130 W no total"
+        ],
+        [
+          "Resolução",
+          "até 16 MP"
+        ],
+        [
+          "Discos (HD)",
+          "4 SATA"
+        ],
+        [
+          "Compressão",
+          "H.265+, H.265, H.264+, H.264"
+        ],
+        [
+          "Vazão",
+          "165 Mbps"
+        ],
+        [
+          "Saídas de vídeo",
+          "1 HDMI e 1 VGA"
+        ],
+        [
+          "Faces cadastráveis",
+          "até 20 mil"
+        ],
+        [
+          "App",
+          "iSIC e Guardian (Android e iOS)"
+        ]
+      ],
+      "pictograma": "nvr",
+      "fotos": [],
+      "fonte": [
+        "https://backend.intelbras.com/sites/default/files/2024-07/datasheet-invd-5232-16-p-pt.pdf",
+        "https://www.intelbras.com/pt-br/gravador-digital-de-video-com-32-canais-ip-invd-5232-16p"
+      ],
+      "destaque": true
+    },
+    {
+      "slug": "controlador-facial-ss-3542-mf",
+      "nome": "Controlador facial interno e externo",
+      "marca": "Intelbras",
+      "modelo": "SS 3542 MF",
+      "linha": "controle-de-acesso",
+      "tipo": "controladores faciais",
+      "status": "ativo",
+      "link_ml": "https://www.mercadolivre.com.br/controle-de-acesso-facial-biometria-intelbras-ss-3542-mf/up/MLBU6025013726",
+      "resumo": "Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Para áreas internas e externas, com tela de 4,3 polegadas.",
+      "beneficios": [
+        "Abre a porta pelo rosto, digital, cartão, QR Code ou senha",
+        "Impede o acesso com foto ou vídeo do rosto (anti-fake)",
+        "Guarda até 10 mil usuários e 300 mil registros de acesso"
+      ],
+      "specs": [
+        [
+          "Usuários",
+          "até 10.000"
+        ],
+        [
+          "Proteção",
+          "IP55 (interno e externo)"
+        ],
+        [
+          "Reconhecimento facial",
+          "0,2 s"
+        ],
+        [
+          "Tela",
+          "4,3 pol, sensível ao toque"
+        ],
+        [
+          "Precisão facial",
+          "acima de 99,5%"
+        ],
+        [
+          "Autenticação",
+          "rosto, digital, cartão, QR Code, senha"
+        ],
+        [
+          "Rede",
+          "Ethernet 10/100"
+        ],
+        [
+          "Alimentação",
+          "12 Vdc 2 A (fonte não inclusa)"
+        ],
+        [
+          "Temperatura",
+          "-30 °C a 60 °C"
+        ],
+        [
+          "Aciona",
+          "fechadura elétrica, eletroímã ou solenoide"
+        ]
+      ],
+      "pictograma": "face",
+      "fotos": [],
+      "fonte": [
+        "https://backend.intelbras.com/sites/default/files/2026-04/Datasheet%20SS%203542%20MF.pdf"
+      ],
+      "destaque": true
+    },
+    {
+      "slug": "controlador-facial-ss-3541-mf-lite",
+      "nome": "Controlador facial para uso interno",
+      "marca": "Intelbras",
+      "modelo": "SS 3541 MF LITE",
+      "linha": "controle-de-acesso",
+      "tipo": "controladores faciais",
+      "status": "ativo",
+      "link_ml": "https://www.mercadolivre.com.br/controle-de-acesso-facial-biometria-intelbras-ss-3541-lite/up/MLBU5967573837",
+      "resumo": "Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Versão para áreas internas, com tela de 4,3 polegadas.",
+      "beneficios": [
+        "Abre a porta pelo rosto, digital, cartão, QR Code ou senha",
+        "Impede o acesso com foto ou vídeo do rosto (anti-fake)",
+        "Guarda até 6 mil usuários e 300 mil registros de acesso"
+      ],
+      "specs": [
+        [
+          "Usuários",
+          "até 6.000"
+        ],
+        [
+          "Ambiente",
+          "somente interno"
+        ],
+        [
+          "Reconhecimento facial",
+          "0,2 s"
+        ],
+        [
+          "Tela",
+          "4,3 pol, sensível ao toque"
+        ],
+        [
+          "Autenticação",
+          "rosto, digital, cartão, QR Code, senha"
+        ],
+        [
+          "Rede",
+          "Ethernet 10/100"
+        ],
+        [
+          "Alimentação",
+          "12 Vdc 2 A (fonte não inclusa)"
+        ],
+        [
+          "Temperatura",
+          "-10 °C a 55 °C"
+        ],
+        [
+          "Aciona",
+          "fechadura elétrica, eletroímã ou solenoide"
+        ]
+      ],
+      "pictograma": "face",
+      "fotos": [],
+      "fonte": [
+        "https://backend.intelbras.com/sites/default/files/2025-11/Datasheet%20SS%203541%20MF%20Lite.pdf",
+        "https://www.intelbras.com/pt-br/controlador-de-acesso-facial-ss-3541-mf-lite"
+      ]
+    }
+  ]
+}
