@@ -2,6 +2,9 @@ services:
   web:
     image: nginx:stable-alpine
     container_name: devboot-site
+    # Site principal (devboot.com.br). Rodava com policy `no` desde 01/05/2026 —
+    # mesma armadilha que deixou o takenote-site 96 dias fora do ar. Não remover.
+    restart: unless-stopped
     volumes:
       - ./public:/usr/share/nginx/html:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
