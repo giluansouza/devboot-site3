@@ -38,7 +38,17 @@ class LinkDoMercadoLivre(Base):
                     "https://mercadolivre.com.br@evil.com/x",
                     "http://www.mercadolivre.com.br/x",
                     "javascript:alert(1)",
-                    "www.mercadolivre.com.br/x"):
+                    "www.mercadolivre.com.br/x",
+                    # a browser reads the backslash as a slash: this one goes to evil.com
+                    "https://evil.com\\.mercadolivre.com.br/x",
+                    "https://evil.com\\@www.mercadolivre.com.br/x",
+                    "https://www.mercadolivre.com.br/x y",
+                    "https://www.mercadolivre.com.br/x\ty",
+                    "https://www.mercadolivre.com.br/x\ny",
+                    "https://www.mercadolivre.com.br/x\x00y",
+                    "https://www.mercadolivre.com.br/x\x7fy",
+                    " https://www.mercadolivre.com.br/x",
+                    "https://www.mercadolivre.com.br/x\u2028y"):
             with self.subTest(url=url):
                 self.assertRecusa(dados(produto("camera-um", link_ml=url)), "link_ml", "camera-um")
 
@@ -58,6 +68,37 @@ class LinkDoMercadoLivre(Base):
             with self.subTest(status=st):
                 self.assertRecusa(
                     dados(produto("camera-um", status=st, link_ml="https://example.com/x")), "link_ml")
+
+
+class AjustesDaLoja(Base):
+    """loja.whatsapp and loja.site are published in every link and canonical: check their shape."""
+
+    def com(self, campo, valor):
+        d = dados()
+        d["loja"][campo] = valor
+        return d
+
+    def test_the_real_values_are_accepted(self):
+        self.assertAceita(self.com("whatsapp", "5587991402037"))
+        self.assertAceita(self.com("site", "https://www.devboot.com.br"))
+
+    def test_whatsapp_is_digits_only_with_the_country_code(self):
+        for n in ("+5587991402037", "55 87 99140-2037", "(87) 99140-2037", "87991402037",
+                  "5587", "55879914020371234", "55879914020a7", "", "wa.me/5587991402037"):
+            with self.subTest(whatsapp=n):
+                self.assertRecusa(self.com("whatsapp", n), "whatsapp")
+
+    def test_whatsapp_accepts_landline_and_mobile_lengths(self):
+        for n in ("558733211234", "5587991402037"):
+            with self.subTest(whatsapp=n):
+                self.assertAceita(self.com("whatsapp", n))
+
+    def test_site_is_exactly_the_public_address(self):
+        for u in ("https://www.devboot.com.br/", "http://www.devboot.com.br", "https://devboot.com.br",
+                  "https://www.devboot.com.br.evil.com", "https://evil.com", "https://www.devboot.com.br/loja",
+                  "HTTPS://www.devboot.com.br", " https://www.devboot.com.br"):
+            with self.subTest(site=u):
+                self.assertRecusa(self.com("site", u), "site")
 
 
 class AtivoSemLink(Base):

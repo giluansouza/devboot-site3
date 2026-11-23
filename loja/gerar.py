@@ -11,6 +11,7 @@ Photos are the one exception: they are put in public/loja/img/<slug>/ and only r
 Standard library only.
 """
 import re
+import unicodedata
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -21,6 +22,8 @@ PICTOGRAMAS = ("bullet", "dome", "kit", "nvr", "hd", "face", "lock", "door")
 RESERVADOS = ("img", "404", "loja", "sitemap")  # would shadow a file or folder of the shop
 MAX_NOME, MAX_RESUMO, MAX_BENEFICIO, MAX_FOTOS, MAX_DESTAQUES = 40, 155, 70, 6, 4
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+SITE_PUBLICO = "https://www.devboot.com.br"
+WHATSAPP_RE = re.compile(r"^55[0-9]{10,11}$")
 
 CAMPOS_PRODUTO = {
     "slug", "nome", "marca", "modelo", "linha", "tipo", "status", "link_ml", "resumo", "beneficios",
@@ -36,9 +39,17 @@ class ErroDeDados(Exception):
         self.erros = list(erros)
 
 
+def url_limpa(url):
+    """No backslash, whitespace or control/format character anywhere: a browser reads `\\` as `/`
+    (https://evil.com\\.mercadolivre.com.br/ goes to evil.com) and strips tabs and newlines, so
+    the parser here and the browser would disagree about the host."""
+    return (isinstance(url, str) and "\\" not in url
+            and not any(c.isspace() or unicodedata.category(c) in ("Cc", "Cf", "Zl", "Zp") for c in url))
+
+
 def link_do_mercado_livre(url):
     """True only for https://mercadolivre.com.br or any of its subdomains, with no userinfo."""
-    if not isinstance(url, str):
+    if not url_limpa(url):
         return False
     try:
         u = urlparse(url)
@@ -51,6 +62,8 @@ def link_do_mercado_livre(url):
 
 
 def link_https(url):
+    if not url_limpa(url):
+        return False
     try:
         u = urlparse(url)
         return u.scheme == "https" and bool(u.hostname) and "." in u.hostname
@@ -72,6 +85,11 @@ def validar(dados, pasta_fotos):
     for campo in ("site", "whatsapp", "vendedor_ml", "perfil_ml", "revenda", "instalacao", "ano"):
         if not loja.get(campo):
             e.append(f"loja.{campo}: missing")
+    if loja.get("site") and loja["site"] != SITE_PUBLICO:
+        e.append(f"loja.site: {loja['site']!r} must be exactly {SITE_PUBLICO!r} (canonical, OG and sitemap use it)")
+    if loja.get("whatsapp") and not (isinstance(loja["whatsapp"], str) and WHATSAPP_RE.match(loja["whatsapp"])):
+        e.append(f"loja.whatsapp: {loja['whatsapp']!r} must be digits only with the country code, "
+                 "e.g. 5587991402037 (no +, spaces or dashes)")
     if loja.get("perfil_ml") and not link_do_mercado_livre(loja["perfil_ml"]):
         e.append(f"loja.perfil_ml: {loja['perfil_ml']!r} is not an https link on mercadolivre.com.br")
 
@@ -198,7 +216,6 @@ import hashlib
 import html as _html
 import json
 import sys
-import unicodedata
 from html.parser import HTMLParser
 from urllib.parse import quote
 
