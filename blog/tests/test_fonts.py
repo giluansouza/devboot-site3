@@ -56,8 +56,13 @@ class SelfHostedFonts(ApiBase):
             self.assertEqual(self.client.get(href).status_code, 200, href)
         self.assertNotIn("fonts.googleapis.com", html)
 
-    def test_licence_notice_ships_with_the_fonts(self):
-        self.assertIn("SIL Open Font License", (STATIC / "fonts" / "LICENSE.md").read_text())
+    def test_licence_carries_the_full_ofl_text_and_the_exact_copyright_lines(self):
+        text = (STATIC / "fonts" / "LICENSE.md").read_text()
+        self.assertIn("Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)", text)
+        self.assertIn('Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"', text)
+        self.assertIn("SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007", text)
+        for clause in ("PREAMBLE", "DEFINITIONS", "PERMISSION & CONDITIONS", "TERMINATION", "DISCLAIMER"):
+            self.assertIn(clause, text)
 
 
 if __name__ == "__main__":
