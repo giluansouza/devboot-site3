@@ -5,6 +5,7 @@ public/ directory, with a stub standing in for the blog. Needs Docker; without
 it the tests are skipped, loudly.
 """
 import shutil
+import http.client
 import re
 import subprocess
 import tempfile
@@ -41,6 +42,13 @@ def get(port, path):
         return e.code, e.read().decode("utf-8", "replace"), e.headers
 
 
+def head(port, path, host):
+    conn = http.client.HTTPConnection("127.0.0.1", port, timeout=10)
+    conn.request("GET", path, headers={"Host": host})
+    r = conn.getresponse()
+    return r.status, r.getheader("Location")
+
+
 @unittest.skipUnless(DOCKER, "docker is required to probe nginx")
 class LandingIndependentOfBlog(unittest.TestCase):
     @classmethod
@@ -58,9 +66,10 @@ class LandingIndependentOfBlog(unittest.TestCase):
         shutil.rmtree(cls.stub_conf.parent, ignore_errors=True)
 
     def run_container(self, name, *args):
-        r = docker("run", "-d", "--rm", "--label", f"probe={self.tag}", "--name", f"{self.tag}-{name}",
+        unique = f"{self.tag}-{name}-{uuid.uuid4().hex[:6]}"
+        r = docker("run", "-d", "--rm", "--label", f"probe={self.tag}", "--name", unique,
                    "--network", self.tag, *args)
-        return f"{self.tag}-{name}"
+        return unique
 
     def start_web(self):
         name = self.run_container(
@@ -84,6 +93,13 @@ class LandingIndependentOfBlog(unittest.TestCase):
                    "-v", f"{CONF}:/etc/nginx/conf.d/default.conf:ro", IMAGE, "nginx", "-t", check=False)
         self.assertEqual(r.returncode, 0, r.stderr)
 
+    def test_blog_redirect_is_relative_so_it_keeps_the_public_scheme(self):
+        # Behind Traefik nginx sees plain http; an absolute Location would downgrade to http://.
+        web, port = self.start_web()
+        status, location = head(port, "/blog", "www.devboot.com.br")
+        self.assertEqual(status, 308)
+        self.assertEqual(location, "/blog/")
+
     def test_landing_survives_blog_absent_then_reaches_it_when_it_appears_and_moves(self):
         web, port = self.start_web()
 
@@ -98,7 +114,7 @@ class LandingIndependentOfBlog(unittest.TestCase):
         self.assertEqual(get(port, "/")[0], 200)
 
         # blog appears AFTER nginx started: reached without a restart, URIs untouched
-        self.start_stub("blog1")
+        blog1 = self.start_stub("blog1")
         time.sleep(11)  # resolver valid=10s
         for path in ("/blog/", "/blog/artigo-x", "/blog/sitemap.xml?a=1&b=2", "/api/blog/articles/7",
                      "/api/blog", "/mcp", "/.well-known/oauth-protected-resource",
@@ -111,7 +127,7 @@ class LandingIndependentOfBlog(unittest.TestCase):
         self.assertEqual(get(port, "/")[0], 200)
 
         # blog recreated with a different IP: reached again without a restart
-        docker("rm", "-f", f"{self.tag}-blog1")
+        docker("rm", "-f", blog1)
         filler = self.run_container("filler", IMAGE)  # takes the freed address range slot
         self.start_stub("blog2")
         deadline = time.time() + 30
