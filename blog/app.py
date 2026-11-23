@@ -71,7 +71,9 @@ class Auth:
         claims = jwt.decode(token, key.key, algorithms=["RS256", "ES256"],
             issuer=self.settings.oauth_issuer, audience=self.settings.base_url + "/mcp",
             options={"require": ["exp", "iss", "aud", "sub"]})
-        if "blog:write" not in claims.get("scope", "").split():
+        scope = claims.get("scope", "")
+        # RFC 8693/9068: a space-delimited string. Any other type is a malformed token, not a crash.
+        if not isinstance(scope, str) or "blog:write" not in scope.split():
             raise jwt.InvalidTokenError("Missing blog:write scope")
 
 
