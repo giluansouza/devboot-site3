@@ -88,15 +88,23 @@ cd /opt/apps/devboot-site3
 PREV=$(git rev-parse HEAD); echo "$PREV"        # currently fda8d47...
 
 # 1. .env with a token generated here. It never leaves the VPS and is never printed.
-umask 077
-printf 'BLOG_API_TOKEN=%s\nBLOG_BASE_URL=https://www.devboot.com.br\n' "$(openssl rand -hex 32)" > .env
+#    The umask is confined to this subshell. Set for the whole shell it makes `git pull`
+#    create every new file 0600: the blog crash-looped (PermissionError: /app/app.py) and
+#    nginx answered 403 for public/blog-down.html. Never `umask 077` outside the parentheses.
+( umask 077; printf 'BLOG_API_TOKEN=%s\nBLOG_BASE_URL=https://www.devboot.com.br\n' "$(openssl rand -hex 32)" > .env )
 ls -l .env                                       # -rw------- , owned by vps222
+umask                                            # must print 0022 (or 0002), never 0077
 
 # 2. Code: blog/, nginx/default.conf, the new compose, public/blog-down.html.
 #    (master must already contain branch `blog`. The nav link is NOT in it — see §5.)
 git pull --ff-only
 
+#    Nothing the web server serves may be unreadable. This must print nothing:
+find public nginx -type f ! -perm -o+r
+
 # 3. Build and start the blog first; wait until it is healthy.
+#    The image build fails (instead of the container crash-looping) if the runtime user cannot
+#    read /app, and normalises file modes itself.
 docker compose up -d --build --wait blog
 
 # 4. Recreate web so it mounts nginx/default.conf and joins blog-internal (a second or two).
