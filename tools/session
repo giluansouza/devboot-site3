@@ -1,0 +1,417 @@
+#!/usr/bin/env bash
+# foundation:canonical — this file comes from foundation/standards/session.
+# Do not edit it in a project: the same bytes run everywhere and tools/push-standards refuses a
+# copy that differs. What is particular to a project goes in tools/session.conf; a fix goes in
+# the canonical and reaches every project together.
+#
+# session — open one of this project's roles in a session, so nobody has to remember the flags.
+# Run it with no arguments for this project's roles.
+#
+# A session opening another: `tools/session --spawn <role> ...` opens it in a new window of the
+# caller's own tmux session, named after the caller (AGENT_SESSION, e.g. gateway-grace) and
+# created on first use; never in the session the owner works in. `tools/session --close` ends
+# that tmux session when the work is done, and refuses while a session in it is still running.
+# Windows that exit close themselves, and a tmux session with no windows left is gone.
+#
+# tools/session.conf, one directive per line, # for comments:
+#   code <dir|glob>...       directories holding code, for the `code` deny
+#   code-files <glob>...     file patterns holding code, when a directory list is not enough
+#   areas <name[=dir]>...    where a feature session can start; the first is the default, and
+#                            name=. starts at the root. No areas: features start at the root.
+#   role <name> <kind> <start> <model> <deny>
+#     kind    manager  one session, and `<role> <front>` opens a parallel one beside it
+#             feature  one session per feature; a name is required
+#             single   one session, which resumes; a name is refused
+#     start   a directory relative to the root (. is the root); `area` for a feature role
+#     deny    comma-separated, no spaces, `-` for none:
+#             code | code-except=<dir> | reviewers | a literal rule, {ROOT} = the main checkout
+#
+# tools/session.pre.<role>, when it exists, is sourced before launching: a project's own
+# precondition for one role (a token the session needs, refused up front).
+#
+# WHY A LAUNCHER AND NOT AN AGENT FILE: `claude --agent` REPLACES the default system prompt
+# with the agent's body, and an agent in .claude/agents/ also becomes a subagent every
+# session can spawn. The role here is APPENDED, and the model and the limits come by flag.
+#
+# WHY ai-memory run: it keeps the named workstream, so opening a role tomorrow resumes today's
+# session instead of starting a stranger.
+#
+# WHY THE DENY PATHS ARE ABSOLUTE: a relative `Edit(web/**)` is read from the directory the
+# session starts in, and from anywhere but the root it matches nothing — a limit announced
+# and not applied. `**/` also covers worktree copies. Only Edit rules: Claude Code matches
+# an Edit(path) deny against every file-editing tool and ignores Write(path) with a warning.
+set -euo pipefail
+
+CODE=(); CODE_FILES=(); AREAS=(); ROLE_NAMES=(); ERRORS=()
+declare -A KIND=() START=() MODEL=() DENY_SPEC=()
+CONF_NAME="tools/session.conf"
+
+area_name() { printf '%s' "${1%%=*}"; }
+
+area_dir() {
+  case "$1" in
+    *=*) printf '%s' "${1#*=}" ;;
+    *)   printf '%s' "$1" ;;
+  esac
+}
+
+is_area() {
+  local a
+  for a in "${AREAS[@]}"; do
+    if [[ "$(area_name "${a}")" == "$1" ]]; then return 0; fi
+  done
+  return 1
+}
+
+in_list() {
+  local needle="$1" item
+  shift
+  for item in "$@"; do
+    if [[ "${item}" == "${needle}" ]]; then return 0; fi
+  done
+  return 1
+}
+
+load_conf() {
+  local file="$1" line n=0
+  local -a f
+  while IFS= read -r line || [[ -n "${line}" ]]; do
+    n=$((n + 1))
+    read -r -a f <<<"${line}" || true
+    if [[ ${#f[@]} -eq 0 || "${f[0]}" == \#* ]]; then continue; fi
+    case "${f[0]}" in
+      code)       CODE+=("${f[@]:1}") ;;
+      code-files) CODE_FILES+=("${f[@]:1}") ;;
+      areas)      AREAS+=("${f[@]:1}") ;;
+      role)
+        if [[ ${#f[@]} -ne 6 ]]; then
+          ERRORS+=("${CONF_NAME}:${n}: a role row is: role <name> <kind> <start> <model> <deny>")
+          continue
+        fi
+        if in_list "${f[1]}" "${ROLE_NAMES[@]}"; then
+          ERRORS+=("${CONF_NAME}:${n}: role ${f[1]} is declared twice")
+          continue
+        fi
+        ROLE_NAMES+=("${f[1]}")
+        KIND["${f[1]}"]="${f[2]}"
+        START["${f[1]}"]="${f[3]}"
+        MODEL["${f[1]}"]="${f[4]}"
+        DENY_SPEC["${f[1]}"]="${f[5]}"
+        ;;
+      *) ERRORS+=("${CONF_NAME}:${n}: unknown directive '${f[0]}'") ;;
+    esac
+  done <"${file}"
+}
+
+check_deny_token() {
+  local role="$1" token="$2"
+  case "${token}" in
+    code)
+      if [[ ${#CODE[@]} -eq 0 && ${#CODE_FILES[@]} -eq 0 ]]; then
+        ERRORS+=("role ${role}: deny 'code' with no code directive denies nothing")
+      fi
+      ;;
+    code-except=*)
+      if ! in_list "${token#code-except=}" "${CODE[@]}"; then
+        ERRORS+=("role ${role}: '${token}' names a directory that is not in the code list")
+      fi
+      ;;
+    reviewers) ;;
+    *\(*\)) ;;
+    *) ERRORS+=("role ${role}: unknown deny token '${token}'") ;;
+  esac
+}
+
+check_conf() {
+  local role token area dir
+  local -a tokens
+  if [[ ${#ROLE_NAMES[@]} -eq 0 ]]; then
+    ERRORS+=("${CONF_NAME}: declares no role")
+  fi
+  for area in "${AREAS[@]}"; do
+    dir="$(area_dir "${area}")"
+    if [[ -z "$(area_name "${area}")" || -z "${dir}" || "${dir}" == /* || "${dir}" == *..* ]]; then
+      ERRORS+=("area '${area}': must be a name, or name=<directory relative to the root>")
+    fi
+  done
+  for role in "${ROLE_NAMES[@]}"; do
+    case "${KIND[${role}]}" in
+      manager|single)
+        if [[ "${START[${role}]}" == "area" || "${START[${role}]}" == /* || "${START[${role}]}" == *..* ]]; then
+          ERRORS+=("role ${role}: start must be a directory relative to the root")
+        fi
+        ;;
+      feature)
+        if [[ "${START[${role}]}" != "area" ]]; then
+          ERRORS+=("role ${role}: a feature role's start is 'area'; the areas directive says where")
+        fi
+        ;;
+      *) ERRORS+=("role ${role}: kind must be manager, feature or single, not '${KIND[${role}]}'") ;;
+    esac
+    if [[ "${DENY_SPEC[${role}]}" != "-" ]]; then
+      IFS=, read -r -a tokens <<<"${DENY_SPEC[${role}]}"
+      for token in "${tokens[@]}"; do check_deny_token "${role}" "${token}"; done
+    fi
+    if [[ ! -f "${ROOT}/.claude/roles/${role}.md" ]]; then
+      ERRORS+=("role ${role}: .claude/roles/${role}.md does not exist")
+    fi
+  done
+}
+
+# Built into DENY, in the order the spec lists them.
+deny_code() {
+  local except="${1:-}" d f
+  for d in "${CODE[@]}"; do
+    if [[ "${d}" != "${except}" ]]; then DENY+=("Edit(/${ROOT}/**/${d}/**)"); fi
+  done
+  for f in "${CODE_FILES[@]}"; do DENY+=("Edit(/${ROOT}/**/${f})"); done
+}
+
+build_deny() {
+  local token
+  local -a tokens
+  DENY=()
+  if [[ "$1" == "-" ]]; then return 0; fi
+  IFS=, read -r -a tokens <<<"$1"
+  for token in "${tokens[@]}"; do
+    case "${token}" in
+      code)          deny_code ;;
+      code-except=*) deny_code "${token#code-except=}" ;;
+      # The reviewers are the manager's: an author who briefs its own reviewer is not reviewed.
+      # Subagents are found upward from the start directory, so only a deny keeps them out.
+      reviewers)     DENY+=("Agent(change-reviewer)" "Agent(money-path-auditor)") ;;
+      *)             DENY+=("${token//\{ROOT\}/${ROOT}}") ;;
+    esac
+  done
+}
+
+area_usage() {
+  local a out=""
+  if [[ ${#AREAS[@]} -eq 0 ]]; then return 0; fi
+  for a in "${AREAS[@]}"; do out+="${out:+|}$(area_name "${a}")"; done
+  printf ' [%s]' "${out}"
+}
+
+usage() {
+  local role form title
+  {
+    for role in "${ROLE_NAMES[@]}"; do
+      case "${KIND[${role}]}" in
+        manager) form="${role} [front]" ;;
+        feature) form="${role} <feature>$(area_usage)" ;;
+        *)       form="${role}" ;;
+      esac
+      title=""
+      if [[ -f "${ROLES}/${role}.md" ]]; then
+        IFS= read -r title <"${ROLES}/${role}.md" || true
+      fi
+      printf '  tools/session %-36s %s\n' "${form}" "${title#\# }"
+    done
+    printf '  anything after -- goes to claude unchanged\n'
+    printf '  tools/session --spawn <role> ...   opens it in a window of your own tmux session\n'
+    printf '  tools/session --close              ends that tmux session when the work is done\n'
+  } >&2
+}
+
+fail_on_errors() {
+  local e
+  if [[ ${#ERRORS[@]} -gt 0 ]]; then
+    for e in "${ERRORS[@]}"; do printf '%s\n' "${e}" >&2; done
+    printf 'Fix %s in this project. Do not edit tools/session: it is the canonical copy.\n' \
+      "${CONF_NAME}" >&2
+    exit 1
+  fi
+}
+
+# tools/push-standards validates a project through this, so there is one parser and it is the
+# one that launches.
+if [[ "${1:-}" == "--check" ]]; then
+  ROOT="$(cd "${2:?usage: session --check <project dir>}" && pwd)"
+  if [[ ! -f "${ROOT}/${CONF_NAME}" ]]; then
+    printf '%s/%s not found\n' "${ROOT}" "${CONF_NAME}" >&2
+    exit 2
+  fi
+  load_conf "${ROOT}/${CONF_NAME}"
+  check_conf
+  fail_on_errors
+  exit 0
+fi
+
+# --spawn opens the session in a window of the caller's own tmux session, so a session opening
+# others never fills the window list of the one the owner works in; --close ends it.
+mode=""
+if [[ "${1:-}" == "--spawn" || "${1:-}" == "--close" ]]; then
+  mode="${1#--}"
+  shift
+fi
+orig_args=("$@")
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# The roles and the workstreams belong to the main checkout, not to a worktree of it.
+main="$(git -C "${ROOT}" worktree list --porcelain 2>/dev/null | sed -n '1s/^worktree //p' || true)"
+if [[ -n "${main}" ]]; then ROOT="${main}"; fi
+ROLES="${ROOT}/.claude/roles"
+cd "${ROOT}"
+project="$(basename "${ROOT}")"
+# Set by this launcher for the session it opens. Unset means a session opened some other way.
+tsession="${SESSION_TMUX:-${AGENT_SESSION:-${project}-agents}}"
+tsession="${tsession//[.:]/-}"
+
+if [[ ! -f "${ROOT}/${CONF_NAME}" ]]; then
+  printf 'missing %s/%s: it says which roles this project has.\n' "${ROOT}" "${CONF_NAME}" >&2
+  exit 1
+fi
+load_conf "${ROOT}/${CONF_NAME}"
+check_conf
+fail_on_errors
+
+if [[ "${mode}" == close ]]; then
+  if ! tmux has-session -t "=${tsession}" 2>/dev/null; then
+    printf 'tmux session %s is not open: nothing to close.\n' "${tsession}"
+    exit 0
+  fi
+  live="$(tmux list-panes -s -t "=${tsession}" -F '#{pane_dead} #{window_name}' | awk '$1 == 0 {print $2}' | sort -u)"
+  if [[ -n "${live}" ]]; then
+    printf 'tmux session %s still has sessions running: %s\n' "${tsession}" "$(tr '\n' ' ' <<<"${live}")" >&2
+    printf 'Wait for them to finish, or end one deliberately: tmux kill-window -t %s:<name>\n' "${tsession}" >&2
+    exit 1
+  fi
+  tmux kill-session -t "=${tsession}"
+  printf 'closed tmux session %s.\n' "${tsession}"
+  exit 0
+fi
+
+role="${1:-}"
+shift || true
+if [[ -z "${role}" ]] || ! in_list "${role}" "${ROLE_NAMES[@]}"; then
+  usage
+  exit 2
+fi
+kind="${KIND[${role}]}"
+
+name=""
+if [[ $# -gt 0 && "$1" != "--" ]]; then
+  name="$1"
+  shift
+fi
+area=""
+if [[ "${kind}" == "feature" && $# -gt 0 ]] && is_area "$1"; then
+  area="$1"
+  shift
+fi
+if [[ "${1:-}" == "--" ]]; then shift; fi
+
+start="${ROOT}/${START[${role}]}"
+case "${kind}" in
+  manager)
+    # A front name opens a second manager beside the main one; it never replaces it.
+    workstream="${role}${name:+-${name}}"
+    ;;
+  single)
+    # A name would be silently dropped, so refuse it.
+    if [[ -n "${name}" ]]; then
+      printf 'tools/session %s takes no name: there is one %s session, and it resumes. Did you mean tools/session ada %s?\n' \
+        "${role}" "${role}" "${name}" >&2
+      exit 2
+    fi
+    workstream="${role}"
+    ;;
+  feature)
+    if [[ -z "${name}" ]]; then
+      printf 'usage: tools/session %s <feature>%s   (an existing session name resumes it)\n' \
+        "${role}" "$(area_usage)" >&2
+      exit 2
+    fi
+    workstream="${name}"
+    # An area carries its own settings.json, which is read only from the starting directory.
+    # Until a default area exists on disk, the root is all there is.
+    start="${ROOT}"
+    if [[ ${#AREAS[@]} -gt 0 ]]; then
+      if [[ -n "${area}" ]]; then
+        for a in "${AREAS[@]}"; do
+          if [[ "$(area_name "${a}")" == "${area}" ]]; then start="${ROOT}/$(area_dir "${a}")"; fi
+        done
+      elif [[ -d "${ROOT}/$(area_dir "${AREAS[0]}")" ]]; then
+        start="${ROOT}/$(area_dir "${AREAS[0]}")"
+      fi
+    fi
+    ;;
+esac
+start="$(cd "${start}" 2>/dev/null && pwd)" || {
+  printf 'tools/session %s starts in a directory that does not exist. See %s.\n' "${role}" "${CONF_NAME}" >&2
+  exit 1
+}
+
+if [[ "${mode}" == spawn ]]; then
+  # Validated above, launched below: a wrong role fails here, in the caller, not in a window
+  # nobody is looking at. The window re-runs this launcher without --spawn.
+  window="${project}-${workstream}"
+  if ! command -v tmux >/dev/null 2>&1; then
+    printf 'tools/session --spawn needs tmux, and it is not installed.\n' >&2
+    exit 1
+  fi
+  if tmux has-session -t "=${tsession}" 2>/dev/null; then
+    if tmux list-windows -t "=${tsession}" -F '#{window_name}' | grep -qxF "${window}"; then
+      printf '%s is already open in tmux session %s. Attach to it: tmux switch-client -t %s\n' \
+        "${window}" "${tsession}" "${tsession}" >&2
+      exit 1
+    fi
+    target="$(tmux new-window -d -P -F '#{window_id}' -t "=${tsession}:" -n "${window}" \
+      -c "${ROOT}" -e "PATH=${PATH}" -- "${ROOT}/tools/session" "${orig_args[@]}")"
+  else
+    target="$(tmux new-session -d -P -F '#{window_id}' -s "${tsession}" -n "${window}" \
+      -c "${ROOT}" -e "PATH=${PATH}" -- "${ROOT}/tools/session" "${orig_args[@]}")"
+  fi
+  # A launch that fails at once would close its window and take the error with it.
+  tmux set-option -w -t "${target}" remain-on-exit failed >/dev/null
+  printf 'opened %s in tmux session %s. Attach: tmux switch-client -t %s. When the work is done: tools/session --close\n' \
+    "${window}" "${tsession}" "${tsession}"
+  exit 0
+fi
+
+if [[ -f "${ROOT}/tools/session.pre.${role}" ]]; then
+  # shellcheck disable=SC1090
+  source "${ROOT}/tools/session.pre.${role}"
+fi
+
+# Captured before grep: under pipefail, `ai-memory | grep -q` can read as false when grep exits
+# on the first match and the writer fails on the closed pipe, and false here means --new, which
+# the server refuses with a 409 for a name that exists. Asked from the start directory, because
+# workstreams are kept per ai-memory project and the project is resolved from the directory.
+known="$(cd "${start}" && ai-memory workstreams --limit 100 2>/dev/null || true)"
+if grep -qE "^[* ] ${workstream}  " <<<"${known}"; then
+  select=(--workstream "${workstream}")
+else
+  select=(--new "${workstream}")
+fi
+
+# The session list is machine-wide and every project runs a "grace": the display name carries
+# the project, or a message to "grace" lands in whichever one the sender picks. The workstream
+# keeps the bare name, so resuming still finds yesterday's session.
+prompt="$(cat "${ROLES}/${role}.md")
+
+## Session names
+
+Every project on this machine shares one session list. This project's sessions are named
+\`${project}-<role or feature>\`: you are \`${project}-${workstream}\`, and this project's manager is
+\`${project}-grace\`. Message only names that start with \`${project}-\`; any other name belongs
+to another project.
+
+To open another session of this project, run \`tools/session --spawn <role> [name] -- <brief>\`.
+It opens in your own tmux session, \`${project}-${workstream}\`, created on first use. When the
+sessions you opened are done, run \`tools/session --close\` to end it. Never open a tmux window
+yourself: the session you are in is the owner's."
+
+args=(--name "${project}-${workstream}" --model "${MODEL[${role}]}" --effort high
+      --append-system-prompt "${prompt}")
+
+build_deny "${DENY_SPEC[${role}]}"
+if [[ ${#DENY[@]} -gt 0 ]]; then
+  # The = form: --disallowedTools is variadic and would swallow a prompt passed after --.
+  joined="$(IFS=,; printf '%s' "${DENY[*]}")"
+  args+=("--disallowedTools=${joined}")
+fi
+
+cd "${start}"
+export AGENT_SESSION="${project}-${workstream}"
+exec ai-memory run "${select[@]}" claude "${args[@]}" "$@"
