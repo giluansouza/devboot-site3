@@ -154,7 +154,8 @@ curl -si -X POST https://www.devboot.com.br/mcp | head -n 5      # expect 401, w
 
 # b. The blog advertises the right resource and authorization server:
 curl -s https://www.devboot.com.br/.well-known/oauth-protected-resource/mcp
-#    expect "resource": "https://www.devboot.com.br/mcp" and "authorization_servers": [<your issuer>]
+#    expect "resource": "https://www.devboot.com.br/mcp", "authorization_servers": [<your issuer>]
+#    and "scopes_supported": ["blog:write", "offline_access"]
 
 # c. The authorization server meets ChatGPT's needs:
 curl -s https://TENANT_DOMAIN/.well-known/openid-configuration | python3 -c 'import sys,json; d=json.load(sys.stdin); print({k:d.get(k) for k in ("code_challenge_methods_supported","authorization_response_iss_parameter_supported","registration_endpoint")})'
@@ -170,12 +171,31 @@ with 401 by design.
 If the connection fails with an audience error → §2, "Resource Parameter Compatibility Profile".
 If every call is 401 though login worked → compare `iss` (trailing slash) and `aud` as above.
 
-## Known gap
+## 7. Required before the automation is called active: the refresh-token check
 
-The blog's discovery document advertises `scopes_supported: ["blog:write"]` only. Whether ChatGPT
-then requests `offline_access` (needed for refresh tokens, so scheduled runs keep working after the
-first access token expires) is `unknown`. If runs start failing a day after setup, that is the first
-suspect, and the fix is a one-line change in the blog's metadata plus a test — not part of this setup.
+Scheduled runs are 3–4 days apart and an access token lasts minutes. If the provider issued no
+refresh token, the first run after setup gets a 401 and the article is lost for that run. The blog
+advertises `offline_access` next to `blog:write` — in `scopes_supported` and in the 401
+challenge's `scope` — so the client asks for it. It does **not** require it: a token is accepted
+with `blog:write` alone. (RFC 6750 reads a challenge's `scope` as what the *token* needs; the blog
+lists `offline_access` there only so MCP clients, which treat the challenge as authoritative, request
+a refresh token. The token check is unchanged.) Whether ChatGPT then actually requests it and keeps
+the refresh token is the thing to prove:
+
+1. Make the test fast: API → Settings → "Maximum Access Token Lifetime (Seconds)" = `300`.
+   Remember to set it back afterwards (the value to keep: your choice, §1).
+2. Connect ChatGPT (§3) and call `list_articles` once from the chat the scheduled task uses.
+3. Wait more than 300 seconds.
+4. Call `list_articles` again from the **scheduled task's chat** (not a fresh connection). It must
+   succeed without asking to log in again.
+5. Confirm in the Auth0 dashboard (Monitoring → Logs) that the second call was a **refresh-token
+   exchange**, not a new login. The log entry's exact type code and wording: `unknown` — look for
+   the entry between the two calls that is not a user login.
+
+If step 4 asks you to log in again, or step 5 shows no refresh-token exchange, the automation is
+**not** active: check "Allow Offline Access" on the API (§1.2), that the application is allowed to
+use refresh tokens, and that the connector requested the `offline_access` scope. Do not enable the
+schedules until this passes.
 
 ## Sources
 

@@ -84,5 +84,15 @@ class ToolDescription(McpBase):
         self.assertNotIn("nunca diga que foi publicada", description.lower())
 
 
+class Auth0DocCarriesTheRefreshCheck(unittest.TestCase):
+    def test_refresh_token_verification_is_a_required_step_and_the_gap_is_gone(self):
+        doc = (Path(__file__).resolve().parents[2] / "docs" / "auth0-setup.md").read_text()
+        self.assertIn("Required before the automation is called active", doc)
+        self.assertIn("300", doc)
+        self.assertIn("refresh-token exchange", doc)
+        self.assertNotIn("## Known gap", doc)
+        self.assertIn('"scopes_supported": ["blog:write", "offline_access"]', doc)
+
+
 if __name__ == "__main__":
     unittest.main()
