@@ -1,0 +1,30 @@
+# .githooks/config — this project's answers. Copy to `.githooks/config` and commit it.
+#
+# The factory owns `pre-push` and overwrites it. It never touches this file: the
+# procedure is universal, every answer it needs is local.
+
+# New blobs above this are refused. Raise it only if large files are genuinely part of
+# the work — a blob in history is permanent and every clone pays for it forever.
+# MAX_BLOB_MB="25"
+
+# How to run this project's tests, for the red-green gate. `{dir}` expands to the
+# directory being tested and MUST appear in a container command: check-red-green builds a
+# throwaway worktree of the base commit, and without {dir} the container would test the
+# working tree twice and call the result proof.
+#
+# Leave it unset and the gate is not installed at all, rather than answering `unknown` on
+# every push — a gate that always says unknown is decoration, and decoration teaches
+# people to skim past the ones that mean something.
+#
+#   host, tests run directly:
+#     TEST_CMD="vendor/bin/pest"
+#
+#   container (mount the path being tested, because cwd means nothing inside):
+#     TEST_CMD="docker run --rm -v {dir}:{dir} -w {dir} --network <net> <image> vendor/bin/pest"
+# TEST_CMD=""
+
+# Which tests directory red-green checks, relative to the repo root. Leave it unset in a
+# single-app project: the gate finds it. Set it in a monorepo with several apps (a live
+# `web/` beside a frozen `backend/`) if the branch may touch tests in more than one —
+# the gate then stops with `unknown` instead of guessing.
+# TEST_DIR="web/tests"

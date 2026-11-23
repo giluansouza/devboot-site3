@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+"""Recusa commitar arquivo de outra sessão que você não tocou.
+
+Instalado pela fábrica. Roda em todo `git commit` deste clone.
+
+O QUE ELE IMPEDE, E POR QUE PRECISA SER CÓDIGO
+    Vários agentes trabalham no mesmo checkout ao mesmo tempo. Um deles roda `git add -A`,
+    o índice leva junto os arquivos que o OUTRO estava editando, e o commit os captura.
+    Se em seguida alguém troca de branch, aquele trabalho some do disco — e ninguém
+    percebe, porque o commit passou verde.
+
+    Aconteceu pelo menos três vezes neste parque: 14 arquivos numa sessão do confereplaca,
+    depois 11 em outra (llms.txt, Support/Funnel.php, uma migration, dois testes, duas
+    branch tables). Nas três o agente sabia da regra — o `session-brief` avisa no início
+    de toda sessão. Aviso a IA lê e segue em frente; código de saída ela não atravessa.
+
+A DISTINÇÃO QUE TORNA ISTO PRECISO EM VEZ DE CHATO
+    Não recusa "arquivo que já estava sujo". Recusa "arquivo que já estava sujo E cujo
+    conteúdo não mudou desde que sua sessão abriu". Se você editou, é seu e passa. Se está
+    exatamente como estava quando você chegou, você não escreveu aquilo — está engolindo.
+
+    Sem isso o guarda acusaria toda vez que duas sessões tocam a mesma área, e um guarda
+    que acusa inocente é desligado, levando junto os casos reais.
+
+O RETRATO É DA SUA SESSÃO, NÃO DA ÁRVORE (corrigido em 5 Out 2026)
+    Era um arquivo por checkout, e isso acusava o inocente de forma reprodutível. Uma
+    sessão de gestão que abre na raiz do mesmo repositório reescrevia o retrato com o
+    trabalho EM CURSO de quem estava editando ali; na hora do commit esse trabalho aparecia
+    como "já estava aqui antes de você abrir" e era recusado — ao autor dele.
+
+    Então cada sessão tem o seu: `.git/foundation-sessions/<session_id>.json`, gravado pelo
+    `session-brief` na abertura. Aqui a identidade vem de `CLAUDE_CODE_SESSION_ID`, que o
+    Claude Code exporta no ambiente de todo comando — é o MESMO valor que o payload do
+    SessionStart carrega, conferido no clone da foundation em 5 Out 2026.
+
+    O que isto deixa de pegar está dito no `session-brief`: arquivo que a outra sessão
+    criou depois de você abrir não está no seu retrato e passa. A troca é deliberada —
+    guarda que acusa inocente é guarda desinstalado, e aí nada é pego.
+
+QUANDO ELE SE CALA
+    Sem retrato desta sessão — commit feito à mão no terminal, outro harness, sessão aberta
+    antes deste guarda existir — ele deixa passar. Ausência de informação não é evidência
+    de culpa, e reprovar commit por falta de dado ensinaria `--no-verify` em uma semana.
+
+SAÍDA DELIBERADA
+    `git commit --no-verify`. Deliberada e visível, que é o ponto: a alternativa é alguém
+    desinstalar o hook e perder também os casos que importam.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+RETRATOS = "foundation-sessions"
+LEGADO = "foundation-session-start.json"
+
+
+def git(*a: str) -> str:
+    p = subprocess.run(["git", *a], capture_output=True, text=True)
+    return p.stdout.strip() if p.returncode == 0 else ""
+
+
+def nome_de_arquivo(session_id: str) -> str:
+    """Idêntica à do `tools/session-brief`, que é quem grava.
+
+    Duas cópias da mesma regra é dívida, e a forma de ela não apodrecer em silêncio é
+    `bench/seeded-shared-checkout`: ele grava chamando o `session-brief` de verdade e lê
+    chamando este arquivo. Se as duas discordarem, o retrato não é encontrado, o guarda
+    deixa passar e o caso de RECUSAR fica vermelho.
+    """
+    limpo = "".join(c if (c.isalnum() or c in "._-") else "-" for c in session_id)
+    return limpo[:120] if limpo.strip("-.") else hashlib.sha256(
+        session_id.encode()).hexdigest()[:32]
+
+
+def retrato_desta_sessao(gitdir: str) -> dict[str, str] | None:
+    """O que estava sujo quando ESTA sessão abriu — ou None, que significa "não sei"."""
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    if not sid:
+        return None                       # sem identidade não há retrato que seja seu
+
+    def ler(f: Path) -> dict[str, str] | None:
+        try:
+            dados = json.loads(f.read_text())
+            return dados if isinstance(dados, dict) else None
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    meu = Path(gitdir) / RETRATOS / f"{nome_de_arquivo(sid)}.json"
+    if meu.is_file():
+        return ler(meu)
+
+    # O formato anterior, um arquivo por árvore. Honrado só se for desta sessão: é o que
+    # mantém protegida uma sessão que já estava aberta quando esta mudança entrou, sem
+    # reintroduzir o defeito de ler o retrato de outra. Some sozinho pela varredura do
+    # `session-brief`.
+    velho = Path(gitdir) / LEGADO
+    if velho.is_file():
+        dados = ler(velho)
+        if dados and dados.get("_session_id") == sid:
+            return dados
+    return None
+
+
+def main() -> int:
+    raiz = git("rev-parse", "--show-toplevel")
+    gitdir = git("rev-parse", "--absolute-git-dir")
+    if not raiz or not gitdir:
+        return 0
+
+    antes = retrato_desta_sessao(gitdir)
+    if not antes:
+        return 0                          # sem dado: passa, e passa em silêncio
+
+    staged = [l for l in git("diff", "--cached", "--name-only").splitlines() if l.strip()]
+    if not staged:
+        return 0
+
+    engolidos = []
+    for caminho in staged:
+        if caminho.startswith("_") and caminho in antes:
+            continue                      # `_session_id`, `_at`: metadado, não caminho
+        if caminho not in antes:
+            continue                      # não estava sujo quando você chegou: seu
+        f = Path(raiz) / caminho
+        try:
+            agora = hashlib.sha256(f.read_bytes()).hexdigest()[:16] if f.is_file() else "ausente"
+        except OSError:
+            continue
+        if agora == antes[caminho]:
+            engolidos.append(caminho)     # idêntico ao que já estava: você não escreveu
+
+    if not engolidos:
+        return 0
+
+    print(f"🚫 {len(engolidos)} arquivo(s) no índice já estavam modificados quando esta "
+          f"sessão abriu, e continuam idênticos — você não escreveu isso:\n", file=sys.stderr)
+    for c in engolidos:
+        print(f"     {c}", file=sys.stderr)
+    print("\n   Provavelmente foi um `git add -A` num diretório compartilhado. Commitar "
+          "leva\n   junto o trabalho de outra sessão, e a próxima troca de branch o apaga "
+          "do disco.\n", file=sys.stderr)
+    print("   Tire do índice e commite só o que é seu:", file=sys.stderr)
+    print(f"       git restore --staged {' '.join(engolidos[:4])}"
+          + (" …" if len(engolidos) > 4 else ""), file=sys.stderr)
+    print("\n   Se é seu mesmo e você quer levar assim:  git commit --no-verify",
+          file=sys.stderr)
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
