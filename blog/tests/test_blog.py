@@ -112,8 +112,9 @@ class BlogTests(unittest.TestCase):
     def test_publication_disabled_still_allows_manual_review(self):
         app = create_app(replace(self.settings, allow_auto_publish=False))
         with TestClient(app) as client:
-            self.assertEqual(client.post("/api/blog/articles", headers=self.headers, json=article(status="published")).status_code, 403)
-            self.assertEqual(client.post("/api/blog/articles", headers=self.headers, json=article()).status_code, 201)
+            # A published request is no longer refused: it is kept as a draft (see test_drafts.py).
+            self.assertEqual(client.post("/api/blog/articles", headers=self.headers, json=article(status="published")).status_code, 201)
+            self.assertEqual(client.get("/blog/software-para-negocios/").status_code, 404)
             self.assertEqual(client.post("/api/blog/articles/software-para-negocios/publish", headers=self.headers).status_code, 200)
 
     def test_missing_credentials_fail_closed(self):

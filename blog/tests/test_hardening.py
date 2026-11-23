@@ -134,18 +134,6 @@ class BranchTableRows(ApiBase):
             ElementTree.fromstring(self.client.get(path).content)
 
 
-class AutoPublishOff(ApiBase):
-    auto_publish = False
-
-    def test_resubmitting_a_draft_as_published_is_refused(self):  # characterization
-        self.assertEqual(self.create().status_code, 201)
-        response = self.create(status="published")
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(self.client.get("/blog/software-para-negocios/").status_code, 404)
-        stored = self.client.get("/api/blog/articles", headers=self.headers).json()["articles"]
-        self.assertEqual([a["status"] for a in stored], ["draft"])
-
-
 class AutoPublishOnResubmit(ApiBase):
     def test_resubmitting_a_draft_as_published_conflicts_instead_of_overwriting(self):  # characterization
         self.assertEqual(self.create().status_code, 201)
@@ -219,19 +207,6 @@ class McpHardening(McpBase):
             self.assertEqual(response.status_code, 401)
         finally:
             self.jwks_patch.start()
-
-
-class McpAutoPublishOff(McpBase):
-    auto_publish = False
-
-    def test_create_published_is_refused_by_the_tool_and_stores_nothing(self):  # characterization
-        response = self.rpc("tools/call", dict(name="create_article", arguments=dict(article=article(status="published"))))
-        self.assertEqual(response.status_code, 200, response.text)
-        self.assertTrue(response.json()["result"]["isError"], response.text)
-        self.assertEqual(self.app.state.store.list(public=False), [])
-        draft = self.rpc("tools/call", dict(name="create_article", arguments=dict(article=article())))
-        self.assertFalse(draft.json()["result"].get("isError", False), draft.text)
-        self.assertEqual(len(self.app.state.store.list(public=False)), 1)
 
 
 if __name__ == "__main__":

@@ -146,6 +146,13 @@ def create_app(settings=None):
             enable_dns_rebinding_protection=True, allowed_hosts=[*hosts, "testserver", "localhost:*", "127.0.0.1:*"],
             allowed_origins=[f"{base.scheme}://{h}" for h in hosts]))
 
+    def outcome(saved, created):
+        """Machine-readable result of a create request, in Portuguese for the scheduled task to relay."""
+        awaiting = saved["status"] != "published"
+        return {"created": created, "status": saved["status"], "awaiting_approval": awaiting,
+                "message": "Recebida como rascunho; aguarda aprovação do editor." if awaiting else "Matéria publicada.",
+                "article": presentation(saved)}
+
     def presentation(article):
         return {key: value for key, value in article.items() if key not in {"fingerprint", "id"}} | {
             "url": settings.base_url + "/blog/" + article["slug"] + "/" if article["status"] == "published" else None}
@@ -155,12 +162,14 @@ def create_app(settings=None):
         """Cria uma matéria no blog Devboot. Use Markdown com fontes verificáveis.
 
         edition_key deve ser estável por agendamento e data (ex.: terca-2026-10-20).
-        status=draft salva em privado; published publica na internet se habilitado.
+        Toda matéria chega como rascunho: mesmo com status=published a matéria é guardada como
+        rascunho e aguarda aprovação do editor. Confira `status` e `awaiting_approval` na resposta
+        e informe que a matéria aguarda aprovação; nunca diga que foi publicada.
         Reenvio idêntico devolve o artigo existente; divergências geram erro.
         Nunca invente uma nova edition_key para contornar um conflito.
         """
         saved, created = store.save(article, settings.allow_auto_publish)
-        return {"created": created, "article": presentation(saved)}
+        return outcome(saved, created)
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
     def list_articles() -> list[dict]:
@@ -233,11 +242,9 @@ def create_app(settings=None):
         try:
             article = ArticleInput.model_validate_json(body)
             saved, created = store.save(article, settings.allow_auto_publish)
-            return JSONResponse({"created": created, "article": presentation(saved)}, 201 if created else 200)
+            return JSONResponse(outcome(saved, created), 201 if created else 200)
         except ValidationError:
             return JSONResponse({"error": "JSON ou campos inválidos. Consulte docs/blog.md."}, 422)
-        except PermissionError as exc:
-            return JSONResponse({"error": str(exc)}, 403)
         except Conflict as exc:
             return JSONResponse({"error": str(exc)}, 409)
 

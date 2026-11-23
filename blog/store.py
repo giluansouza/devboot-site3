@@ -77,9 +77,12 @@ class Store:
 
     def save(self, article: ArticleInput, allow_auto_publish: bool):
         data = article.model_dump()
-        fingerprint = hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+        # With auto-publish off a `published` request is never refused and never lost: it is stored
+        # as a draft awaiting the editor. The fingerprint uses the effective status, so a retry of
+        # the same edition (as draft or as published) stays idempotent instead of conflicting.
         if data["status"] == "published" and not allow_auto_publish:
-            raise PermissionError("Publicação automática desativada. Envie status=draft e revise antes de publicar.")
+            data["status"] = "draft"
+        fingerprint = hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
         now = datetime.now(timezone.utc).isoformat()
         with self.connect() as db:
             db.execute("BEGIN IMMEDIATE")
@@ -93,7 +96,7 @@ class Store:
                     (edition_key,slug,title,excerpt,content_markdown,category,status,created_at,published_at,fingerprint)
                     VALUES (:edition_key,:slug,:title,:excerpt,:content_markdown,:category,:status,:created_at,:published_at,:fingerprint)
                     RETURNING *""", {**data, "created_at": now,
-                        "published_at": now if article.status == "published" else None,
+                        "published_at": now if data["status"] == "published" else None,
                         "fingerprint": fingerprint}).fetchone()
             except sqlite3.IntegrityError as exc:
                 raise Conflict("Este slug já pertence a outro artigo. Escolha um slug diferente.") from exc
