@@ -428,5 +428,49 @@ class DadosInvalidos(unittest.TestCase):
         self.assertIn("link_ml", str(c.exception))
 
 
+
+class JsonLdNaoQuebraOScript(unittest.TestCase):
+    """json.dumps does not escape `<`: a name containing </script> would end the JSON-LD block."""
+    ATAQUE = "</script><img src=x onerror=alert(1)>"
+
+    def paginas(self, d):
+        return gerar_paginas(d)
+
+    def confere(self, f, nome_esperado):
+        for k, v in f.items():
+            if not k.endswith(".html"):
+                continue
+            with self.subTest(page=k):
+                texto = v.decode("utf-8")
+                self.assertNotIn("</script><img", texto)
+                p = Pagina(texto)
+                self.assertEqual(p.problemas, [])
+                self.assertFalse([a for t, a in p.links if t == "img" and "onerror" in a])
+                for ld in p.jsonld:
+                    for item in ld["itemListElement"]:
+                        self.assertNotIn("<", item["name"].replace(self.ATAQUE, ""))
+        return f
+
+    def test_a_product_name_with_a_closing_script_tag(self):
+        self.assertLessEqual(len(self.ATAQUE), 40)
+        f = self.confere(self.paginas(dados(cat("camera-um", nome=self.ATAQUE), acesso("controlador-um"))), self.ATAQUE)
+        nomes = [i["name"] for x in pg(f, "camera-um/index.html").jsonld for i in x["itemListElement"]]
+        self.assertIn(self.ATAQUE, nomes)  # still the same name once the JSON is parsed
+
+    def test_a_line_name_with_a_closing_script_tag(self):
+        d = dados(cat("camera-um"), acesso("controlador-um"))
+        d["linhas"]["cameras-e-gravadores"]["nome"] = self.ATAQUE
+        f = self.confere(self.paginas(d), self.ATAQUE)
+        nomes = [i["name"] for x in pg(f, "cameras-e-gravadores/index.html").jsonld for i in x["itemListElement"]]
+        self.assertIn(self.ATAQUE, nomes)
+
+    def test_angle_brackets_and_ampersands_leave_the_json_ld_as_escapes(self):
+        f = self.paginas(dados(cat("camera-um", nome="A <b> & C"), acesso("controlador-um")))
+        bloco = f["camera-um/index.html"].decode().split('application/ld+json">')[1].split("</script>")[0]
+        for ch in "<>&":
+            self.assertNotIn(ch, bloco)
+        self.assertIn("\\u003c", bloco)
+
+
 if __name__ == "__main__":
     unittest.main()

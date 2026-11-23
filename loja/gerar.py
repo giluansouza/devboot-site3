@@ -375,11 +375,19 @@ def rodape(c):
 
 
 def breadcrumb_ld(c, itens):
-    return json.dumps({
+def json_para_script(obj, **kw):
+    """JSON that is safe inside <script>: json.dumps leaves `<` alone, so a name containing
+    </script> would end the block and the rest would be parsed as HTML. \\u003c and friends mean
+    the same thing to a JSON parser and nothing to the HTML parser."""
+    return (json.dumps(obj, ensure_ascii=False, **kw)
+            .replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026"))
+
+
+    return json_para_script({
         "@context": "https://schema.org", "@type": "BreadcrumbList",
         "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": nome, "item": c.site + caminho}
                             for i, (nome, caminho) in enumerate(itens)]},
-        ensure_ascii=False, indent=2)
+        indent=2)
 
 
 def pagina(c, *, titulo, descricao, caminho, corpo, atual, noindex=False, og=None, migalhas=None,
