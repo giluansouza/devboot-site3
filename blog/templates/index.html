@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero wrap">
+  <p class="eyebrow">DEVBOOT / IDEIAS EM PRODUÇÃO</p>
+  <h1>Tecnologia que<br>faz <span>diferença.</span></h1>
+  <div class="hero-bottom"><p class="lede">Análises, ideias e experiências sobre software e negócios. Para quem transforma tecnologia em resultado.</p><span class="index-label">BLOG / {{ '%02d' | format(articles|length) }} {{ 'ARTIGO' if articles|length == 1 else 'ARTIGOS' }}</span></div>
+</section>
+<section class="paper" aria-label="Artigos do blog"><div class="wrap">
+  <div class="section-heading"><h2>Últimas publicações</h2><span class="index-label">CONHECIMENTO APLICADO</span></div>
+  {% if articles %}
+  <div class="articles">{% for article in articles %}
+    <article class="card">
+      <div class="card-top"><span class="category">{{ article.category }}</span><time datetime="{{ article.published_at }}">{{ article.published_at | date_br }}</time></div>
+      <h3><a href="/blog/{{ article.slug }}/">{{ article.title }}</a></h3>
+      <p>{{ article.excerpt }}</p>
+      <a class="read" href="/blog/{{ article.slug }}/" aria-label="Ler: {{ article.title }}">Ler matéria <span aria-hidden="true">↗</span></a>
+    </article>
+  {% endfor %}</div>
+  {% else %}
+  <div class="empty"><span class="empty-mark" aria-hidden="true">↗</span><h3>Boas ideias estão a caminho.</h3><p>Em breve, nossas primeiras análises sobre tecnologia, software e negócios estarão aqui.</p><a class="read" href="/">Conheça a Devboot <span aria-hidden="true">↗</span></a></div>
+  {% endif %}
+</div></section>
+<aside class="cta wrap"><div><p class="eyebrow">DA IDEIA À OPERAÇÃO</p><h2>Seu próximo passo<br>pode começar aqui.</h2></div><a class="button" href="/#contato">Converse com a Devboot ↗</a></aside>
+{% endblock %}

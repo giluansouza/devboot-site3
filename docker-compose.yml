@@ -4,6 +4,10 @@ services:
     container_name: devboot-site
     volumes:
       - ./public:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      blog:
+        condition: service_healthy
     labels:
       - traefik.enable=true
       - traefik.docker.network=debnet
@@ -19,7 +23,36 @@ services:
       - traefik.http.services.devboot.loadbalancer.server.port=80
     networks:
         - debnet
+        - blog-internal
+
+  blog:
+    build: ./blog
+    restart: unless-stopped
+    environment:
+      BLOG_API_TOKEN: ${BLOG_API_TOKEN:?Configure BLOG_API_TOKEN no arquivo .env}
+      BLOG_BASE_URL: ${BLOG_BASE_URL:-https://www.devboot.com.br}
+      BLOG_ALLOW_AUTO_PUBLISH: ${BLOG_ALLOW_AUTO_PUBLISH:-false}
+      BLOG_OAUTH_ISSUER: ${BLOG_OAUTH_ISSUER:-}
+      BLOG_OAUTH_JWKS_URL: ${BLOG_OAUTH_JWKS_URL:-}
+    volumes:
+      - blog-data:/data
+    healthcheck:
+      test: ["CMD", "/app/.venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - blog-internal
 
 networks:
   debnet:
     external: true
+  blog-internal:
+
+volumes:
+  blog-data:

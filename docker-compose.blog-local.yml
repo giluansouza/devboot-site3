@@ -1,0 +1,52 @@
+name: devboot-blog-chatgpt
+
+services:
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.0
+    command: tunnel --no-autoupdate --protocol http2 --url http://web:80
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  auth:
+    image: quay.io/keycloak/keycloak:26.8.0
+    command: start-dev --import-realm
+    environment:
+      KC_HOSTNAME: ${BLOG_BASE_URL:-https://localhost}/auth
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_PROXY_HEADERS: xforwarded
+      KC_HTTP_ENABLED: "true"
+    volumes:
+      - ./.local/chatgpt/realm.json:/opt/keycloak/data/import/devboot-realm.json:ro
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  blog:
+    build: ./blog
+    environment:
+      BLOG_BASE_URL: ${BLOG_BASE_URL:-https://localhost}
+      BLOG_API_TOKEN: ${BLOG_API_TOKEN:-}
+      BLOG_ALLOW_AUTO_PUBLISH: "true"
+      BLOG_OAUTH_ISSUER: ${BLOG_BASE_URL:-https://localhost}/auth/realms/devboot
+      BLOG_OAUTH_JWKS_URL: ${BLOG_BASE_URL:-https://localhost}/auth/realms/devboot/protocol/openid-connect/certs
+    volumes:
+      - articles:/data
+    healthcheck:
+      test: [CMD, /app/.venv/bin/python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  web:
+    image: nginx:stable-alpine
+    ports: ["127.0.0.1:18976:80"]
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+      - ./nginx/blog-local.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      blog:
+        condition: service_healthy
+      auth:
+        condition: service_started
+    security_opt: [no-new-privileges:true]
+
+volumes:
+  articles:

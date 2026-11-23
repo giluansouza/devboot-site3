@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="theme-color" content="#0a0d12">
+  {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+  <link rel="icon" href="/img/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/blog/assets/blog.css">
+  <link rel="alternate" type="application/rss+xml" title="Blog Devboot" href="/blog/feed.xml">
+  <meta property="og:site_name" content="Devboot">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:image" content="{{ base_url }}/img/devboot-share-dark-1200x630.png">
+  {% if canonical %}<meta property="og:url" content="{{ canonical }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  {% block meta %}<meta property="og:type" content="website">{% endblock %}
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="nav wrap">
+    <a class="brand" href="/" aria-label="Devboot — início"><img src="/img/devboot-wordmark.svg" alt="Devboot" width="150" height="35"></a>
+    <nav aria-label="Navegação principal"><a href="/#desenvolvimento">O que fazemos</a><a href="/blog/" aria-current="page">Blog</a><a class="contact" href="/#contato">Vamos conversar <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="conteudo">{% block content %}{% endblock %}</main>
+  <footer class="wrap footer"><a href="/">Devboot Tecnologia</a><p>Software sob medida. Conhecimento compartilhado.</p><a href="/blog/feed.xml">Acompanhar por RSS ↗</a></footer>
+</body>
+</html>
