@@ -34,6 +34,18 @@ def docker(*args, check=True):
     return subprocess.run(["docker", *args], capture_output=True, text=True, check=check)
 
 
+def create_network(name):
+    """A user-defined network (Docker's embedded DNS, as in production). On a machine with many
+    compose projects Docker's default address pools run out ("fully subnetted"), so fall back to
+    an explicit subnet from a block nobody uses."""
+    if docker("network", "create", name, check=False).returncode == 0:
+        return
+    for n in range(40):
+        if docker("network", "create", "--subnet", f"10.241.{n}.0/24", name, check=False).returncode == 0:
+            return
+    raise AssertionError("could not create a Docker network for the probe")
+
+
 def get(port, path):
     try:
         with urllib.request.urlopen(f"http://127.0.0.1:{port}{path}", timeout=10) as r:
@@ -54,16 +66,20 @@ class LandingIndependentOfBlog(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.tag = "nginxprobe-" + uuid.uuid4().hex[:8]
-        cls.stub_conf = Path(tempfile.mkdtemp()) / "stub.conf"
+        # Registered before anything is created: runs even if setUpClass fails halfway or a test
+        # fails. Removes only what carries THIS run's tag; never prunes networks it did not create.
+        cls.addClassCleanup(cls.remove_everything_created, cls.tag)
+        tmp = Path(tempfile.mkdtemp())
+        cls.addClassCleanup(shutil.rmtree, tmp, True)
+        cls.stub_conf = tmp / "stub.conf"
         cls.stub_conf.write_text(STUB_CONF)
-        docker("network", "create", cls.tag)
+        create_network(cls.tag)
 
-    @classmethod
-    def tearDownClass(cls):
-        for name in docker("ps", "-aq", "--filter", f"label=probe={cls.tag}").stdout.split():
+    @staticmethod
+    def remove_everything_created(tag):
+        for name in docker("ps", "-aq", "--filter", f"label=probe={tag}", check=False).stdout.split():
             docker("rm", "-f", name, check=False)
-        docker("network", "rm", cls.tag, check=False)
-        shutil.rmtree(cls.stub_conf.parent, ignore_errors=True)
+        docker("network", "rm", tag, check=False)
 
     def run_container(self, name, *args):
         unique = f"{self.tag}-{name}-{uuid.uuid4().hex[:6]}"
@@ -140,6 +156,31 @@ class LandingIndependentOfBlog(unittest.TestCase):
         self.assertEqual(status, 200, "nginx never reached the recreated blog")
         self.assertIn("uri=/blog/x ", body + " ")
         self.assertTrue(filler)
+
+
+@unittest.skipUnless(DOCKER, "docker is required to probe nginx")
+class ProbeCleansUpAfterItself(unittest.TestCase):
+    def test_network_and_containers_are_removed_when_setup_or_a_test_fails(self):
+        seen = {}
+
+        class Failing(LandingIndependentOfBlog):
+            @classmethod
+            def setUpClass(cls):
+                super().setUpClass()
+                seen["tag"] = cls.tag
+                subprocess.run(["docker", "run", "-d", "--rm", "--label", f"probe={cls.tag}", "--name", cls.tag + "-x",
+                                "--network", cls.tag, IMAGE, "sleep", "60"], capture_output=True, check=True)
+                raise RuntimeError("setup fails after the network and a container exist")
+
+            def test_never_runs(self):
+                pass
+
+        result = unittest.TextTestRunner(stream=open("/dev/null", "w")).run(
+            unittest.defaultTestLoader.loadTestsFromTestCase(Failing))
+        self.assertFalse(result.wasSuccessful())
+        networks = docker("network", "ls", "--filter", f"name={seen['tag']}", "-q").stdout.split()
+        containers = docker("ps", "-aq", "--filter", f"label=probe={seen['tag']}").stdout.split()
+        self.assertEqual((networks, containers), ([], []))
 
 
 class ComposeDoesNotGateTheLanding(unittest.TestCase):
