@@ -83,10 +83,11 @@
     atualizar();
   }
 
-  /* ---- 404: put the address that failed into the WhatsApp message */
+  /* ---- 404: put the address that failed into the WhatsApp message (the template is in the page) */
   var wa404 = document.getElementById('wa404');
   if (wa404) {
     var base = wa404.getAttribute('data-wa-base');
-    wa404.href = base + encodeURIComponent('Olá, tentei abrir ' + location.pathname + ' no site da Devboot e não encontrei.');
+    var modelo = wa404.getAttribute('data-wa-modelo');
+    if (base && modelo) wa404.href = base + encodeURIComponent(modelo.replace('{endereco}', location.pathname));
   }
 })();

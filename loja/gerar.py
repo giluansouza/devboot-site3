@@ -217,7 +217,7 @@ import html as _html
 import json
 import sys
 from html.parser import HTMLParser
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 SITE_IMG_PADRAO = "/img/devboot-share-light-1200x630.png"
 FONTES = ("https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900"
@@ -228,6 +228,7 @@ TEMA_JS = ("try { if (localStorage.getItem('devboot-tema') === 'escuro') "
 LANDING = (("Desenvolvimento", "/#desenvolvimento"), ("Produtos", "/#produtos"),
            ("Câmeras", "/#cftv"), ("Loja", "/loja/"), ("Blog", "/blog/"), ("Contato", "/#contato"))
 CAMSEEK = "https://camseek.devboot.com.br"
+WA_404 = "Olá, tentei abrir {endereco} no site da Devboot e não encontrei."
 
 
 def e(s):
@@ -374,7 +375,6 @@ def rodape(c):
             '<span>Loja: vitrine dos anúncios da Devboot no Mercado Livre</span></div></footer>')
 
 
-def breadcrumb_ld(c, itens):
 def json_para_script(obj, **kw):
     """JSON that is safe inside <script>: json.dumps leaves `<` alone, so a name containing
     </script> would end the block and the rest would be parsed as HTML. \\u003c and friends mean
@@ -383,6 +383,7 @@ def json_para_script(obj, **kw):
             .replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026"))
 
 
+def breadcrumb_ld(c, itens):
     return json_para_script({
         "@context": "https://schema.org", "@type": "BreadcrumbList",
         "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": nome, "item": c.site + caminho}
@@ -536,13 +537,18 @@ def pagina_da_linha(c, slug):
         migalhas=[("Loja", "/loja/"), (L["nome"], f"/loja/{slug}/")])
 
 
+def mensagem_do_produto(rotulo, status):
+    """No article before the name ('vi o Câmera' reads wrong for half the catalog)."""
+    n = f"Olá, vi no site da Devboot: {rotulo}."
+    if status == "pausado":
+        return f"{n} O anúncio está pausado: tem previsão ou um equivalente?"
+    if status == "encerrado":
+        return f"{n} Ele saiu de linha: podem me indicar um similar?"
+    return f"{n} Quero um orçamento."
+
+
 def texto_whatsapp(c, p):
-    n = c.rotulo(p)
-    if p["status"] == "pausado":
-        return f"Olá, vi o {n} no site da Devboot. O anúncio está pausado: tem previsão ou um equivalente?"
-    if p["status"] == "encerrado":
-        return f"Olá, vi o {n} no site da Devboot, mas saiu de linha. Podem me indicar um similar?"
-    return f"Olá, vi o {n} no site da Devboot e quero um orçamento."
+    return mensagem_do_produto(c.rotulo(p), p["status"])
 
 
 def pagina_do_produto(c, p):
@@ -620,13 +626,13 @@ def pagina_do_produto(c, p):
 
 
 def pagina_404(c):
-    base = c.wa("")  # ".../?text=" : the script appends the address that failed
-    texto = "Olá, tentei abrir uma página da loja no site da Devboot e não encontrei."
+    base = c.wa("")  # ".../?text=" : the script appends the message
+    texto = WA_404.format(endereco="uma página da loja")
     corpo = f"""<div class="wrap gut page"><div class="stack"><span class="eyebrow">404 · produto não encontrado</span>
 <h1 class="h1 h1--md">Esse produto não está na vitrine.</h1>
 <p class="lede">O endereço pode ter mudado, ou o produto saiu da loja. Veja as linhas abaixo ou pergunte direto.</p></div>
 {lista_de_linhas(c)}
-<div class="cta cta--narrow"><a class="btn btn--ghost" id="wa404" data-wa-base="{e(base)}" href="{e(c.wa(texto))}" target="_blank" rel="noopener noreferrer">{icone("wa")}Procurando um modelo? Pergunte</a></div>
+<div class="cta cta--narrow"><a class="btn btn--ghost" id="wa404" data-wa-base="{e(base)}" data-wa-modelo="{e(WA_404)}" href="{e(c.wa(texto))}" target="_blank" rel="noopener noreferrer">{icone("wa")}Procurando um modelo? Pergunte</a></div>
 <p><a class="go go--lone" href="/loja/">Ir para o início da loja</a></p></div>"""
     return pagina(c, titulo="Produto não encontrado | Loja Devboot",
                   descricao="Esse endereço não está na vitrine da Devboot. Veja as linhas da loja ou pergunte no WhatsApp.",
@@ -706,7 +712,30 @@ def texto_para_revisao(arquivos):
         saida += [f"## /loja/{k[:-len('index.html')] if k.endswith('index.html') else k}",
                   f"- Título: {_html.unescape(titulo)}", f"- Descrição (Google): {_html.unescape(desc)}", "",
                   *[f"- {_html.unescape(x)}" for x in linhas if x], ""]
+    saida += ["## Mensagens de WhatsApp (já escritas quando o visitante toca no botão)", ""]
+    for msg, paginas in mensagens_whatsapp(arquivos):
+        onde = "todas as páginas" if len(paginas) == len(paginas_html(arquivos)) else ", ".join(paginas)
+        saida.append(f"- {msg}  ({onde})")
+    saida.append(f"- {WA_404.format(endereco='{endereço que falhou}')}  (/loja/404.html: o endereço digitado entra no lugar)")
+    modelo = "{nome} ({marca} {modelo})"
+    saida.append(f"- {mensagem_do_produto(modelo, 'pausado')}  (modelo: página de um produto pausado)")
+    saida.append(f"- {mensagem_do_produto(modelo, 'encerrado')}  (modelo: página de um produto que saiu de linha)")
+    saida.append("")
     return "\n".join(saida)
+
+
+def paginas_html(arquivos):
+    return [k for k in sorted(arquivos) if k.endswith(".html")]
+
+
+def mensagens_whatsapp(arquivos):
+    """Every distinct pre-filled WhatsApp text in the generated pages, with the pages it is on."""
+    achadas = {}
+    for k in paginas_html(arquivos):
+        for h in re.findall(r'href="(https://wa\.me/[0-9]+\?text=[^"]*)"', arquivos[k].decode("utf-8")):
+            msg = unquote(_html.unescape(h).split("?text=", 1)[1])
+            achadas.setdefault(msg, []).append("/loja/" + (k[:-len("index.html")] if k.endswith("index.html") else k))
+    return [(m, sorted(set(p))) for m, p in achadas.items()]
 
 
 def escrever(saida, arquivos):
@@ -725,6 +754,27 @@ def escrever(saida, arquivos):
             arq.unlink()
         elif arq.is_dir() and not any(arq.iterdir()):
             arq.rmdir()
+
+
+def fotos_nomeadas(dados):
+    """Every photo the data names, as paths under public/loja/ (fotos and og)."""
+    nomes = set()
+    for p in dados["produtos"]:
+        for f in p.get("fotos", []):
+            nomes.add(f"img/{p['slug']}/{f['arquivo']}")
+        if p.get("og"):
+            nomes.add(f"img/{p['slug']}/{p['og']}")
+    return nomes
+
+
+def arquivos_estranhos(saida, gerados, dados):
+    """Files in public/loja/ that nothing explains: not generated, and not a photo the data names.
+    The photo folders are not exempt: anything else under img/ (a page, an unlisted file, a folder
+    of an unknown slug) would be served from the shop's own address."""
+    esperados = set(gerados) | fotos_nomeadas(dados)
+    saida = Path(saida)
+    existentes = {a.relative_to(saida).as_posix() for a in saida.rglob("*") if a.is_file()}
+    return sorted(existentes - esperados)
 
 
 def carregar(raiz=RAIZ):
@@ -748,32 +798,6 @@ def main(argv):
         return 0
     escrever(saida, arquivos)
     print(f"{len(arquivos)} files written to {saida.relative_to(RAIZ)}/")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
-def fotos_nomeadas(dados):
-    """Every photo the data names, as paths under public/loja/ (fotos and og)."""
-    nomes = set()
-    for p in dados["produtos"]:
-        for f in p.get("fotos", []):
-            nomes.add(f"img/{p['slug']}/{f['arquivo']}")
-        if p.get("og"):
-            nomes.add(f"img/{p['slug']}/{p['og']}")
-    return nomes
-
-
-def arquivos_estranhos(saida, gerados, dados):
-    """Files in public/loja/ that nothing explains: not generated, and not a photo the data names.
-    The photo folders are not exempt: anything else under img/ (a page, an unlisted file, a folder
-    of an unknown slug) would be served from the shop's own address."""
-    esperados = set(gerados) | fotos_nomeadas(dados)
-    saida = Path(saida)
-    existentes = {a.relative_to(saida).as_posix() for a in saida.rglob("*") if a.is_file()}
-    return sorted(existentes - esperados)
-
-
     estranhos = arquivos_estranhos(saida, arquivos, dados)
     if estranhos:
         print("files under public/loja/ that nothing explains (not generated, not a listed photo):",
@@ -781,3 +805,8 @@ def arquivos_estranhos(saida, gerados, dados):
         for a in estranhos:
             print(f"  - {a}", file=sys.stderr)
         return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

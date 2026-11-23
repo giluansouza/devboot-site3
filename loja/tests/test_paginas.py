@@ -286,8 +286,9 @@ class Produto(unittest.TestCase):
                   if h.startswith("https://wa.me/5587991402037?text=")]
         do_produto = [t for t in textos if "Câmera de teste camera-um" in t]
         self.assertTrue(do_produto, textos)
-        self.assertIn("T-100", do_produto[0])
-        self.assertIn("quero um orçamento", do_produto[0])
+        self.assertEqual(
+            do_produto[0],
+            "Olá, vi no site da Devboot: Câmera de teste camera-um (Intelbras T-100). Quero um orçamento.")
 
     def test_the_sticky_bar_exists_only_for_active_products_and_starts_hidden(self):
         p, _ = self.pagina(cat("camera-um"))
@@ -427,6 +428,86 @@ class DadosInvalidos(unittest.TestCase):
             gerar_paginas(dados(cat("camera-um", link_ml="https://example.com/x")))
         self.assertIn("link_ml", str(c.exception))
 
+
+def mensagens(arquivos, pagina):
+    from urllib.parse import parse_qs, urlparse
+    return [parse_qs(urlparse(h).query)["text"][0] for h in pg(arquivos, pagina).hrefs()
+            if h.startswith("https://wa.me/") and "?text=" in h]
+
+
+class MensagensDoWhatsApp(unittest.TestCase):
+    """The pre-filled messages read as Portuguese whatever the product's gender: no 'vi o/a'."""
+    ARTIGO = r"\bvi (o|a|os|as|um|uma) "
+
+    def test_active_paused_and_ended_templates(self):
+        f = gerar_paginas(dados(
+            cat("camera-um"), cat("camera-dois", status="pausado"), cat("camera-tres", status="encerrado"),
+            acesso("controlador-um")))
+        r = lambda s: f"Câmera de teste {s} (Intelbras T-100)"
+        self.assertIn(f"Olá, vi no site da Devboot: {r('camera-um')}. Quero um orçamento.",
+                      mensagens(f, "camera-um/index.html"))
+        self.assertIn(f"Olá, vi no site da Devboot: {r('camera-dois')}. O anúncio está pausado: tem previsão ou um equivalente?",
+                      mensagens(f, "camera-dois/index.html"))
+        self.assertIn(f"Olá, vi no site da Devboot: {r('camera-tres')}. Ele saiu de linha: podem me indicar um similar?",
+                      mensagens(f, "camera-tres/index.html"))
+
+    def test_no_message_in_any_page_starts_with_an_article_before_the_name(self):
+        import re
+        f = gerar_paginas(dados(
+            cat("camera-um"), cat("camera-dois", status="pausado"), cat("camera-tres", status="encerrado"),
+            acesso("controlador-um")))
+        for k in f:
+            if k.endswith(".html"):
+                for m in mensagens(f, k):
+                    with self.subTest(page=k, msg=m):
+                        self.assertIsNone(re.search(self.ARTIGO, m))
+
+    def test_the_six_real_products_all_use_the_template(self):
+        import re
+        d, t = gerar.carregar(RAIZ)
+        f = gerar.renderizar(d, t, ESTATICOS, RAIZ / "public" / "loja" / "img")
+        for p in d["produtos"]:
+            with self.subTest(slug=p["slug"]):
+                esperado = f"Olá, vi no site da Devboot: {p['nome']} ({p['marca']} {p['modelo']}). Quero um orçamento."
+                msgs = mensagens(f, f"{p['slug']}/index.html")
+                self.assertIn(esperado, msgs)
+                self.assertFalse([m for m in msgs if re.search(self.ARTIGO, m)])
+
+    def test_the_404_message_template_is_in_the_page_and_the_script_fills_it(self):
+        f = gerar_paginas(dados())
+        html = f["404.html"].decode()
+        self.assertIn('data-wa-modelo="Olá, tentei abrir {endereco} no site da Devboot e não encontrei."', html)
+        self.assertIn("data-wa-modelo", f["loja.js"].decode())
+
+    def test_the_review_text_lists_every_message(self):
+        import re
+        d = dados(cat("camera-um"), cat("camera-dois", status="pausado"), cat("camera-tres", status="encerrado"),
+                  acesso("controlador-um"))
+        f = gerar_paginas(d)
+        texto = gerar.texto_para_revisao(f)
+        self.assertIn("WhatsApp", texto)
+        todas = set()
+        for k in f:
+            if k.endswith(".html"):
+                todas.update(mensagens(f, k))
+        self.assertGreaterEqual(len(todas), 8)
+        for m in todas:
+            with self.subTest(msg=m):
+                self.assertIn(m, texto)
+        self.assertIn("Olá, tentei abrir {endereço que falhou} no site da Devboot e não encontrei.", texto)
+
+    def test_the_review_text_shows_the_paused_and_ended_templates_even_when_no_product_is(self):
+        d, t = gerar.carregar(RAIZ)  # all six real products are active
+        texto = gerar.texto_para_revisao(gerar.renderizar(d, t, ESTATICOS, RAIZ / "public" / "loja" / "img"))
+        base = "Olá, vi no site da Devboot: {nome} ({marca} {modelo})."
+        self.assertIn(base + " O anúncio está pausado: tem previsão ou um equivalente?", texto)
+        self.assertIn(base + " Ele saiu de linha: podem me indicar um similar?", texto)
+
+    def test_the_real_review_file_has_the_six_product_messages(self):
+        d, t = gerar.carregar(RAIZ)
+        texto = gerar.texto_para_revisao(gerar.renderizar(d, t, ESTATICOS, RAIZ / "public" / "loja" / "img"))
+        for p in d["produtos"]:
+            self.assertIn(f"Olá, vi no site da Devboot: {p['nome']} ({p['marca']} {p['modelo']}). Quero um orçamento.", texto)
 
 
 class JsonLdNaoQuebraOScript(unittest.TestCase):

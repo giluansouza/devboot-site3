@@ -377,3 +377,20 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
 
+## Mensagens de WhatsApp (já escritas quando o visitante toca no botão)
+
+- Olá, vim pelo site da Devboot e quero conversar.  (todas as páginas)
+- Olá, tentei abrir uma página da loja no site da Devboot e não encontrei.  (/loja/404.html)
+- Olá, vi no site da Devboot: Câmera bullet 4 MP com IR de 40 m (Intelbras VIP 5440 IA). Quero um orçamento.  (/loja/bullet-4mp-vip-5440-ia/)
+- Olá, vim pela loja da Devboot e procuro um equipamento de câmeras e gravadores.  (/loja/cameras-e-gravadores/)
+- Olá, vi no site da Devboot: Controlador facial para uso interno (Intelbras SS 3541 MF LITE). Quero um orçamento.  (/loja/controlador-facial-ss-3541-mf-lite/)
+- Olá, vi no site da Devboot: Controlador facial interno e externo (Intelbras SS 3542 MF). Quero um orçamento.  (/loja/controlador-facial-ss-3542-mf/)
+- Olá, vim pela loja da Devboot e procuro um equipamento de controle de acesso.  (/loja/controle-de-acesso/)
+- Olá, vi no site da Devboot: Câmera dome Full Color 2 MP (Intelbras VIP 3230 D FC+ IA). Quero um orçamento.  (/loja/dome-full-color-vip-3230-d-fc-ia/)
+- Olá, vim pela loja da Devboot e quero um orçamento de projeto completo.  (/loja/)
+- Olá, vi no site da Devboot: Gravador NVR 32 canais com 16 PoE (Intelbras iNVD 5232-16P). Quero um orçamento.  (/loja/nvr-32-canais-invd-5232-16p/)
+- Olá, vi no site da Devboot: Câmera speed dome com zoom 32x (Intelbras VIP 5232 SD IA G2). Quero um orçamento.  (/loja/speed-dome-vip-5232-sd-ia-g2/)
+- Olá, tentei abrir {endereço que falhou} no site da Devboot e não encontrei.  (/loja/404.html: o endereço digitado entra no lugar)
+- Olá, vi no site da Devboot: {nome} ({marca} {modelo}). O anúncio está pausado: tem previsão ou um equivalente?  (modelo: página de um produto pausado)
+- Olá, vi no site da Devboot: {nome} ({marca} {modelo}). Ele saiu de linha: podem me indicar um similar?  (modelo: página de um produto que saiu de linha)
+
