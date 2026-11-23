@@ -1,8 +1,11 @@
 """Follow-ups from the delta review: refresh tokens, flag flips, MCP error hygiene."""
+import json
 import sys
 import unittest
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 from starlette.testclient import TestClient  # noqa: E402
@@ -52,6 +55,27 @@ class FlagFlipRetry(ApiBase):
             self.assertEqual(changed.status_code, 409)
             as_draft = off.post("/api/blog/articles", headers=self.headers, json=article(status="draft"))
             self.assertEqual(as_draft.status_code, 409)  # a draft is different content from a published row
+
+
+class McpFlagFlipRetry(McpBase):
+    auto_publish = True
+
+    def test_published_while_flag_was_on_retried_after_it_is_off_is_idempotent(self):  # @covers-existing
+        first = self.rpc("tools/call", dict(name="create_article", arguments=dict(article=article(status="published"))))
+        self.assertFalse(first.json()["result"].get("isError", False), first.text)
+        off = create_app(replace(self.settings, allow_auto_publish=False))
+        with TestClient(off) as client, patch.object(off.state.auth.jwks, "get_signing_key_from_jwt",
+                return_value=SimpleNamespace(key=self.key.public_key())):
+            retry = client.post("/mcp", headers={"Authorization": "Bearer " + self.token(),
+                "Accept": "application/json, text/event-stream", "MCP-Protocol-Version": "2025-06-18"},
+                json=dict(jsonrpc="2.0", id=1, method="tools/call",
+                          params=dict(name="create_article", arguments=dict(article=article(status="published")))))
+            result = retry.json()["result"]
+            self.assertFalse(result.get("isError", False), retry.text)
+            body = json.loads(result["content"][0]["text"])
+            self.assertFalse(body["created"])
+            self.assertEqual((body["status"], body["awaiting_approval"]), ("published", False))
+            self.assertEqual(len(off.state.store.list(public=False)), 1)
 
 
 class McpErrorsDoNotEchoInput(McpBase):
