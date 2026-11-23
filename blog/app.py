@@ -136,11 +136,15 @@ def create_app(settings=None):
             raise ValueError("OAuth exige HTTPS")
     store = Store(settings.database)
     auth = Auth(settings)
-    host = urlparse(settings.base_url).netloc
+    base = urlparse(settings.base_url)
+    host = base.netloc
+    # Traefik routes both www and the bare domain to this service; accept both.
+    bare = host.removeprefix("www.")
+    hosts = [host] + ([bare] if bare != host else [])
     mcp = BlogMCP("Devboot Blog", stateless_http=True, json_response=True,
         streamable_http_path="/mcp", transport_security=TransportSecuritySettings(
-            enable_dns_rebinding_protection=True, allowed_hosts=[host, "testserver", "localhost:*", "127.0.0.1:*"],
-            allowed_origins=[settings.base_url]))
+            enable_dns_rebinding_protection=True, allowed_hosts=[*hosts, "testserver", "localhost:*", "127.0.0.1:*"],
+            allowed_origins=[f"{base.scheme}://{h}" for h in hosts]))
 
     def presentation(article):
         return {key: value for key, value in article.items() if key not in {"fingerprint", "id"}} | {
