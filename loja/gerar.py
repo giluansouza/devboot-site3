@@ -745,3 +745,31 @@ def main(argv):
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))
+def fotos_nomeadas(dados):
+    """Every photo the data names, as paths under public/loja/ (fotos and og)."""
+    nomes = set()
+    for p in dados["produtos"]:
+        for f in p.get("fotos", []):
+            nomes.add(f"img/{p['slug']}/{f['arquivo']}")
+        if p.get("og"):
+            nomes.add(f"img/{p['slug']}/{p['og']}")
+    return nomes
+
+
+def arquivos_estranhos(saida, gerados, dados):
+    """Files in public/loja/ that nothing explains: not generated, and not a photo the data names.
+    The photo folders are not exempt: anything else under img/ (a page, an unlisted file, a folder
+    of an unknown slug) would be served from the shop's own address."""
+    esperados = set(gerados) | fotos_nomeadas(dados)
+    saida = Path(saida)
+    existentes = {a.relative_to(saida).as_posix() for a in saida.rglob("*") if a.is_file()}
+    return sorted(existentes - esperados)
+
+
+    estranhos = arquivos_estranhos(saida, arquivos, dados)
+    if estranhos:
+        print("files under public/loja/ that nothing explains (not generated, not a listed photo):",
+              file=sys.stderr)
+        for a in estranhos:
+            print(f"  - {a}", file=sys.stderr)
+        return 1
