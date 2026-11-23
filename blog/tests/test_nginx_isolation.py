@@ -175,7 +175,7 @@ class ProbeCleansUpAfterItself(unittest.TestCase):
                                 "--network", cls.tag, IMAGE, "sleep", "60"], capture_output=True, check=True)
                 raise RuntimeError("setup fails after the network and a container exist")
 
-            def test_never_runs(self):
+            def runTest(self):
                 pass
 
         result = unittest.TextTestRunner(stream=open("/dev/null", "w")).run(
