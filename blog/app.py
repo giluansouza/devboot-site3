@@ -14,6 +14,7 @@ import jwt
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from markdown_it import MarkdownIt
 from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp.exceptions import ToolError
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import ToolAnnotations
 from pydantic import ValidationError
@@ -37,6 +38,18 @@ SECURITY_SCHEMES = [{"type": "oauth2", "scopes": ["blog:write"]}]
 
 
 class BlogMCP(FastMCP):
+    async def call_tool(self, name, arguments):
+        try:
+            return await super().call_tool(name, arguments)
+        except ToolError as exc:
+            if isinstance(exc.__cause__, ValidationError):
+                # Pydantic's own text echoes input_value=<what was submitted>. Say which field
+                # failed and why, never the content (it is the editor's unpublished draft).
+                raise ToolError("Campos inválidos: " + "; ".join(
+                    f"{'.'.join(str(part) for part in error['loc'])}: {error['msg'].removeprefix('Value error, ')}"
+                    for error in exc.__cause__.errors(include_url=False, include_input=False, include_context=False))) from None
+            raise
+
     async def list_tools(self):
         # ChatGPT uses the tool descriptor to offer account linking.
         tools = await super().list_tools()
@@ -167,9 +180,10 @@ def create_app(settings=None):
         """Cria uma matéria no blog Devboot. Use Markdown com fontes verificáveis.
 
         edition_key deve ser estável por agendamento e data (ex.: terca-2026-10-20).
-        Toda matéria chega como rascunho: mesmo com status=published a matéria é guardada como
-        rascunho e aguarda aprovação do editor. Confira `status` e `awaiting_approval` na resposta
-        e informe que a matéria aguarda aprovação; nunca diga que foi publicada.
+        Com a publicação automática desligada, a matéria é guardada como rascunho mesmo com
+        status=published e aguarda aprovação do editor. Relate ao usuário exatamente o `status`
+        e a `message` devolvidos pela ferramenta, sem acrescentar nem presumir o que não constar
+        na resposta.
         Reenvio idêntico devolve o artigo existente; divergências geram erro.
         Nunca invente uma nova edition_key para contornar um conflito.
         """
