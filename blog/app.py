@@ -29,6 +29,10 @@ ROOT = Path(__file__).parent
 templates = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape())
 templates.filters["date_br"] = lambda value: datetime.fromisoformat(value).strftime("%d.%m.%Y")
 markdown = MarkdownIt("commonmark", {"html": False, "linkify": False})
+# Scopes advertised to clients (RFC 9728 scopes_supported and the 401 challenge). offline_access is
+# asked for so the provider issues a refresh token: scheduled runs are days apart and an access
+# token lasts minutes. It is NOT required of a token: verify_oauth demands blog:write only.
+ADVERTISED_SCOPES = ["blog:write", "offline_access"]
 SECURITY_SCHEMES = [{"type": "oauth2", "scopes": ["blog:write"]}]
 
 
@@ -108,7 +112,7 @@ class Protection:
             if not valid:
                 challenge = 'Bearer realm="Devboot Blog"'
                 if mcp:
-                    challenge += f', resource_metadata="{settings.base_url}/.well-known/oauth-protected-resource/mcp", scope="blog:write"'
+                    challenge += f', resource_metadata="{settings.base_url}/.well-known/oauth-protected-resource/mcp", scope="{' '.join(ADVERTISED_SCOPES)}"'
                 return await JSONResponse({"error": "Não autorizado"}, 401,
                     headers={"WWW-Authenticate": challenge, "Cache-Control": "no-store"})(scope, receive, send)
 
@@ -262,7 +266,7 @@ def create_app(settings=None):
         if not settings.oauth_issuer:
             return JSONResponse({"error": "OAuth não configurado"}, 503)
         return JSONResponse({"resource": settings.base_url + "/mcp",
-            "authorization_servers": [settings.oauth_issuer], "scopes_supported": ["blog:write"],
+            "authorization_servers": [settings.oauth_issuer], "scopes_supported": ADVERTISED_SCOPES,
             "bearer_methods_supported": ["header"]})
 
     async def health(request):
