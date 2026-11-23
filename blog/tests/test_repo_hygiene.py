@@ -61,6 +61,9 @@ class DeployDoc(unittest.TestCase):
         self.assertIn("diff - nginx/default.conf", self.doc)
         self.assertIn("grep -i '^location: /blog/'", self.doc)
 
+    def test_font_mime_probe_is_in_the_post_deploy_checks(self):
+        self.assertIn("/blog/assets/fonts/archivo-800-latin.woff2 | grep -i content-type", self.doc)
+
     def test_readability_check_covers_directories(self):
         self.assertIn("-type d ! -perm -o+x", self.doc)
 

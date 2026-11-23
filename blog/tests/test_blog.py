@@ -185,7 +185,7 @@ class OAuthAndMCPTests(unittest.TestCase):
         self.assertEqual(listing.status_code, 200, listing.text)
         self.assertEqual({tool["name"] for tool in listing.json()["result"]["tools"]}, {"create_article", "list_articles", "read_article"})
         for tool in listing.json()["result"]["tools"]:
-            self.assertEqual(tool["securitySchemes"], [{"type": "oauth2", "scopes": ["blog:write"]}])
+            self.assertEqual(tool["securitySchemes"], [{"type": "oauth2", "scopes": ["blog:write", "offline_access"]}])
             self.assertEqual(tool["_meta"]["securitySchemes"], tool["securitySchemes"])
         response = self.rpc("tools/call", dict(name="create_article", arguments=dict(article=article(status="published"))))
         self.assertEqual(response.status_code, 200, response.text)

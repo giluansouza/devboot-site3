@@ -143,6 +143,9 @@ done                                              # expect 200 four times
 # the running nginx config is the committed one: /blog redirects relatively (keeps https)
 curl -sI https://www.devboot.com.br/blog | grep -i '^location: /blog/'      # must print the line
 
+# fonts are served as fonts (the slim image has no mime table; this was text/plain once):
+curl -sI https://www.devboot.com.br/blog/assets/fonts/archivo-800-latin.woff2 | grep -i content-type   # content-type: font/woff2
+
 for p in sitemap.xml feed.xml; do                  # well-formed XML
   curl -s "https://www.devboot.com.br/blog/$p" | python3 -c 'import sys,xml.dom.minidom as m; m.parseString(sys.stdin.buffer.read()); print("well-formed")'
 done

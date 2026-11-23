@@ -2,6 +2,7 @@ import asyncio
 import hmac
 import json
 import math
+import mimetypes
 import os
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
@@ -27,6 +28,9 @@ from starlette.staticfiles import StaticFiles
 from store import ArticleInput, Conflict, Store, xml_safe
 
 ROOT = Path(__file__).parent
+# python:3.12-slim has no /etc/mime.types and the built-in table lacks woff2: without this the
+# fonts are served text/plain in production (and ignored by browsers under nosniff).
+mimetypes.add_type("font/woff2", ".woff2")
 templates = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape())
 templates.filters["date_br"] = lambda value: datetime.fromisoformat(value).strftime("%d.%m.%Y")
 markdown = MarkdownIt("commonmark", {"html": False, "linkify": False})
@@ -34,7 +38,7 @@ markdown = MarkdownIt("commonmark", {"html": False, "linkify": False})
 # asked for so the provider issues a refresh token: scheduled runs are days apart and an access
 # token lasts minutes. It is NOT required of a token: verify_oauth demands blog:write only.
 ADVERTISED_SCOPES = ["blog:write", "offline_access"]
-SECURITY_SCHEMES = [{"type": "oauth2", "scopes": ["blog:write"]}]
+SECURITY_SCHEMES = [{"type": "oauth2", "scopes": ADVERTISED_SCOPES}]
 
 
 class BlogMCP(FastMCP):

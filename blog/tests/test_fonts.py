@@ -1,5 +1,6 @@
 """The blog names Archivo and IBM Plex; the CSP (font-src 'self') blocks Google Fonts, so they must be self-hosted."""
 import re
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -37,6 +38,15 @@ class SelfHostedFonts(ApiBase):
             self.assertEqual(response.headers["content-type"], "font/woff2")
             self.assertEqual(response.content[:4], b"wOF2")
         self.assertIn("font-src 'self'", self.client.get("/blog/").headers["content-security-policy"])
+
+    def test_woff2_type_does_not_depend_on_the_host_mime_table(self):
+        # The slim production image has no /etc/mime.types and Python's built-in table has no
+        # woff2, so a font was served text/plain there while every host test passed. Run a fresh
+        # interpreter whose mime lookup may read no host file at all.
+        code = ("import mimetypes; mimetypes.knownfiles = []; import app; "
+                "print(mimetypes.guess_type('archivo-800-latin.woff2')[0])")
+        out = subprocess.run([sys.executable, "-c", code], cwd=BLOG, capture_output=True, text=True)
+        self.assertEqual(out.stdout.strip().splitlines()[-1], "font/woff2", out.stderr[-500:])
 
     def test_pages_preload_the_display_and_body_fonts(self):
         html = self.client.get("/blog/").text
