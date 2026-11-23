@@ -56,5 +56,12 @@ class MarcaIgualALanding(unittest.TestCase):
             self.assertIn(linha.strip(), landing)
 
 
+
+class RobotsListaOSitemapDaLoja(unittest.TestCase):
+    def test_robots_txt_points_to_the_shop_sitemap(self):
+        robots = (RAIZ / "public" / "robots.txt").read_text(encoding="utf-8")
+        self.assertIn("Sitemap: https://www.devboot.com.br/loja/sitemap.xml", robots.splitlines())
+
+
 if __name__ == "__main__":
     unittest.main()
