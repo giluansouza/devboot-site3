@@ -1,16 +1,15 @@
 """The generator refuses bad data. Each test is one row of docs/loja-flow.md's branch table,
 written before the code that satisfies it."""
-import tempfile
 import unittest
 from pathlib import Path
 
 import gerar
-from tests.dados import ML, dados, produto
+from tests.dados import ML, dados, pasta_de_fotos, produto
 
 
 class Base(unittest.TestCase):
     def setUp(self):
-        self.fotos = Path(tempfile.mkdtemp())
+        self.fotos = pasta_de_fotos()
 
     def erros(self, d):
         return gerar.validar(d, self.fotos)

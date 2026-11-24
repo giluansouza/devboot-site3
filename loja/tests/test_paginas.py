@@ -1,11 +1,10 @@
 """What the generated pages say, branch by branch (docs/loja-flow.md)."""
 import json
-import tempfile
 import unittest
 from pathlib import Path
 
 import gerar
-from tests.dados import ML, dados, produto
+from tests.dados import ML, dados, pasta_de_fotos, produto
 from tests.pagina import Pagina
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -15,7 +14,7 @@ SITE = "https://www.devboot.com.br"
 
 
 def gerar_paginas(d, fotos=None):
-    fotos = fotos or Path(tempfile.mkdtemp())
+    fotos = fotos or pasta_de_fotos()
     return gerar.renderizar(d, TOKENS, ESTATICOS, fotos)
 
 
@@ -34,9 +33,10 @@ def acesso(slug, **o):
 class TodasAsPaginas(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.fotos = pasta_de_fotos()
         cls.f = gerar_paginas(dados(
             cat("camera-um", destaque=True), cat("camera-dois", status="pausado"),
-            cat("camera-tres", status="encerrado", tipo="kits"), acesso("controlador-um")))
+            cat("camera-tres", status="encerrado", tipo="kits"), acesso("controlador-um")), cls.fotos)
         cls.html = sorted(k for k in cls.f if k.endswith(".html"))
 
     def test_the_expected_files_are_generated(self):
@@ -137,6 +137,8 @@ class TodasAsPaginas(unittest.TestCase):
                 with self.subTest(page=k, ref=ref):
                     if ref.startswith("#"):
                         self.assertIn(ref[1:], ids)
+                    elif ref.startswith("/loja/img/"):
+                        self.assertTrue((self.fotos / ref[len("/loja/img/"):]).is_file(), ref)
                     elif ref.startswith("/loja/"):
                         alvo = ref[len("/loja/"):].split("#")[0].split("?")[0]
                         arq = alvo + "index.html" if alvo.endswith("/") or alvo == "" else alvo
@@ -339,7 +341,7 @@ class Produto(unittest.TestCase):
         self.assertEqual([a for t, a in p.links if t == "img"], [])
 
     def test_one_photo_has_no_counter_and_is_the_og_image(self):
-        fotos = Path(tempfile.mkdtemp())
+        fotos = pasta_de_fotos()
         (fotos / "camera-um").mkdir()
         (fotos / "camera-um" / "1.webp").write_bytes(b"x")
         (fotos / "camera-um" / "og.jpg").write_bytes(b"x")
@@ -357,7 +359,7 @@ class Produto(unittest.TestCase):
         self.assertEqual(p.meta["og:image"], SITE + "/loja/img/camera-um/og.jpg")
 
     def test_several_photos_have_counter_and_first_is_og_when_no_og_given(self):
-        fotos = Path(tempfile.mkdtemp())
+        fotos = pasta_de_fotos()
         (fotos / "camera-um").mkdir()
         fs = []
         for i in (1, 2, 3):

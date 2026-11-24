@@ -14,6 +14,11 @@
       "descricao": "Câmeras IP internas e externas e gravadores de rede (NVR) para CFTV.",
       "vazio": "A Devboot projeta e instala CFTV: câmera, gravador, HD e rede. Diga o que você quer monitorar e mandamos o orçamento com o equipamento certo.",
       "pictograma": "bullet",
+      "ambiente": {
+        "produto": "bullet-4mp-vip-5440-ia",
+        "fonte": "https://backend.intelbras.com/sites/default/files/2024-12/camera-bullet-com-inteligencia-artificial-vip-5440-ia.jpg",
+        "alt": "Câmera bullet Intelbras fixada na parede da fachada de uma casa, com jardim e janelas ao fundo"
+      },
       "tipos": [
         "câmeras",
         "kits",
@@ -26,6 +31,11 @@
       "descricao": "Controladores de acesso por reconhecimento facial para portaria, empresa e condomínio.",
       "vazio": "A Devboot já projeta e instala controle de acesso: leitor facial, fechadura e videoporteiro. Diga o que você precisa e mandamos o orçamento com o equipamento certo.",
       "pictograma": "face",
+      "ambiente": {
+        "produto": "controlador-facial-ss-3542-mf",
+        "fonte": "https://backend.intelbras.com/sites/default/files/2024-09/controlador-de-acesso-facial-com-biometria-digital-ss-3542-mf.jpg",
+        "alt": "Controlador de acesso facial Intelbras na parede, ao lado de portas de vidro, com o rosto de um homem sorrindo no visor"
+      },
       "tipos": [
         "controladores faciais",
         "fechaduras",

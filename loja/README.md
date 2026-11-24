@@ -39,3 +39,18 @@ uv run --with pillow python preparar_foto.py <slug> photo1.png photo2.png ...
 It writes `public/loja/img/<slug>/1.webp ... n.webp` (800 px, padded onto white, about 10 KB each) and
 `og.jpg` (1200 x 630 preview). Add `"fotos": [{"arquivo": "1.webp", "fonte": "<where it came from>"}]`
 and `"og": "og.jpg"` to the product. The first photo is the cover; up to 6.
+
+Each line also has a **scene photo** for its tile on the shop home: an official Intelbras photo of
+one of its products installed in a real setting, 700 px wide at the 700:478 ratio (never padded or
+cropped). It goes through the same helper, then is described in `produtos.json`:
+
+```bash
+uv run --with pillow python preparar_foto.py --ambiente <line-slug> scene.jpg
+```
+
+```json
+"ambiente": {"produto": "<slug of the product shown>", "fonte": "<image URL>", "alt": "<scene, in Portuguese>"}
+```
+
+It writes `public/loja/img/_linhas/<line-slug>/480.webp` and `700.webp` (about 15 and 25 KB). The
+generator refuses a line without `ambiente`, without either file, or without `fonte` or `alt`.

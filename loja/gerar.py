@@ -32,6 +32,12 @@ OBRIGATORIOS = ("slug", "nome", "marca", "linha", "tipo", "status", "resumo", "b
                 "pictograma", "fonte")
 CAMPOS_PRECO = {"preco", "preço", "price", "valor", "precos", "preços"}
 
+# The scene photo of each line (the home tile): img/_linhas/<line>/480.webp and 700.webp, the same
+# picture at two widths. "_" cannot start a product slug, so the folder never collides with one.
+AMBIENTE_DIR, AMBIENTE_ARQUIVOS = "_linhas", ("480.webp", "700.webp")
+AMBIENTE_LARGURA, AMBIENTE_ALTURA = 700, 478
+CAMPOS_AMBIENTE = {"produto", "fonte", "alt"}
+
 
 class ErroDeDados(Exception):
     def __init__(self, erros):
@@ -75,6 +81,27 @@ def _texto(v):
     return isinstance(v, str) and v.strip() != ""
 
 
+def _erros_do_ambiente(ls, a, produtos, pasta_fotos):
+    """The scene photo of a line: its files, where it came from, what it shows and its alt text."""
+    ref = f"linhas.{ls}.ambiente"
+    if a in (None, "", {}):
+        return [f"{ref}: missing (the scene photo of the home tile: fonte, alt, files under "
+                f"img/{AMBIENTE_DIR}/{ls}/)"]
+    if not isinstance(a, dict):
+        return [f"{ref}: must be {{fonte, alt}} with an optional produto"]
+    e = [f"{ref}: unknown field {campo!r}" for campo in sorted(set(a) - CAMPOS_AMBIENTE)]
+    if not link_https(a.get("fonte")):
+        e.append(f"{ref}.fonte: must be the https URL the photo came from")
+    if not _texto(a.get("alt")):
+        e.append(f"{ref}.alt: missing (the Portuguese description of the scene)")
+    if "produto" in a and a["produto"] not in [p.get("slug") for p in produtos if p.get("linha") == ls]:
+        e.append(f"{ref}.produto: {a['produto']!r} is not a product of {ls}")
+    for nome in AMBIENTE_ARQUIVOS:
+        if not (Path(pasta_fotos) / AMBIENTE_DIR / ls / nome).is_file():
+            e.append(f"{ref}: img/{AMBIENTE_DIR}/{ls}/{nome} does not exist")
+    return e
+
+
 def validar(dados, pasta_fotos):
     """Every reason the data is not publishable, each naming the field and the product."""
     e = []
@@ -101,6 +128,7 @@ def validar(dados, pasta_fotos):
                 e.append(f"linhas.{ls}.{campo}: missing")
         if l.get("pictograma") and l["pictograma"] not in PICTOGRAMAS:
             e.append(f"linhas.{ls}.pictograma: {l['pictograma']!r} unknown (one of {', '.join(PICTOGRAMAS)})")
+        e += _erros_do_ambiente(ls, l.get("ambiente"), produtos, pasta_fotos)
 
     vistos = {}
     destaques = 0
@@ -328,7 +356,22 @@ def item(c, p):
             + (carimbo_pausado() if p["status"] == "pausado" else "") + "</div></a></li>")
 
 
-def tile_da_linha(c, slug):
+def foto_da_linha(c, slug, primeira):
+    """The scene photo of a line: reserved at its own ratio, never lazy (the home tiles are above
+    the fold on a phone and on a desktop), the first one also first in the queue."""
+    a = c.linhas[slug]["ambiente"]
+    base = f"/loja/img/{AMBIENTE_DIR}/{slug}"
+    prioridade = ' fetchpriority="high"' if primeira else ""
+    return (f'<div class="amb"><img src="{base}/700.webp" '
+            f'srcset="{base}/480.webp 480w, {base}/700.webp 700w" '
+            f'sizes="(min-width: 720px) calc(50vw - 3rem), calc(100vw - 2.5rem)" alt="{e(a["alt"])}" '
+            f'width="{AMBIENTE_LARGURA}" height="{AMBIENTE_ALTURA}" loading="eager"{prioridade} '
+            f'decoding="async"></div>')
+
+
+def tile_da_linha(c, slug, foto=None):
+    """`foto`: None draws the line pictogram; otherwise it is True for the first photo tile of the
+    page and False for the others."""
     L, ps = c.linhas[slug], c.visiveis(slug)
     if ps:
         tipos = [t for t in L["tipos"] if any(p["tipo"] == t for p in ps)]
@@ -337,13 +380,19 @@ def tile_da_linha(c, slug):
     else:
         meta = '<span class="stamp stamp--dot">Chegando à vitrine</span>'
         ir = "Pedir orçamento"
-    return (f'<li class="line"><a href="/loja/{slug}/"><div class="stack g45"><h3>{e(L["nome"])}</h3>{meta}'
+    imagem = ph(c, None, L["pictograma"]) if foto is None else foto_da_linha(c, slug, foto)
+    return (f'<li class="line{" line--foto" if foto is not None else ""}"><a href="/loja/{slug}/">'
+            f'<div class="stack g45"><h3>{e(L["nome"])}</h3>{meta}'
             f'<span class="go">{ir} <span aria-hidden="true">→</span></span></div>'
-            f'{ph(c, None, L["pictograma"])}</a></li>')
+            f'{imagem}</a></li>')
 
 
-def lista_de_linhas(c):
-    return '<ul class="lines">' + "".join(tile_da_linha(c, s) for s in c.linhas) + "</ul>"
+def lista_de_linhas(c, com_foto=False):
+    """The line tiles. Only the shop home shows the scene photos; the 404 and the category page's
+    "other line" tile keep the pictogram."""
+    return ('<ul class="lines">'
+            + "".join(tile_da_linha(c, s, (i == 0) if com_foto else None) for i, s in enumerate(c.linhas))
+            + "</ul>")
 
 
 # ------------------------------------------------------------------------------ page shell
@@ -485,7 +534,7 @@ def pagina_inicial(c):
 <h1 class="h1">Equipamento que a gente instala.<span class="snd">Compra segura no Mercado Livre.</span></h1>
 <p class="lede">Câmeras, gravadores e controle de acesso escolhidos por quem projeta e instala segurança no sertão. Você compra no Mercado Livre; se quiser, a instalação é com a gente.</p>
 <p class="model">{e(l["revenda"])} · Instalamos em {e(l["instalacao"])}</p></div>
-{lista_de_linhas(c)}
+{lista_de_linhas(c, com_foto=True)}
 {sec_dest}
 <section class="stack" aria-labelledby="h-como"><h2 class="h2" id="h-como">Como a compra funciona</h2><ol class="steps">{passos}</ol></section>
 <div class="band"><div class="stack g4"><h2>Precisa de um projeto completo?</h2><p class="lede">Calculamos a cobertura de cada câmera antes de instalar, com o CamSeek.</p></div>
@@ -675,11 +724,16 @@ class _Texto(HTMLParser):
 
     def __init__(self):
         super().__init__()
-        self.partes, self.pula = [], 0
+        self.partes, self.pula, self.alts = [], 0, set()
 
     def handle_starttag(self, tag, attrs):
         if tag in ("script", "style", "svg"):
             self.pula += 1
+        elif tag == "img":
+            alt = dict(attrs).get("alt")
+            if alt and not self.pula and alt not in self.alts:  # a gallery repeats its photos as thumbnails
+                self.alts.add(alt)
+                self.partes.append(f"\n[foto] {alt}\n")
         elif tag == "dd":
             self.partes.append(" : ")
         elif tag in ("h1", "h2", "h3", "li", "p", "div", "section", "dt", "span", "a", "b", "button"):
@@ -757,8 +811,11 @@ def escrever(saida, arquivos):
 
 
 def fotos_nomeadas(dados):
-    """Every photo the data names, as paths under public/loja/ (fotos and og)."""
+    """Every photo the data names, as paths under public/loja/ (fotos, og and the line scenes)."""
     nomes = set()
+    for ls, l in (dados.get("linhas") or {}).items():
+        if l.get("ambiente"):
+            nomes |= {f"img/{AMBIENTE_DIR}/{ls}/{a}" for a in AMBIENTE_ARQUIVOS}
     for p in dados["produtos"]:
         for f in p.get("fotos", []):
             nomes.add(f"img/{p['slug']}/{f['arquivo']}")

@@ -14,20 +14,26 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Câmeras e gravadores
 - 4 produtos · câmeras, gravadores
 - Ver a linha
+- [foto] Câmera bullet Intelbras fixada na parede da fachada de uma casa, com jardim e janelas ao fundo
 - Controle de acesso
 - 2 produtos · controladores faciais
 - Ver a linha
+- [foto] Controlador de acesso facial Intelbras na parede, ao lado de portas de vidro, com o rosto de um homem sorrindo no visor
 - Destaques
 - 4 produtos
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 1 de 5
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
 - 4 MP (2688×1520) · 3,6 mm fixa
+- [foto] Câmera dome Full Color 2 MP, foto 1 de 3
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
+- [foto] Gravador NVR 32 canais com 16 PoE, foto 1 de 4
 - Gravador NVR 32 canais com 16 PoE
 - Intelbras iNVD 5232-16P
 - 32 IP · 16 (802.3af/at)
+- [foto] Controlador facial interno e externo
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - até 10.000 · IP55 (interno e externo)
@@ -70,6 +76,11 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Câmeras e gravadores
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 1 de 5
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 2 de 5
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 3 de 5
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 4 de 5
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 5 de 5
 - 1 / 5
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
@@ -98,9 +109,11 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais câmeras
+- [foto] Câmera dome Full Color 2 MP, foto 1 de 3
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
+- [foto] Câmera speed dome com zoom 32x, foto 1 de 3
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -120,17 +133,21 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - 1
 - câmeras
 - 3
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 1 de 5
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
 - 4 MP (2688×1520) · 3,6 mm fixa
+- [foto] Câmera dome Full Color 2 MP, foto 1 de 3
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
+- [foto] Câmera speed dome com zoom 32x, foto 1 de 3
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
 - gravadores
 - 1
+- [foto] Gravador NVR 32 canais com 16 PoE, foto 1 de 4
 - Gravador NVR 32 canais com 16 PoE
 - Intelbras iNVD 5232-16P
 - 32 IP · 16 (802.3af/at)
@@ -148,6 +165,8 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Controle de acesso
+- [foto] Controlador facial para uso interno, foto 1 de 2
+- [foto] Controlador facial para uso interno, foto 2 de 2
 - 1 / 2
 - Controlador facial para uso interno
 - Intelbras SS 3541 MF LITE
@@ -175,6 +194,7 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais controladores faciais
+- [foto] Controlador facial interno e externo
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - até 10.000 · IP55 (interno e externo)
@@ -186,6 +206,7 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Controle de acesso
+- [foto] Controlador facial interno e externo
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Para áreas internas e externas, com tela de 4,3 polegadas.
@@ -213,6 +234,7 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais controladores faciais
+- [foto] Controlador facial para uso interno, foto 1 de 2
 - Controlador facial para uso interno
 - Intelbras SS 3541 MF LITE
 - até 6.000 · somente interno
@@ -228,9 +250,11 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Controladores de acesso por reconhecimento facial para portaria, empresa e condomínio.
 - controladores faciais
 - 2
+- [foto] Controlador facial interno e externo
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - até 10.000 · IP55 (interno e externo)
+- [foto] Controlador facial para uso interno, foto 1 de 2
 - Controlador facial para uso interno
 - Intelbras SS 3541 MF LITE
 - até 6.000 · somente interno
@@ -248,6 +272,9 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Câmeras e gravadores
+- [foto] Câmera dome Full Color 2 MP, foto 1 de 3
+- [foto] Câmera dome Full Color 2 MP, foto 2 de 3
+- [foto] Câmera dome Full Color 2 MP, foto 3 de 3
 - 1 / 3
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
@@ -276,9 +303,11 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais câmeras
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 1 de 5
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
 - 4 MP (2688×1520) · 3,6 mm fixa
+- [foto] Câmera speed dome com zoom 32x, foto 1 de 3
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -290,6 +319,10 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Câmeras e gravadores
+- [foto] Gravador NVR 32 canais com 16 PoE, foto 1 de 4
+- [foto] Gravador NVR 32 canais com 16 PoE, foto 2 de 4
+- [foto] Gravador NVR 32 canais com 16 PoE, foto 3 de 4
+- [foto] Gravador NVR 32 canais com 16 PoE, foto 4 de 4
 - 1 / 4
 - Gravador NVR 32 canais com 16 PoE
 - Intelbras iNVD 5232-16P
@@ -318,12 +351,15 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais em Câmeras e gravadores
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 1 de 5
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
 - 4 MP (2688×1520) · 3,6 mm fixa
+- [foto] Câmera dome Full Color 2 MP, foto 1 de 3
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
+- [foto] Câmera speed dome com zoom 32x, foto 1 de 3
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -335,6 +371,9 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Câmeras e gravadores
+- [foto] Câmera speed dome com zoom 32x, foto 1 de 3
+- [foto] Câmera speed dome com zoom 32x, foto 2 de 3
+- [foto] Câmera speed dome com zoom 32x, foto 3 de 3
 - 1 / 3
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
@@ -362,9 +401,11 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais câmeras
+- [foto] Câmera bullet 4 MP com IR de 40 m, foto 1 de 5
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
 - 4 MP (2688×1520) · 3,6 mm fixa
+- [foto] Câmera dome Full Color 2 MP, foto 1 de 3
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
