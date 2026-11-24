@@ -60,6 +60,14 @@ observation proves it worked.
 **NOT YET must always name a case, never a worry.** If you cannot construct the failing input, you do
 not have a finding yet — say that instead of dressing up a hunch.
 
+**The case must be one the system can receive.** A structural case — empty, missing, repeated,
+dependency down — needs no proof. A value attributed to another system — a status, a code, a message
+— needs an occurrence: count it in the stored responses or cite the sender's documentation, and
+state the count. A value you made up to illustrate a worry is reported as *hypothesis — zero found*
+or *hypothesis — not counted*, never as a finding and never inside a test string. The session reads
+your examples as facts and takes them to the owner as decisions; an invented status costs a rule
+for a case that does not exist.
+
 ## Rules
 
 - **Do not edit.** Naming the flaw is the deliverable.

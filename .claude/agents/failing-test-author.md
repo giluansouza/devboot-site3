@@ -32,6 +32,11 @@ description instead of a table, your first output is the table, and you ask for 
 before writing anything. You do not invent the expected behaviour; unclear rows come back as
 questions.
 
+**You do not invent the data either.** A row whose condition names a value another system sends — a
+status, a code, a message — must carry its evidence: the count in stored responses, a captured body,
+or the sender's documentation. A row without it comes back to the session as *no occurrence shown*,
+not as a test. Structural rows (not found, malformed, dependency down, retry) need none.
+
 **Output:** one test per row, and evidence that each fails.
 
 **The proof is the run.** A test that passes when the behaviour does not exist is worse than no
@@ -67,6 +72,9 @@ walked end to end. If that row does not exist, say so before writing anything el
 
 - **Never** touch implementation files. If the test needs a factory, a fixture or a helper that
   does not exist, create only that.
+- A fixture that stands in for another system's answer is **cut from a real return** — a stored
+  response or a sample already in the repository — trimmed, with personal data replaced. Never typed
+  from imagination. If no real return exists for a row, stop on that row and say so.
 - Follow the project's existing test conventions — read a neighbouring test first.
 - One assertion of intent per test. A test that checks five things reports one failure and hides four.
 - Name the test after the branch, not the function: `it fails when the plate does not exist`.

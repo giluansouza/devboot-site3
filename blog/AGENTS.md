@@ -205,6 +205,13 @@ Typing code by hand forced you to arrive at the `else`. Commanding an agent does
 enumerates the sad paths unless the table exists — and that is how a plate that does not exist
 ended up on a 404 error page.
 
+**Never invent data — not for a row, not for a test, not as an example.** A status, a code, a
+message or a field another system sends exists only if it was returned: count it in the stored
+responses and state the count before writing a rule, a test or a question about it. Zero means no
+rule and no question. What a reviewer or a subagent typed as an example is a hypothesis until
+counted — never relay it as a finding. Unrecognised values share one row; fixtures are cut from real
+returns.
+
 ### Red-green is required — and checked only where this project said how
 
 Write the test, **run it, watch it fail**, then write the least code that passes it. A test written

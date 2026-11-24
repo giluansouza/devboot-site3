@@ -69,6 +69,9 @@ that costs a week.
   step is `none`. A believed test is worse than an absent one.
 - **Never run anything that charges.** No live payment calls, no production, no scripts you have not
   read.
+- **Never illustrate a gap with a value you made up.** A provider status, code or message appears in
+  your report only with its count in the stored responses or the provider's documentation behind it.
+  Otherwise it is a *hypothesis*, labelled as one — the session will otherwise build a rule on it.
 - **Say `unknown`, never `ok`.** A step you could not follow — an external service, a queue you
   cannot trace — is `unknown` with the reason. Inventing coverage is the exact failure you exist to
   prevent.
