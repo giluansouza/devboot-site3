@@ -14,7 +14,7 @@ def linhas_ativas():
     return [l for l in CONFIG.read_text(encoding="utf-8").splitlines() if not l.lstrip().startswith("#")]
 
 
-def test_cmd():
+def comando_do_gate():
     achadas = [m.group(1) for l in linhas_ativas() if (m := re.fullmatch(r'TEST_CMD="(.*)"', l.strip()))]
     return achadas[0] if achadas else None
 
@@ -22,11 +22,11 @@ def test_cmd():
 class PortaoCobreALoja(unittest.TestCase):
     # @covers-existing: the config was already app-agnostic; this keeps it that way
     def test_the_gate_is_declared(self):
-        self.assertTrue(test_cmd(), ".githooks/config must declare TEST_CMD or the pre-push gate is not installed")
+        self.assertTrue(comando_do_gate(), ".githooks/config must declare TEST_CMD or the pre-push gate is not installed")
 
     # @covers-existing: the config was already app-agnostic; this keeps it that way
     def test_the_command_runs_whichever_app_the_branch_changed(self):
-        cmd = test_cmd()
+        cmd = comando_do_gate()
         self.assertIn("{dir}", cmd)
         for app in ("blog", "loja"):
             self.assertNotIn(app, cmd, f"TEST_CMD names {app}: the other app would be tested with it too")
@@ -38,7 +38,7 @@ class PortaoCobreALoja(unittest.TestCase):
 
     # @covers-existing: the config was already app-agnostic; this keeps it that way
     def test_the_runner_is_pytest_because_only_it_gives_the_gate_a_report_per_case(self):
-        self.assertIn("pytest", test_cmd())
+        self.assertIn("pytest", comando_do_gate())
 
 
 if __name__ == "__main__":
