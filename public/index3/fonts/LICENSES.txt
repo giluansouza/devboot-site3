@@ -1,0 +1,8 @@
+Fonts self-hosted for the prototype, latin subset, as served by Google Fonts (woff2).
+All are licensed under the SIL Open Font License 1.1 (https://openfontlicense.org).
+
+big-shoulders-display-latin.woff2   Big Shoulders Display, variable 500-900   (c) The Big Shoulders Project Authors
+hanken-grotesk-latin.woff2          Hanken Grotesk, variable 400-700          (c) The Hanken Grotesk Project Authors
+instrument-serif-latin.woff2        Instrument Serif Regular                  (c) The Instrument Serif Project Authors
+instrument-serif-italic-latin.woff2 Instrument Serif Italic                   (c) The Instrument Serif Project Authors
+schibsted-grotesk-latin.woff2       Schibsted Grotesk, variable 400-800       (c) The Schibsted Grotesk Project Authors

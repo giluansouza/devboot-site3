@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Devboot · protótipo 3 da página inicial</title>
+<meta name="description" content="Protótipo 3 da nova página inicial da Devboot. Textos provisórios.">
+<link rel="icon" type="image/svg+xml" href="/img/favicon/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/img/favicon/apple-touch-icon.png">
+<script>
+/* Before first paint: variant, theme (site-wide key devboot-tema), motion, and the right display font preloaded. */
+(function () {
+  var r = document.documentElement, v = 'a';
+  try {
+    var t = localStorage.getItem('devboot-tema');
+    if (t === 'escuro') r.setAttribute('data-theme', 'dark');
+    else if (t === 'claro') r.setAttribute('data-theme', 'light');
+    if (localStorage.getItem('devboot-proto3-variante') === 'b') v = 'b';
+    var m = localStorage.getItem('devboot-proto3-movimento');
+    if (m === 'menos') r.setAttribute('data-motion', 'menos');
+    else if (m !== 'normal' && matchMedia('(prefers-reduced-motion: reduce)').matches) r.setAttribute('data-motion', 'menos');
+  } catch (e) {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) r.setAttribute('data-motion', 'menos');
+  }
+  r.setAttribute('data-v', v);
+  var l = document.createElement('link');
+  l.rel = 'preload'; l.as = 'font'; l.type = 'font/woff2'; l.crossOrigin = 'anonymous';
+  l.href = v === 'b' ? '/index3/fonts/instrument-serif-latin.woff2' : '/index3/fonts/big-shoulders-display-latin.woff2';
+  document.head.appendChild(l);
+  r.classList.add('js');
+})();
+</script>
+<link rel="stylesheet" href="/index3/home.css">
+<script src="/index3/home.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="proto" role="note"><b>Protótipo 3</b> — textos provisórios. <span>Onde aparece <span class="q">[pergunta]</span> falta um fato do dono.</span></div>
+
+<header class="bar">
+  <a class="brand" href="#topo" aria-label="Devboot, início">
+    <img class="wm wm--on-light" src="/img/devboot-wordmark-dark.svg" alt="" width="118" height="14">
+    <img class="wm wm--on-dark" src="/img/devboot-wordmark.svg" alt="" width="118" height="14">
+  </a>
+  <nav class="bar-links" aria-label="Atalhos">
+    <a class="ul" href="/loja/">Loja</a>
+    <a class="ul" href="/blog/">Blog</a>
+  </nav>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="menu-btn-t">Menu</span><span class="menu-btn-i" aria-hidden="true"></span></button>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav class="menu-nav" aria-label="Principal">
+    <a href="#software"><span class="mn">01</span><span class="ml">Software</span></a>
+    <a href="#automacao"><span class="mn">02</span><span class="ml">Automação</span></a>
+    <a href="#seguranca"><span class="mn">03</span><span class="ml">Segurança</span></a>
+    <a href="/loja/"><span class="mn">↗</span><span class="ml">Loja</span></a>
+    <a href="/blog/"><span class="mn">↗</span><span class="ml">Blog</span></a>
+  </nav>
+  <div class="menu-foot">
+    <button class="btn" type="button" data-wa="geral">Falar com a Devboot</button>
+  </div>
+</div>
+
+<main id="conteudo">
+
+  <!-- 1 · Opening: the headline is the image. Lines rise out of masks, then drift apart with scroll. -->
+  <section class="hero" id="topo" aria-labelledby="h-topo">
+    <div class="hero-meta">
+      <p>Devboot — uma empresa de tecnologia</p>
+      <p>Software · Automação · Segurança eletrônica</p>
+    </div>
+    <h1 class="hero-t" id="h-topo">
+      <span class="ln" style="--d:0;--dir:-1"><span class="li">Primeiro</span></span>
+      <span class="ln" style="--d:1;--dir:1"><span class="li">entender.</span></span><br class="br-d">
+      <span class="ln" style="--d:2;--dir:-1"><span class="li">Depois, a</span></span>
+      <span class="ln" style="--d:3;--dir:1"><span class="li"><span class="hl">tecnologia.</span></span></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="lede rise" style="--d:5">Software sob medida, automação e segurança eletrônica, pensados a partir da rotina de quem usa.</p>
+      <div class="acts rise" style="--d:6">
+        <button class="btn magnet" type="button" data-wa="geral">Falar com a Devboot <span class="arw" aria-hidden="true">→</span></button>
+        <a class="ul" href="/loja/">Ver a loja</a>
+      </div>
+    </div>
+    <ol class="fronts rise" style="--d:7" aria-label="O que a Devboot faz">
+      <li><a href="#software" data-peek="/index2/img/scr-cp-desk.webp"><span class="fn">01</span><span class="ft">Software</span><span class="fd">sob medida e produtos próprios</span></a></li>
+      <li><a href="#automacao" data-peek-text="[pergunta] caso real a caminho"><span class="fn">02</span><span class="ft">Automação</span><span class="fd">de processos <span class="q">[pergunta]</span></span></a></li>
+      <li><a href="#seguranca" data-peek="/loja/img/_linhas/cameras-e-gravadores/700.webp"><span class="fn">03</span><span class="ft">Segurança</span><span class="fd">eletrônica e controle de acesso</span></a></li>
+    </ol>
+  </section>
+
+  <!-- Marquee: the three fronts, one loop, equal weight. Drifts on its own and follows the scroll. -->
+  <div class="marquee" aria-hidden="true">
+    <div class="mq-track">
+      <span>Software</span><i>✳</i><span>Automação</span><i>✳</i><span>Segurança eletrônica</span><i>✳</i>
+      <span>Software</span><i>✳</i><span>Automação</span><i>✳</i><span>Segurança eletrônica</span><i>✳</i>
+    </div>
+  </div>
+
+  <!-- 2 · Method: words light up as you read down; one proof per front, three equal cards. -->
+  <section class="method" id="metodo" aria-labelledby="h-metodo">
+    <p class="kicker">O método</p>
+    <h2 class="say" id="h-metodo" data-split>Ouvir quem usa. Medir antes de instalar.</h2>
+    <p class="lede">Todo trabalho começa no seu lugar, com quem está lá todo dia, e não num modelo pronto.</p>
+    <ul class="proofs">
+      <li class="proof rise"><span class="pl">No software</span><p>“Antes da primeira linha de código, a gente senta com quem opera.”</p></li>
+      <li class="proof rise" style="--d:1"><span class="pl">Na automação</span><p><span class="q">[pergunta]</span> Um exemplo real do que a Devboot automatiza, dito do mesmo jeito.</p></li>
+      <li class="proof rise" style="--d:2"><span class="pl">Na segurança</span><p>“O layout das câmeras é fechado no CamSeek antes de encostar em qualquer equipamento.”</p></li>
+    </ul>
+  </section>
+
+  <!-- 3 + 4 · Software. Chapter name slides in and grows; two beats, each with real media. -->
+  <section class="chapter" id="software" aria-labelledby="h-software">
+    <header class="ch-head">
+      <span class="ch-n">01 / 03</span>
+      <h2 class="ch-name" id="h-software"><span>Software</span></h2>
+      <p class="ch-sub">Sob medida e produtos próprios</p>
+    </header>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <h3 class="say-m" data-split>Um sistema do seu jeito.</h3>
+        <p>Sistemas web e aplicativos feitos a partir da sua rotina. O programa se adapta a você, e não o contrário.</p>
+      </div>
+      <figure class="media mask">
+        <picture>
+          <source media="(max-width: 699px)" srcset="/index2/img/scr-cpl-m.webp" width="600" height="1299">
+          <img src="/index2/img/scr-cp-desk.webp" alt="Tela do ConferePlaca, sistema web da Devboot para consulta de veículos pela placa" width="1000" height="625" loading="lazy">
+        </picture>
+        <figcaption>ConferePlaca · sistema web da Devboot</figcaption>
+      </figure>
+    </div>
+
+    <div class="beat beat--list">
+      <div class="beat-copy">
+        <h3 class="say-m" data-split>Os nossos rodam todo dia.</h3>
+        <p>FrotasPro e ConferePlaca <span class="q">[pergunta 3: quais citar]</span> são da Devboot. O seu projeto é feito do mesmo jeito.</p>
+      </div>
+      <ul class="works">
+        <li class="work rise" data-peek="/index2/img/scr-cp-desk.webp">
+          <a href="https://confereplaca.com.br" rel="noopener">
+            <span class="wk-name">ConferePlaca</span>
+            <span class="wk-desc">Débitos, multas e leilão pela placa</span>
+            <img class="wk-thumb" src="/index2/img/scr-cpl-m.webp" alt="" width="600" height="1299" loading="lazy">
+            <span class="arw" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li class="work rise" data-peek="/index2/img/scr-cam-desk.webp">
+          <a href="https://camseek.devboot.com.br" rel="noopener">
+            <span class="wk-name">CamSeek</span>
+            <span class="wk-desc">Projeto da cobertura de câmeras, no navegador</span>
+            <img class="wk-thumb" src="/index2/img/scr-cam-m.webp" alt="" width="780" height="1688" loading="lazy">
+            <span class="arw" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li class="work rise" data-peek-text="Tela do FrotasPro: o dono envia">
+          <div class="wk-row">
+            <span class="wk-name">FrotasPro</span>
+            <span class="wk-desc">Gestão de frota: imagem ao vivo, motorista e custo por quilômetro</span>
+            <span class="wk-gap">tela a enviar</span>
+          </div>
+        </li>
+        <li class="work rise" data-peek-text="Tela do TakeNote: o dono envia">
+          <div class="wk-row">
+            <span class="wk-name">TakeNote</span>
+            <span class="wk-desc"><span class="q">[pergunta]</span> o que faz, em uma linha</span>
+            <span class="wk-gap">tela a enviar</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ch-acts">
+      <button class="btn magnet" type="button" data-wa="sistema">Falar sobre um sistema <span class="arw" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+
+  <!-- 5 · Automation. Same chapter scaffold and the same scroll length; the gaps are labelled, never drawn. -->
+  <section class="chapter" id="automacao" aria-labelledby="h-automacao">
+    <header class="ch-head">
+      <span class="ch-n">02 / 03</span>
+      <h2 class="ch-name" id="h-automacao"><span>Automação</span></h2>
+      <p class="ch-sub">De processos <span class="q">[pergunta: integrações, processos, equipamentos?]</span></p>
+    </header>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <h3 class="say-m" data-split><span class="q">[pergunta]</span> O trabalho repetido, feito sem ninguém.</h3>
+        <p><span class="q">[pergunta: um exemplo real, ex. “o relatório que chegava na sexta agora chega sozinho”]</span></p>
+      </div>
+      <figure class="media gap mask">
+        <div class="gap-in">
+          <p class="gap-l">02 · imagem pendente</p>
+          <p class="gap-t">Aqui entra um caso real de automação.</p>
+          <p>O dono envia: o que foi automatizado, para quem, e uma foto ou tela do resultado. Sem caso real, não há imagem.</p>
+        </div>
+        <figcaption>Espaço reservado · nada desenhado</figcaption>
+      </figure>
+    </div>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <h3 class="say-m say-m--gap">Segundo título da automação</h3>
+        <p><span class="q">[pergunta]</span> Software e segurança têm dois títulos cada. A automação ganha o segundo quando o caso real chegar; até lá, o espaço fica guardado para ela.</p>
+      </div>
+    </div>
+
+    <div class="ch-acts">
+      <button class="btn magnet" type="button" data-wa="automacao">Falar sobre automação <span class="arw" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+
+  <!-- 6 + 7 · Security. Real installed photos and Intelbras renders, revealed by masks. -->
+  <section class="chapter" id="seguranca" aria-labelledby="h-seguranca">
+    <header class="ch-head">
+      <span class="ch-n">03 / 03</span>
+      <h2 class="ch-name" id="h-seguranca"><span>Segurança</span></h2>
+      <p class="ch-sub">Eletrônica e controle de acesso · instalamos em Petrolina, Juazeiro, Dormentes e região</p>
+    </header>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <h3 class="say-m" data-split>Cada câmera no lugar certo.</h3>
+        <p>O alcance é calculado antes de furar a parede. Depois, a imagem fica no celular, de onde você estiver.</p>
+      </div>
+      <div class="pair">
+        <figure class="media mask">
+          <img src="/loja/img/_linhas/cameras-e-gravadores/700.webp" alt="Câmera bullet Intelbras instalada na parede externa de uma casa" width="700" height="478" loading="lazy">
+          <figcaption>Câmera instalada, de dia · à noite: foto a enviar</figcaption>
+        </figure>
+        <figure class="media media--tall mask" style="--d:2">
+          <img src="/index2/img/scr-cam-m.webp" alt="Tela do CamSeek, ferramenta da Devboot para projetar a cobertura das câmeras" width="780" height="1688" loading="lazy">
+          <figcaption>CamSeek · o projeto antes da obra</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <h3 class="say-m" data-split>A porta sabe quem entra.</h3>
+        <p>Rosto, digital, cartão, QR Code ou senha, com o registro de cada acesso.</p>
+      </div>
+      <div class="pair pair--flip">
+        <figure class="media mask">
+          <img src="/loja/img/_linhas/controle-de-acesso/700.webp" alt="Controlador facial Intelbras instalado na parede, ao lado de uma porta de vidro" width="700" height="478" loading="lazy">
+          <figcaption>Controlador facial instalado</figcaption>
+        </figure>
+        <figure class="media media--tall media--render mask" style="--d:2">
+          <img src="/index2/img/ib-facial.webp" alt="Controlador facial Intelbras com a tela acesa" width="320" height="640" loading="lazy">
+          <figcaption>Revenda autorizada Intelbras</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="ch-acts">
+      <button class="btn magnet" type="button" data-wa="orcamento">Pedir orçamento <span class="arw" aria-hidden="true">→</span></button>
+      <a class="ul" href="/loja/">Ver na loja</a>
+    </div>
+  </section>
+
+  <!-- Layout break: the signature colour takes the whole screen; two lines cross with the scroll. -->
+  <section class="statement" aria-label="Uma empresa só">
+    <p class="st-l" style="--dir:-1"><span>Software,</span></p>
+    <p class="st-l" style="--dir:1"><span>automação e</span></p>
+    <p class="st-l" style="--dir:-1"><span>segurança.</span></p>
+    <p class="st-l st-l--last" style="--dir:1"><span>Uma empresa só.</span></p>
+  </section>
+
+  <!-- 8 · Close: the question, then four big doors. Each composes a WhatsApp message (shown, never opened). -->
+  <section class="close" id="contato" aria-labelledby="h-contato">
+    <h2 class="say" id="h-contato" data-split>Por onde você quer começar?</h2>
+    <p class="lede">Sistema, automação, câmeras ou acesso. Conte o que precisa resolver. <span class="q">[pergunta 5: o que acontece depois e em quanto tempo]</span></p>
+    <ul class="doors">
+      <li><button type="button" data-wa="sistema" aria-label="Começar por um sistema"><span class="dn">01</span><span class="dt">Sistema</span><span class="arw" aria-hidden="true">→</span></button></li>
+      <li><button type="button" data-wa="automacao" aria-label="Começar pela automação"><span class="dn">02</span><span class="dt">Automação</span><span class="arw" aria-hidden="true">→</span></button></li>
+      <li><button type="button" data-wa="cameras" aria-label="Começar pelas câmeras"><span class="dn">03</span><span class="dt">Câmeras</span><span class="arw" aria-hidden="true">→</span></button></li>
+      <li><button type="button" data-wa="acesso" aria-label="Começar pelo controle de acesso"><span class="dn">04</span><span class="dt">Acesso</span><span class="arw" aria-hidden="true">→</span></button></li>
+    </ul>
+    <div class="acts">
+      <a class="ul" href="/loja/">Ver na loja</a>
+      <a class="ul" href="/blog/">Ler o blog</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-cols">
+    <div>
+      <p class="fh">Contato</p>
+      <p><button class="ul" type="button" data-wa="geral">Falar com a Devboot</button></p>
+    </div>
+    <div>
+      <p class="fh">Site</p>
+      <p><a class="ul" href="/loja/">Loja</a> · <a class="ul" href="/blog/">Blog</a></p>
+    </div>
+    <div>
+      <p class="fh">Segurança eletrônica</p>
+      <p>Revenda autorizada Intelbras. Instalamos em Petrolina, Juazeiro, Dormentes e região.</p>
+    </div>
+  </div>
+  <div class="foot-mark">
+    <img class="wm wm--on-light" src="/img/devboot-wordmark-dark.svg" alt="Devboot" width="1007" height="115" loading="lazy">
+    <img class="wm wm--on-dark" src="/img/devboot-wordmark.svg" alt="" width="1007" height="115" loading="lazy">
+  </div>
+  <p class="foot-note">Protótipo 3 · textos provisórios · não indexado</p>
+</footer>
+
+<!-- Settings: variant, theme, motion. -->
+<div class="dial">
+  <button class="dial-btn" type="button" aria-expanded="false" aria-controls="dial-panel"><span aria-hidden="true">Aa</span><span class="sr">Ajustes do protótipo</span></button>
+  <div class="dial-panel" id="dial-panel" role="group" aria-label="Ajustes do protótipo" hidden>
+    <p class="dial-h">Variante</p>
+    <div class="seg" data-set="v">
+      <button type="button" data-val="a" aria-pressed="true"><b>A · Cartaz</b><small>Big Shoulders, verde-limão</small></button>
+      <button type="button" data-val="b" aria-pressed="false"><b>B · Editorial</b><small>Instrument Serif, violeta</small></button>
+    </div>
+    <p class="dial-h">Tema</p>
+    <div class="seg seg--3" data-set="tema">
+      <button type="button" data-val="auto" aria-pressed="true">Auto</button>
+      <button type="button" data-val="claro" aria-pressed="false">Claro</button>
+      <button type="button" data-val="escuro" aria-pressed="false">Escuro</button>
+    </div>
+    <p class="dial-h">Movimento</p>
+    <div class="seg" data-set="mov">
+      <button type="button" data-val="normal" aria-pressed="true">Normal</button>
+      <button type="button" data-val="menos" aria-pressed="false">Menos</button>
+    </div>
+  </div>
+</div>
+
+<div class="peek" aria-hidden="true"><img alt="" width="1000" height="625"><span></span></div>
+
+<div class="toast" role="status" aria-live="polite" hidden>
+  <p class="toast-h">No site real, isto abre o WhatsApp com:</p>
+  <code class="toast-link"></code>
+  <button class="toast-x" type="button">Fechar</button>
+</div>
+</body>
+</html>
