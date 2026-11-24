@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Devboot · protótipo da página inicial</title>
+<meta name="description" content="Protótipo da nova página inicial da Devboot. Textos provisórios.">
+<link rel="icon" href="/img/favicon/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/img/favicon/favicon.svg">
+<link rel="preload" href="/index2/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/index2/home.css">
+<script>
+/* Before first paint: theme (site-wide key devboot-tema), type system, motion. */
+(function () {
+  var r = document.documentElement;
+  try {
+    var t = localStorage.getItem('devboot-tema');
+    if (t === 'escuro') r.setAttribute('data-theme', 'dark');
+    else if (t === 'claro') r.setAttribute('data-theme', 'light');
+    if (localStorage.getItem('devboot-proto-sistema') === 'vale') r.setAttribute('data-sys', 'vale');
+    if (localStorage.getItem('devboot-proto-movimento') === 'menos') r.setAttribute('data-motion', 'menos');
+  } catch (e) {}
+  r.classList.add('js');
+})();
+</script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="proto" role="note">Protótipo · textos provisórios. <span>As marcas <b>[pergunta]</b> são fatos que ainda faltam.</span></div>
+
+<header class="nav">
+  <a class="brand" href="#topo" aria-label="Devboot, início">
+    <img class="wm-l" src="/img/devboot-wordmark-dark.svg" alt="Devboot" width="132" height="15">
+    <img class="wm-d" src="/img/devboot-wordmark.svg" alt="Devboot" width="132" height="15">
+  </a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="/loja/">Loja</a>
+    <a href="/blog/">Blog</a>
+    <button class="btn btn--sm" type="button" data-wa="geral">Conversar</button>
+  </nav>
+</header>
+
+<main id="conteudo">
+
+  <!-- 1 + 2: opening. The composition grows, then flies into the phone (CamSeek). -->
+  <section class="pin hero" id="topo" aria-label="Abertura">
+    <div class="sticky">
+      <div class="copy-a">
+        <h1 class="display">Primeiro entender. Depois, a tecnologia.</h1>
+        <p class="lede">Software sob medida, automação e segurança eletrônica em Petrolina, Juazeiro, Dormentes e região.</p>
+      </div>
+      <div class="copy-b">
+        <h2 class="display">Ouvir quem usa. Medir antes de instalar.</h2>
+        <p class="lede">Todo trabalho começa no seu lugar, com quem está lá todo dia, e não num modelo pronto.</p>
+      </div>
+
+      <div class="comp">
+        <div class="laptop fade">
+          <div class="lt-lid"><div class="lt-screen"><img src="/index2/img/scr-cp-desk.webp" alt="" width="1000" height="625" fetchpriority="high"></div></div>
+          <div class="lt-base"></div>
+        </div>
+        <div class="ph-slot"></div>
+        <img class="render r-bullet fade" src="/index2/img/ib-bullet.webp" alt="" width="640" height="328">
+        <img class="render r-facial fade" src="/index2/img/ib-facial.webp" alt="" width="320" height="640">
+        <p class="cap hero-cap">Nas telas: ConferePlaca e CamSeek, sistemas da Devboot no ar. Equipamentos Intelbras.</p>
+      </div>
+      <div class="phone fly" role="img" aria-label="Celular com o CamSeek aberto: Projete a cobertura das suas câmeras com precisão">
+        <div class="ph-screen"><img src="/index2/img/scr-cam-m.webp" alt="" width="780" height="1688"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 to 7: one pinned stage. Software, Automação and Segurança get the same scroll length. -->
+  <section class="pin stage" id="frentes" aria-label="O que a Devboot faz">
+    <div class="sticky">
+      <nav class="rail" aria-label="Frentes">
+        <button type="button" data-go="0"><span>Software</span><span class="bar"><i></i></span></button>
+        <button type="button" data-go="2"><span>Automação</span><span class="bar"><i></i></span></button>
+        <button type="button" data-go="4"><span>Segurança</span><span class="bar"><i></i></span></button>
+      </nav>
+
+      <div class="media" aria-hidden="true">
+        <div class="scene sc-sw">
+          <div class="devices">
+            <div class="laptop">
+              <div class="lt-lid"><div class="lt-screen">
+                <img src="/index2/img/scr-cp-desk.webp" alt="" width="1000" height="625" loading="lazy">
+                <img class="swap-top" src="/index2/img/scr-cam-desk.webp" alt="" width="1000" height="625" loading="lazy">
+              </div></div>
+              <div class="lt-base"></div>
+            </div>
+            <div class="phone sw-phone">
+              <div class="ph-screen">
+                <img src="/index2/img/scr-cpl-m.webp" alt="" width="600" height="1299" loading="lazy">
+                <img class="swap-top" src="/index2/img/scr-cam-m.webp" alt="" width="780" height="1688" loading="lazy">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene sc-auto" style="opacity:0">
+          <div class="gap">
+            <span class="display">[pergunta]</span>
+            <p>Falta um caso real de automação. A imagem desta etapa sai dele: uma tela, um equipamento ou um antes e depois.</p>
+          </div>
+        </div>
+
+        <div class="scene sc-cam" style="opacity:0">
+          <div class="photo photo--cam"><img src="/loja/img/_linhas/cameras-e-gravadores/700.webp" alt="" width="700" height="478" loading="lazy"></div>
+        </div>
+
+        <div class="scene sc-acc-photo" style="opacity:0">
+          <div class="photo photo--acc"><img src="/loja/img/_linhas/controle-de-acesso/700.webp" alt="" width="700" height="478" loading="lazy"></div>
+        </div>
+
+        <div class="scene sc-acc" style="opacity:0">
+          <div class="acc-render">
+            <img src="/index2/img/ib-facial.webp" alt="" width="320" height="640" loading="lazy">
+            <div class="screen-off"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="cap media-cap" aria-live="off">Na tela: ConferePlaca, sistema web da Devboot.</p>
+
+      <div class="beats">
+        <article class="beat on">
+          <p class="eyebrow">Software sob medida</p>
+          <h2 class="display">Um sistema do seu jeito.</h2>
+          <p class="lede">Sistemas web e aplicativos feitos a partir da sua rotina. O programa se adapta a você, e não o contrário.</p>
+          <div class="actions"><button class="link link--btn" type="button" data-wa="sistema">Conversar sobre um sistema ›</button></div>
+        </article>
+        <article class="beat">
+          <p class="eyebrow">Software · produtos próprios</p>
+          <h2 class="display">Os nossos rodam todo dia.</h2>
+          <p class="lede">FrotasPro e ConferePlaca <span class="q">[pergunta]</span> são da Devboot. O seu projeto é feito do mesmo jeito.</p>
+          <div class="actions">
+            <a class="link" href="https://confereplaca.com.br" target="_blank" rel="noopener">ConferePlaca ›</a>
+            <a class="link" href="https://camseek.devboot.com.br" target="_blank" rel="noopener">CamSeek ›</a>
+          </div>
+        </article>
+        <article class="beat">
+          <p class="eyebrow">Automação</p>
+          <h2 class="display"><span class="q">[pergunta]</span> O trabalho repetido, feito sem ninguém.</h2>
+          <p class="lede"><span class="q">[pergunta: exemplo real]</span></p>
+          <div class="actions"><button class="link link--btn" type="button" data-wa="automacao">Conversar sobre automação ›</button></div>
+        </article>
+        <article class="beat">
+          <p class="eyebrow">Segurança eletrônica · câmeras</p>
+          <h2 class="display">Cada câmera no lugar certo.</h2>
+          <p class="lede">O alcance é calculado antes de furar a parede. Depois, a imagem fica no celular, de onde você estiver.</p>
+          <div class="actions">
+            <button class="link link--btn" type="button" data-wa="cameras">Pedir orçamento ›</button>
+            <a class="link" href="/loja/cameras-e-gravadores/">Ver na loja ›</a>
+          </div>
+        </article>
+        <article class="beat">
+          <p class="eyebrow">Segurança eletrônica · acesso</p>
+          <h2 class="display">A porta sabe quem entra.</h2>
+          <p class="lede">Rosto, digital, cartão, QR Code ou senha, com o registro de cada acesso.</p>
+          <div class="actions">
+            <button class="link link--btn" type="button" data-wa="acesso">Pedir orçamento ›</button>
+            <a class="link" href="/loja/controle-de-acesso/">Ver na loja ›</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <p><strong>Blog da Devboot.</strong> Ideias em produção.</p>
+    <a class="link" href="/blog/">Ler o blog ›</a>
+  </div>
+
+  <!-- 8: closing. The opening frame comes back, smaller. -->
+  <section class="close" id="comecar" aria-labelledby="t-close">
+    <div class="close-media" aria-hidden="true">
+      <div class="laptop">
+        <div class="lt-lid"><div class="lt-screen"><img src="/index2/img/scr-cp-desk.webp" alt="" width="1000" height="625" loading="lazy"></div></div>
+        <div class="lt-base"></div>
+      </div>
+      <div class="phone"><div class="ph-screen"><img src="/index2/img/scr-cam-m.webp" alt="" width="780" height="1688" loading="lazy"></div></div>
+      <img class="render r-bullet" src="/index2/img/ib-bullet.webp" alt="" width="640" height="328" loading="lazy">
+      <img class="render r-facial" src="/index2/img/ib-facial.webp" alt="" width="320" height="640" loading="lazy">
+    </div>
+    <div class="close-copy">
+      <h2 class="display" id="t-close">Por onde você quer começar?</h2>
+      <p class="lede">Sistema, automação, câmeras ou acesso. Conte o que precisa resolver. <span class="q">[pergunta: o que acontece depois]</span></p>
+    </div>
+    <div class="choices">
+      <button class="choice" type="button" data-wa="sistema"><b>Sistema</b><span>WhatsApp ›</span></button>
+      <button class="choice" type="button" data-wa="automacao"><b>Automação</b><span>WhatsApp ›</span></button>
+      <button class="choice" type="button" data-wa="cameras"><b>Câmeras</b><span>WhatsApp ›</span></button>
+      <button class="choice" type="button" data-wa="acesso"><b>Acesso</b><span>WhatsApp ›</span></button>
+    </div>
+    <div class="close-more">
+      <a class="link" href="/loja/">Ver na loja ›</a>
+      <span class="phone-num">(87) 99140-2037 <button class="copy-btn" type="button" data-copy="(87) 99140-2037">Copiar</button></span>
+    </div>
+  </section>
+
+  <footer>
+    <a class="brand" href="#topo" aria-label="Devboot, voltar ao início">
+      <img class="wm-l" src="/img/devboot-wordmark-dark.svg" alt="Devboot" width="123" height="14">
+      <img class="wm-d" src="/img/devboot-wordmark.svg" alt="Devboot" width="123" height="14">
+    </a>
+    <div class="row"><span>Petrolina · Juazeiro · Dormentes e região</span><span>Revenda autorizada Intelbras</span></div>
+    <div class="row">
+      <a href="/loja/">Loja</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://confereplaca.com.br" target="_blank" rel="noopener">ConferePlaca</a>
+      <a href="https://camseek.devboot.com.br" target="_blank" rel="noopener">CamSeek</a>
+    </div>
+  </footer>
+</main>
+
+<div class="dock" role="toolbar" aria-label="Controles do protótipo">
+  <span class="lbl">Estilo</span>
+  <button type="button" data-sys="neutro" aria-pressed="true">Neutro</button>
+  <button type="button" data-sys="vale" aria-pressed="false">Vale</button>
+  <span class="sep" aria-hidden="true"></span>
+  <button type="button" id="themeBtn" aria-label="Mudar para o tema escuro" title="Tema">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+  </button>
+  <button type="button" id="motionBtn" aria-pressed="false" aria-label="Menos movimento" title="Menos movimento">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12h3M10 12h10M4 6h10M17 6h3M4 18h6M13 18h7"/></svg>
+  </button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <p id="toastMsg">Protótipo: o WhatsApp não abre. No site, este botão abriria a conversa com a mensagem <b id="toastText"></b></p>
+  <code id="toastUrl"></code>
+  <div class="row">
+    <button class="copy-btn" type="button" id="toastCopy">Copiar link</button>
+    <button class="copy-btn" type="button" id="toastClose">Fechar</button>
+  </div>
+</div>
+
+<script src="/index2/home.js"></script>
+</body>
+</html>
