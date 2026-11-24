@@ -255,11 +255,25 @@
         ]
       ],
       "pictograma": "dome",
-      "fotos": [],
+      "fotos": [
+        {
+          "arquivo": "1.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-01/VIP_5232_SD_IA_FRONTAL_0.png"
+        },
+        {
+          "arquivo": "2.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-01/VIP_5232_SD_IA_DIREITA_0.png"
+        },
+        {
+          "arquivo": "3.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2025-01/VIP_5232_SD_IA_ESQUERDA_0.png"
+        }
+      ],
       "fonte": [
         "https://backend.intelbras.com/sites/default/files/2024-12/Datasheet%20%20-%20VIP%205232%20SD%20IA%20G2%20-%20V3.pdf",
         "https://www.intelbras.com/pt-br/camera-ip-speed-dome-com-32x-de-zoom-optico-vip-5232-sd-ia-g2"
-      ]
+      ],
+      "og": "og.jpg"
     },
     {
       "slug": "nvr-32-canais-invd-5232-16p",
@@ -402,12 +416,18 @@
         ]
       ],
       "pictograma": "face",
-      "fotos": [],
+      "fotos": [
+        {
+          "arquivo": "1.webp",
+          "fonte": "https://backend.intelbras.com/sites/default/files/2024-11/01%20Frontal.001_Reconhecimento.png"
+        }
+      ],
       "fonte": [
         "https://backend.intelbras.com/sites/default/files/2026-04/Datasheet%20SS%203542%20MF.pdf",
         "https://www.intelbras.com/pt-br/controlador-de-acesso-facial-com-biometria-digital-ss-3542-mf"
       ],
-      "destaque": true
+      "destaque": true,
+      "og": "og.jpg"
     },
     {
       "slug": "controlador-facial-ss-3541-mf-lite",

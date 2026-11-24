@@ -28,7 +28,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Gravador NVR 32 canais com 16 PoE
 - Intelbras iNVD 5232-16P
 - 32 IP · 16 (802.3af/at)
-- Imagem ilustrativa
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - até 10.000 · IP55 (interno e externo)
@@ -102,7 +101,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
-- Imagem ilustrativa
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -128,7 +126,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
-- Imagem ilustrativa
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -178,7 +175,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Precisa instalar?
 - Instalamos em Petrolina, Juazeiro, Dormentes e região. Chame no WhatsApp.
 - Mais controladores faciais
-- Imagem ilustrativa
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - até 10.000 · IP55 (interno e externo)
@@ -190,7 +186,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Controle de acesso
-- Imagem ilustrativa
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - Abre a porta pelo rosto, digital, cartão, QR Code ou senha. Para áreas internas e externas, com tela de 4,3 polegadas.
@@ -233,7 +228,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Controladores de acesso por reconhecimento facial para portaria, empresa e condomínio.
 - controladores faciais
 - 2
-- Imagem ilustrativa
 - Controlador facial interno e externo
 - Intelbras SS 3542 MF
 - até 10.000 · IP55 (interno e externo)
@@ -285,7 +279,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Câmera bullet 4 MP com IR de 40 m
 - Intelbras VIP 5440 IA
 - 4 MP (2688×1520) · 3,6 mm fixa
-- Imagem ilustrativa
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -331,7 +324,6 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Câmera dome Full Color 2 MP
 - Intelbras VIP 3230 D FC+ IA
 - 2 MP (1920×1080) · 2,8 mm fixa
-- Imagem ilustrativa
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - 2 MP (1080p) · 32x
@@ -343,7 +335,7 @@ Gerado por `loja/gerar.py --texto`. Para o dono revisar; não é fonte, não edi
 - Loja
 - /
 - Câmeras e gravadores
-- Imagem ilustrativa
+- 1 / 3
 - Câmera speed dome com zoom 32x
 - Intelbras VIP 5232 SD IA G2
 - Câmera giratória Full HD com zoom óptico de 32x e rastreio automático, para ambientes internos e externos.
