@@ -1,8 +1,13 @@
 # .githooks/config — this project's answers (the factory never overwrites this file).
 
-# The blog suite, run through pytest so check-red-green can read per-case JUnit (it cannot
-# read unittest's exit code per case). `{dir}` is the app directory being tested (blog/): the
-# gate builds a throwaway worktree of the base commit and expands it there. pytest collects the
-# unittest classes unchanged; cwd on sys.path makes `import app` work. Needs Docker for the
-# nginx and image-permission probes (~30 s). The loja suite is not on master yet: blog only.
+# The blog and the loja suites, run through pytest so check-red-green can read per-case JUnit (it
+# cannot read unittest's exit code per case). pytest collects the unittest classes unchanged; cwd on
+# sys.path makes `import app` / `import gerar` work. `{dir}` is the app directory the branch changed
+# tests in (blog/ or loja/): the gate builds a throwaway worktree of the base commit and expands it
+# there, so one app-agnostic command serves both. Needs Docker for the blog's nginx and image-permission
+# probes and the loja's nginx probe (~30 s).
+#
+# One limit lives in the foundation tool, not here: a push that changes tests in BOTH apps answers
+# `unknown: tests changed in more than one app`. TEST_DIR cannot fix it (it pins one app and blinds the
+# other), so keep blog and loja changes on separate branches. test_portao_red_green.py guards this file.
 TEST_CMD="cd {dir} && uv run --with pytest python -m pytest -q -p no:cacheprovider"
