@@ -35,10 +35,6 @@ class Validacao(unittest.TestCase):
         for t in trechos:
             self.assertIn(t, "\n".join(erros))
 
-    # @covers-existing: the positive control of the refusals below; master accepted this data too
-    def test_a_line_with_photo_file_source_and_alt_is_accepted(self):
-        self.assertEqual(self.erros(dados()), [])
-
     def test_a_line_without_a_scene_photo_is_refused(self):
         d = dados()
         del d["linhas"][CAM]["ambiente"]
@@ -96,6 +92,10 @@ class Validacao(unittest.TestCase):
         d = dados()
         d["linhas"][CAM]["ambiente"] = "foto.webp"
         self.assertRecusa(d, f"linhas.{CAM}.ambiente")
+
+    # @covers-existing: the positive control of the refusals above; master accepted this data too
+    def test_a_line_with_photo_file_source_and_alt_is_accepted(self):
+        self.assertEqual(self.erros(dados()), [])
 
 
 class TileDaInicio(unittest.TestCase):
