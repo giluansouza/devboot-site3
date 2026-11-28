@@ -64,6 +64,27 @@
     }
   }
 
+  /* ---------- Click-to-play field videos (poster first; nothing downloads until the visitor asks) ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-video]'), function (fig) {
+    var v = fig.querySelector('video'), b = fig.querySelector('.play'), want = false;
+    function name() { return fig.querySelector('figcaption').textContent; }
+    function apply() {
+      var on = want && fig._vis !== false && !document.hidden;
+      if (on) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
+    }
+    b.addEventListener('click', function () {
+      if (!v.getAttribute('src')) v.src = v.getAttribute('data-src');
+      want = !want;
+      fig.classList.toggle('is-playing', want);
+      b.setAttribute('aria-label', (want ? 'Pausar o vídeo: ' : 'Reproduzir o vídeo: ') + name());
+      apply();
+    });
+    document.addEventListener('visibilitychange', apply);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { fig._vis = en[0].isIntersecting; apply(); }, { threshold: 0.1 }).observe(fig);
+    }
+  });
+
   /* ---------- Hero video: wide screens, no reduced motion, no data saver; pauses when off screen ---------- */
   var video = $('.hero-video'), vctl = $('.vctl');
   var wide = window.matchMedia('(min-width: 960px)');
