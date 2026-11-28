@@ -10,6 +10,12 @@
 
 **In one line:** what this is, only so an agent recognises what it is touching.
 
+## Where the product is planned
+
+Product definitions live in ~/onedrive/devboot/idea/ (synced with OneDrive). Before a task, read
+its AGENTS.md, estado/AGORA.md, estado/QUADRO.md and producao/; this repo's folder is site-devboot/.
+When a task ends, record it in estado/AGORA.md as the idea's AGENTS.md says.
+
 ## Traps
 
 What looks fine here and is not. Each line earns its place by naming a defect it prevents,
