@@ -30,7 +30,7 @@
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
 <div class="proto" role="note">
-  <span><b>Prévia — para revisão.</b> Onde aparece <span class="q">[falta]</span>, depende de material ou decisão do dono.</span>
+  <span>Prévia — dados e textos ilustrativos</span>
   <a class="proto-a" href="/previa/">Página inicial da Devboot</a>
 </div>
 
@@ -42,6 +42,7 @@
   </a>
   <nav class="bar-nav" aria-label="Atalhos">
     <a href="#demonstracao">Demonstração</a>
+    <a href="#confianca">Confiança</a>
     <a href="#piloto">Piloto</a>
   </nav>
   <button class="theme" type="button" aria-label="Tema: automático. Alternar tema.">
@@ -53,6 +54,7 @@
 <main id="conteudo">
 
   <section class="hero" id="topo">
+    <p class="eyebrow">AI-Native Business OS</p>
     <p class="lockup" aria-label="Devboot One"><span class="lk-a" aria-hidden="true">Devboot</span><span class="lk-b" aria-hidden="true">One.</span></p>
     <h1>O sistema que <em>se adapta</em> à sua empresa.</h1>
     <p class="lead">Estamos criando um sistema de gestão em que você pode pedir o que precisa em linguagem natural, ver a resposta com os dados da operação e confirmar ações antes da execução.</p>
@@ -74,7 +76,6 @@
           <p>“Quais contas vencem esta semana?” é um exemplo do que você pode perguntar.</p>
         </div>
         <div class="scene" role="group" aria-label="Demonstração, passo 1">
-          <p class="seal">Ilustração · sem dados reais</p>
           <p class="bub bub-u">Quais contas vencem esta semana?</p>
           <p class="dots" aria-hidden="true"><i></i><i></i><i></i></p>
         </div>
@@ -87,17 +88,18 @@
           <p>A demonstração organiza a resposta por vencimento e valor em uma visão que você pode conferir.</p>
         </div>
         <div class="scene" role="group" aria-label="Demonstração, passo 2">
-          <p class="seal">Ilustração · sem dados reais</p>
           <p class="bub bub-u">Quais contas vencem esta semana?</p>
           <table class="tbl">
-            <caption class="sr">Contas da semana, por vencimento e valor. Campos de exemplo, sem dados reais.</caption>
+            <caption class="sr">Contas da semana, por vencimento e valor. Valores ilustrativos, sem dados reais.</caption>
             <thead><tr><th scope="col">Vencimento</th><th scope="col">Conta</th><th scope="col" class="r">Valor</th></tr></thead>
             <tbody>
-              <tr><td class="ph">dd/mm</td><td class="ph">Nome da conta</td><td class="ph r">R$ —</td></tr>
-              <tr><td class="ph">dd/mm</td><td class="ph">Nome da conta</td><td class="ph r">R$ —</td></tr>
-              <tr><td class="ph">dd/mm</td><td class="ph">Nome da conta</td><td class="ph r">R$ —</td></tr>
+              <tr><td>30/11</td><td>Aluguel</td><td class="r">R$ 2.700,00</td></tr>
+              <tr><td>01/12</td><td>Fornecedor</td><td class="r">R$ 1.850,00</td></tr>
+              <tr><td>03/12</td><td>Internet e serviços</td><td class="r">R$ 280,00</td></tr>
             </tbody>
+            <tfoot><tr><th scope="row" colspan="2">Total</th><td class="r">R$ 4.830,00</td></tr></tfoot>
           </table>
+          <p class="bub bub-b">3 contas vencem nos próximos 5 dias. Seu saldo cobre todas.</p>
         </div>
       </li>
 
@@ -108,10 +110,10 @@
           <p>Quando uma ação exigir confirmação, o sistema mostra o que será feito e pede a sua aprovação.</p>
         </div>
         <div class="scene" role="group" aria-label="Demonstração, passo 3">
-          <p class="seal">Ilustração · sem dados reais</p>
           <div class="confirm">
             <p class="k">O que será feito</p>
-            <p class="ph">Descrição da ação, com a conta e o valor</p>
+            <p class="act-do">Dar baixa no aluguel de novembro</p>
+            <dl class="kv"><dt>Valor</dt><dd>R$ 2.700,00</dd><dt>Vencimento</dt><dd>30/11</dd><dt>Conta</dt><dd>Inter</dd></dl>
             <div class="row">
               <button class="btn btn-p btn-sm" type="button" data-demo="fim">Aprovar</button>
               <button class="btn btn-s btn-sm" type="button" data-demo="fim">Cancelar</button>
@@ -123,6 +125,70 @@
     </ol>
   </section>
 
+  <section class="sec band" id="adaptativo" aria-labelledby="ad-h">
+    <div class="wrap">
+      <header class="sec-h rv"><p class="eyebrow-s">Painel adaptativo</p><h2 id="ad-h">O painel muda<br>com o mês.</h2><p>No início, as contas. No meio, o orçamento. No fim, o fechamento. Escolha um dia e veja a tela se reorganizar.</p></header>
+      <div class="segs rv" data-segs="days" role="group" aria-label="Dia do mês"></div>
+      <div class="panel rv" data-panel="days" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="generativo" aria-labelledby="ge-h">
+    <div class="wrap">
+      <header class="sec-h rv"><p class="eyebrow-s">Interface generativa</p><h2 id="ge-h">Peça a tela.<br>Ela aparece.</h2><p>Ninguém programou essas telas. A IA escolhe componentes testados, o sistema valida as permissões e você salva o que quiser no painel.</p></header>
+      <div class="segs rv" data-segs="gen" role="group" aria-label="Pedido de exemplo"></div>
+      <div class="panel panel-dark rv" data-panel="gen" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="sec band" id="agente" aria-labelledby="ag-h">
+    <div class="wrap">
+      <header class="sec-h rv"><p class="eyebrow-s">Agente operacional</p><h2 id="ag-h">A IA pede.<br>O sistema executa.</h2><p>Nada sensível acontece sem a sua confirmação. Experimente.</p></header>
+      <div class="agent rv">
+        <div class="agent-chat">
+          <p class="bub bub-u">Dá baixa no aluguel de novembro.</p>
+          <p class="bub bub-b">Encontrei: <b>Aluguel · R$ 2.700,00</b>, vence hoje, conta Inter. Confirma a baixa?</p>
+          <div class="agent-act" data-agent="ask"><button class="btn btn-p btn-sm" type="button" data-agent-go="ok">Confirmar</button></div>
+          <div class="agent-act" data-agent="done" hidden>
+            <p class="bub bub-ok">Baixa registrada. Saldo atualizado e ação gravada no log de auditoria.</p>
+            <button class="btn btn-s btn-sm" type="button" data-agent-go="reset">Recomeçar</button>
+          </div>
+        </div>
+        <ol class="steps" data-steps></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="setores" aria-labelledby="se-h">
+    <div class="wrap">
+      <header class="sec-h rv"><p class="eyebrow-s">Um motor. Vários negócios.</p><h2 id="se-h">Fala a língua<br>de cada operação.</h2><p>Serviços, produção, comércio. Cada novo negócio deixa o motor mais capaz.</p></header>
+      <div class="segs rv" data-segs="seg" role="group" aria-label="Tipo de negócio"></div>
+      <div class="panel rv" data-panel="seg" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="sec band" id="confianca" aria-labelledby="co-h">
+    <div class="wrap">
+      <h2 id="co-h" class="rv">Feito para confiar.</h2>
+      <div class="trust">
+        <article class="rv"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><h3>Permissões no sistema</h3><p>Quem pode o quê é decidido pelas regras do sistema, nunca pelo modelo de IA. Os dados de cada empresa ficam isolados.</p></article>
+        <article class="rv"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><h3>Confirmação e auditoria</h3><p>Ações sensíveis pedem o seu sim. Cada operação fica registrada com quem pediu, o que mudou e quando.</p></article>
+        <article class="rv"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 11l7.4-3.8M8.3 13l7.4 3.8"/></svg><h3>Livre de fornecedor</h3><p>O One troca de modelo de IA conforme custo e qualidade, medidos num benchmark próprio. Sua operação não fica presa a ninguém.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="whatsapp" aria-labelledby="wa-h">
+    <div class="wrap wa">
+      <header class="sec-h rv"><p class="eyebrow-s">Onde você já está</p><h2 id="wa-h">No navegador.<br>E no WhatsApp.</h2><p>Mande um áudio com a despesa, peça o resumo do caixa ou receba um alerta quando algo sair do previsto. Sem instalar nada.</p></header>
+      <div class="phone rv">
+        <p class="wb wb-u">Gastei 280 no supermercado, no cartão Inter.</p>
+        <p class="wb">Registrado: R$ 280,00 · Supermercado · Cartão Inter. Você já usou 74% do orçamento dessa categoria.</p>
+        <p class="wb">Aviso: a fatura do cartão fecha em 3 dias.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="pilot" id="piloto" aria-labelledby="pilot-h">
     <h2 id="pilot-h" class="rv">Quer testar o Devboot One na sua empresa?</h2>
     <p class="rv">Conte qual rotina você quer melhorar. A Devboot avalia com você se ela faz sentido para o piloto.</p>
@@ -131,8 +197,8 @@
       <button class="btn btn-s" type="button" data-wa="one">Falar com a Devboot</button>
     </div>
     <p class="alt rv">
-      <button class="ul" type="button" data-email>Falar por e-mail</button>
-      <span class="q">[falta] e-mail da Devboot (D4)</span>
+      <a class="ul" href="mailto:contato@devboot.com.br">Falar por e-mail</a>
+      <span class="mail">contato@devboot.com.br</span>
       <button class="ul" type="button" data-chat="investidor">Sou investidor</button>
     </p>
   </section>
@@ -141,6 +207,8 @@
 
 <footer class="foot">
   <a class="ul" href="/previa/">← Página inicial da Devboot (prévia)</a>
+  <a class="ul" href="/privacidade/">Política de privacidade</a>
+  <p>Devboot One · um produto da Devboot</p>
 </footer>
 
 <div class="dock">
