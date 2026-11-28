@@ -1,0 +1,2 @@
+schibsted-grotesk-latin.woff2   Schibsted Grotesk, variable 400-800, latin subset as served by Google Fonts
+                                (c) The Schibsted Grotesk Project Authors. SIL Open Font License 1.1 (https://openfontlicense.org)
