@@ -102,7 +102,7 @@ the next `push-standards` overwrites the change. Fix them in the factory and red
 | `visual-proposal` | before the first screen is coded, or a redesign — one page the owner approves, phone first, before any interface work |
 | `writing-plans` | more than one step, more than one file, or it outlives the session |
 | `parallel-work` | splitting across subagents or worktrees |
-| `test-driven-development` | **before any implementation.** Red-green is required here. It is *checked* only where `.githooks/config` declares `TEST_CMD` — run `~/dev/foundation/tools/check-red-green .` to see whether this project is one of them |
+| `test-driven-development` | **before any implementation.** Red-green is required here. It is *checked* only where `.githooks/config`, committed on the default branch, declares `TEST_CMD` — every push says which: `red-green ⏭️ no TEST_CMD` means this project is not one of them |
 | `gate-authoring` | writing anything that **refuses** — a convention test, a lint rule, a release check |
 | `systematic-debugging` | something is broken and the cause is unknown, or the second fix failed |
 | `shipping-to-production` | before any deploy, and whenever production is wrong |
@@ -221,10 +221,11 @@ what it should do, so it passes on the broken version too.
 That is not a style argument here. Every test passed while paying customers could not see what they
 had paid for — the suite was green about the wrong things.
 
-**The gate installs only where `.githooks/config` declares `TEST_CMD`.** Measured across this park on
-29 Aug 2026: not one project had it, so `check-red-green` had never run as a gate anywhere while this
-very block said it was checked. If yours is unset, the requirement is on your honour until you set
-it — `~/dev/foundation/tools/check-red-green .` says which you are.
+**The gate runs only where `.githooks/config`, committed on the default branch, declares `TEST_CMD`.**
+Measured across this park on 29 Aug 2026: not one project had it, so `check-red-green` had never run
+as a gate anywhere while this very block said it was checked. If yours is unset — or set in a file
+nobody committed — every push says red-green is unverified, and the requirement is on your honour
+until you commit it — the push's own `red-green` line says which you are.
 
 The mechanical half:
 

@@ -97,8 +97,10 @@ that said "there is no deploy" kept 105 commits unpushed on personal-finance (18
 
 **Before you merge a branch**
 1. Run the project's own push gates on the branch, as its push will send it:
-   `~/dev/foundation/tools/merge-gates <worktree>`. It feeds `.githooks/pre-push` the ref line git
-   would, so the merge checks neither less nor more than the push.
+   `~/dev/foundation/tools/merge-gates <worktree>`. It feeds the push hook git runs in that
+   checkout the ref line git would, so the merge checks no less than the push — and it exits 3
+   where the push would let a gate that could not answer go by, and in a repository that does
+   not run the factory's hook yet (it names the `install-hooks` command).
 2. `❌` returns the branch. `⏭️ could NOT run` is not a pass: make it run, or write `unknown` in
    the ruling. An author's "could not run it here" is never an approval.
 3. A fix travels with its test. Red-green compares against origin, so a test pushed after its fix
