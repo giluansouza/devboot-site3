@@ -5,14 +5,13 @@
   'use strict';
   var root = document.documentElement;
   var WA = '5587991402037';
-  /* Messages: plan/context only (contexto-devboot-ai, "Etapa dos links"). "software" and "automacao" have no
-     line of their own yet, so they use the general one and the toast says so. */
+  /* Messages: plan/context only (contexto-devboot-ai, "Etapa dos links"). "software", "automacao" and
+     "seguranca" have no line of their own yet, so they fall back to the general one below. */
   var MSG = {
     devboot: 'Olá! Vim pelo site e gostaria de falar com a Devboot.',
     one: 'Olá! Gostaria de saber mais sobre o Devboot One.',
     greenvision: 'Olá! Gostaria de saber como funciona a GreenVision.'
   };
-  var GENERAL_FALLBACK = { software: 1, automacao: 1 };
 
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function calm() { return root.getAttribute('data-motion') === 'menos'; }
@@ -111,7 +110,7 @@
   });
 
   /* ---------- WhatsApp: in the prototype, show the composed link instead of opening it ---------- */
-  var toast = $('.toast'), tlink = $('.toast-link'), tgen = $('.toast-gen'), tclose = $('.toast-x'), ttimer = 0, lastBtn = null;
+  var toast = $('.toast'), tlink = $('.toast-link'), tclose = $('.toast-x'), ttimer = 0, lastBtn = null;
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-wa]');
     if (!b) return;
@@ -121,7 +120,6 @@
     var key = b.getAttribute('data-wa');
     var msg = MSG[key] || MSG.devboot;
     tlink.textContent = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
-    tgen.hidden = !GENERAL_FALLBACK[key];
     toast.hidden = false;
     clearTimeout(ttimer);
     ttimer = setTimeout(function () { toast.hidden = true; }, 9000);

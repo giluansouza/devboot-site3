@@ -39,7 +39,7 @@
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
-<div class="proto" role="note"><b>Prévia — para revisão.</b> <span>Não indexada. Onde aparece <span class="q">[pergunta]</span> ou <span class="q">[falta]</span>, falta uma informação do dono.</span></div>
+<div class="proto" role="note">Prévia — dados e textos ilustrativos</div>
 
 <header class="bar">
   <a class="brand" href="#topo" aria-label="Devboot, início">
@@ -105,12 +105,18 @@
     <div class="prods-grid">
       <article class="prod rise">
         <figure class="prod-fig">
-          <div class="gap gap--prod">
-            <div class="gap-in">
-              <p class="gap-l">imagem pendente</p>
-              <p class="gap-t">Aqui entra uma tela real do Devboot One.</p>
-              <p><span class="q">[falta]</span> O dono escolhe o fluxo do Finanças (D1) e envia a captura. Sem tela real, não há imagem.</p>
+          <div class="demo one-demo" role="group" aria-label="Exemplo: pergunta em linguagem natural e resposta organizada por vencimento e valor">
+            <p class="od-ask">Quais contas vencem esta semana?</p>
+            <div class="od-ans">
+              <p class="od-h">Contas a pagar · 30/11 a 04/12</p>
+              <ul class="od-rows">
+                <li><span>30/11</span><span>Aluguel da sala</span><b>R$ 3.200,00</b></li>
+                <li><span>02/12</span><span>Internet e telefonia</span><b>R$ 389,90</b></li>
+                <li><span>04/12</span><span>Fornecedor de equipamentos</span><b>R$ 4.870,00</b></li>
+              </ul>
+              <p class="od-tot"><span>Total da semana</span><b>R$ 8.459,90</b></p>
             </div>
+            <p class="od-note">Ilustração · valores de exemplo</p>
           </div>
           <figcaption>
             <ul class="seals" aria-label="Estágio">
@@ -133,6 +139,7 @@
               <source media="(max-width: 699px)" srcset="/previa/assets/img/gv-rebanho-600.webp" width="600" height="375">
               <img src="/previa/assets/img/gv-rebanho-900.webp" alt="Rebanho de ovinos caminhando em fila por um carreiro de terra, entre cercas, em um dia de céu aberto" width="900" height="563" loading="lazy">
             </picture>
+            <p class="gv-res"><span class="gv-k">Contagem ao vivo</span><b class="gv-n">2,6% abaixo</b><span class="gv-s">da conferência manual · 617 passagens registradas à mão</span></p>
           </div>
           <figcaption>
             <ul class="seals" aria-label="Estágio">
@@ -212,7 +219,6 @@
           <div class="wk-row">
             <span class="wk-name">FrotasPro</span>
             <span class="wk-desc">Gestão de frota: imagem ao vivo, motorista e custo por quilômetro</span>
-            <span class="wk-gap">tela a enviar</span>
           </div>
         </li>
       </ul>
@@ -234,13 +240,16 @@
       <div class="beat-copy">
         <p class="blk">Mapeamos onde a equipe repete trabalho e avaliamos o que pode virar uma integração, um relatório ou um fluxo de aprovação.</p>
       </div>
-      <figure class="media gap mask">
-        <div class="gap-in">
-          <p class="gap-l">imagem pendente</p>
-          <p class="gap-t">Aqui entra um caso real de automação.</p>
-          <p><span class="q">[pergunta]</span> O dono envia: o que foi automatizado, para quem, e uma foto ou tela do resultado. Sem caso real, não há imagem.</p>
+      <figure class="media">
+        <div class="demo auto-demo" role="group" aria-label="Exemplo: pedido de compra que segue por um fluxo de aprovação">
+          <p class="ad-h"><span>Pedido de compra · nº 1042</span><b>R$ 2.350,00</b></p>
+          <ol class="ad-steps">
+            <li class="done"><span class="ad-dot" aria-hidden="true">✓</span><span>Pedido recebido<small>hoje, 08:52</small></span></li>
+            <li class="done"><span class="ad-dot" aria-hidden="true">✓</span><span>Aprovado pelo gerente<small>hoje, 09:14</small></span></li>
+            <li class="now"><span class="ad-dot" aria-hidden="true">3</span><span>Lançamento no financeiro<small>em andamento</small></span></li>
+          </ol>
         </div>
-        <figcaption>Espaço reservado · nada desenhado</figcaption>
+        <figcaption>Exemplo de fluxo de aprovação</figcaption>
       </figure>
     </div>
 
@@ -249,7 +258,6 @@
       <div class="beat-copy">
         <h3 class="say-s" data-split>IA aplicada aos processos da sua empresa</h3>
         <p class="blk">A Devboot está desenvolvendo um motor de agentes para interpretar pedidos e acionar funções autorizadas nos sistemas. O primeiro uso em teste é o financeiro da própria Devboot.</p>
-        <p class="note"><span class="q">[pergunta D6]</span> Este bloco é o texto opcional do plano (§6). Só vale se o Dev aprovar a apresentação pública.</p>
       </div>
     </div>
 
@@ -258,9 +266,12 @@
     </div>
   </section>
 
-  <!-- Faixa "Também fazemos" · decisão do Dev (28/11): Segurança tem página própria. O plano não traz texto para a faixa. -->
+  <!-- Faixa "Também fazemos" · decisão do Dev (28/11): Segurança tem página própria. Texto ilustrativo. -->
   <section class="also" aria-labelledby="h-tambem">
-    <h2 class="also-t" id="h-tambem"><span class="q">[falta copy]</span> título da faixa (ideia do dono: “Também fazemos”)</h2>
+    <div class="also-c">
+      <h2 class="also-t" id="h-tambem">Também fazemos</h2>
+      <p class="also-p">Software e automação sob medida, a partir da sua rotina. E projetos de segurança eletrônica e controle de acesso.</p>
+    </div>
     <ul class="also-l">
       <li><a class="btn btn--line" href="#software">Software e automação <span class="arw" aria-hidden="true">→</span></a></li>
       <li><a class="btn btn--line" href="/seguranca/">Segurança eletrônica <span class="arw" aria-hidden="true">→</span></a></li>
@@ -329,7 +340,7 @@
 <div class="toast" role="status" aria-live="polite" hidden>
   <p class="toast-h">Na versão publicada, isto abre uma conversa com:</p>
   <code class="toast-link"></code>
-  <p class="toast-note"><span class="toast-prov">número provisório (W1)</span><span class="toast-gen" hidden> · [falta] mensagem específica deste assunto: usa a geral</span></p>
+  <p class="toast-note"><span class="toast-prov">número provisório (W1)</span></p>
   <button class="toast-x" type="button">Fechar</button>
 </div>
 </body>
