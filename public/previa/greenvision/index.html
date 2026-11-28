@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>GreenVision · prévia para revisão</title>
-<meta name="description" content="Prévia para revisão da página da GreenVision. Não publicada.">
+<title>GreenVision</title>
+<meta name="description" content="A GreenVision usa câmeras comuns para acompanhar a rotina de ovinos e caprinos.">
 <link rel="icon" type="image/webp" href="assets/logo-mark.webp">
 <script>
 /* Before first paint: theme (site-wide key devboot-tema: 'escuro' | 'claro' | absent = follow the system)
@@ -27,7 +27,7 @@
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
-<div class="banner" role="note">Prévia — para revisão</div>
+<div class="banner" role="note">Prévia — dados e textos ilustrativos</div>
 
 <div class="top">
 <header class="bar">
@@ -72,11 +72,30 @@
       <h2 id="h-contagem" class="rv">A contagem, medida em campo</h2>
       <p class="sec-lede rv">Veja como a câmera registra a passagem dos animais e como a contagem é comparada com a revisão manual do vídeo.</p>
 
-      <div class="gap rv" role="group" aria-labelledby="gap-t">
-        <p class="gap-tag" id="gap-t"><span>[falta]</span> Material de campo da contagem</p>
-        <p class="gap-p">O dono escolhe o vídeo ou a captura que pode aparecer aqui (D3). Até lá esta seção fica sem placar e sem imagem genérica.</p>
-        <p class="gap-cap"><span class="gap-tag-s">[pendente D3 · legenda condicionada à liberação]</span>
-          Em um teste com 617 passagens registradas à mão, a contagem ao vivo ficou 2,6% abaixo da conferência manual.</p>
+      <div class="proof">
+        <figure class="media rv" data-video>
+          <img src="assets/contagem-800.webp" srcset="assets/contagem-800.webp 800w, assets/contagem-1280.webp 1280w" sizes="(min-width: 960px) 56vw, 100vw"
+               width="1280" height="720" alt="Câmera sobre o corredor de passagem, com caixas de detecção marcando os animais e uma linha de contagem" loading="lazy" decoding="async">
+          <video muted loop playsinline preload="none" tabindex="-1" data-src="assets/contagem.mp4" aria-label="Vídeo da detecção dos animais na passagem"></video>
+          <button class="play" type="button" aria-label="Reproduzir o vídeo da contagem"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path class="i-p" d="M8 5.5v13l11-6.5z" fill="currentColor"/><path class="i-s" d="M7 5.5h3.5v13H7zM13.5 5.5H17v13h-3.5z" fill="currentColor"/></svg></button>
+          <figcaption class="chip">Detecção sobre vídeo de campo</figcaption>
+        </figure>
+
+        <div class="panel rv">
+          <p class="panel-k">Teste de campo · 08 a 10/06/2026</p>
+          <p class="big"><span class="big-n">−2,6%</span><span class="big-l">da contagem ao vivo em relação à conferência manual</span></p>
+          <div class="rows">
+            <div class="row">
+              <p class="row-l"><span>Conferência manual</span><strong>617 passagens</strong></p>
+              <div class="meter"><span class="meter-fill" style="width:100%"></span></div>
+            </div>
+            <div class="row">
+              <p class="row-l"><span>Contagem da câmera</span><strong>601 passagens</strong></p>
+              <div class="meter"><span class="meter-fill" style="width:97.4%"></span></div>
+            </div>
+          </div>
+          <p class="panel-cap">Em um teste com 617 passagens registradas à mão, a contagem ao vivo ficou 2,6% abaixo da conferência manual.</p>
+        </div>
       </div>
 
       <ol class="stages">
@@ -84,18 +103,29 @@
           <span class="node" aria-hidden="true"></span>
           <h3><span class="st-name">Contagem</span><span class="sr"> · </span><span class="seal seal-field">medida em campo</span></h3>
           <p>Acompanhe a demonstração de contagem na passagem do rebanho.</p>
+          <p class="metric"><strong>97%</strong> das 1.113 passagens marcadas à mão foram encontradas ao reprocessar o vídeo.</p>
         </li>
         <li class="stage rv">
           <span class="node" aria-hidden="true"></span>
           <h3><span class="st-name">Cocho</span><span class="sr"> · </span><span class="seal seal-test">em teste</span></h3>
           <p>Estamos medindo a presença do lote no cocho ao longo dos tratos.</p>
+          <p class="metric"><strong>7 de 8</strong> sessões com a hora do trato identificada a até 5 minutos.</p>
         </li>
         <li class="stage rv">
           <span class="node" aria-hidden="true"></span>
           <h3><span class="st-name">Alimentação automatizada</span><span class="sr"> · </span><span class="seal seal-eval">em avaliação</span></h3>
           <p>Estamos avaliando como integrar o monitoramento a equipamentos de alimentação.</p>
+          <p class="metric"><strong>Uma pessoa aprova</strong> cada trato antes de o equipamento agir.</p>
         </li>
       </ol>
+
+      <figure class="media media-wide rv" data-video>
+        <img src="assets/cocho-800.webp" srcset="assets/cocho-800.webp 800w, assets/cocho-1508.webp 1508w" sizes="(min-width: 1200px) 72rem, 100vw"
+             width="1508" height="680" alt="Vista de cima do cocho, com máscaras de detecção sobre os animais se alimentando" loading="lazy" decoding="async">
+        <video muted loop playsinline preload="none" tabindex="-1" data-src="assets/cocho.mp4" aria-label="Vídeo da detecção dos animais no cocho"></video>
+        <button class="play" type="button" aria-label="Reproduzir o vídeo do cocho"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path class="i-p" d="M8 5.5v13l11-6.5z" fill="currentColor"/><path class="i-s" d="M7 5.5h3.5v13H7zM13.5 5.5H17v13h-3.5z" fill="currentColor"/></svg></button>
+        <figcaption class="chip">Cocho · em teste</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -116,8 +146,8 @@
 
 <footer class="foot">
   <div class="wrap foot-in">
-    <a class="back" href="/previa/">Voltar à prévia da Devboot</a>
-    <p>Prévia — para revisão. Imagens e identidade do site greenvision.agr.br.</p>
+    <span class="foot-brand"><img src="assets/logo-mark.webp" width="192" height="106" alt=""><span>GreenVision</span></span>
+    <p>Uma frente da <a href="/previa/">Devboot</a>. © 2026 GreenVision.</p>
   </div>
 </footer>
 

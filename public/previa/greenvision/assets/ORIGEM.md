@@ -12,5 +12,7 @@ Baixados em 2026-11-28 e recomprimidos para a web; nada é carregado do site ori
 
 Paleta conferida no CSS/HTML do mesmo site: base `#0A0F0B`, floresta `#14270F`, folha `#669431`, lima `#9DBD3F`, claro `#E7EDDA`; tema claro do site: fundo `#F4F7EE`, texto `#1D2A16`, verde profundo `#3C612D`.
 
-Não usados (existem no site, mas a prova da contagem espera o dono escolher o material de campo, D3):
-`reel-counting.mp4`, `reel-counting-poster.jpg`, `confinamento.mp4`, `confinamento-poster.jpg`.
+| `contagem.mp4`, `contagem-800.webp`, `contagem-1280.webp` | https://greenvision.agr.br/greenvision/reel-counting.mp4 (1280×720, 2,5 s, 788 KB) e reel-counting-poster.jpg | vídeo sem recodificar; pôster em WebP. A filmagem traz a marca "CaprinoTech" e um contador ENTRADAS/SAÍDAS gravados no quadro |
+| `cocho.mp4`, `cocho-800.webp`, `cocho-1508.webp` | https://greenvision.agr.br/greenvision/confinamento.mp4 (1508×680, 14 s, 1,9 MB) e confinamento-poster.jpg | vídeo sem recodificar; pôster em WebP |
+
+Os vídeos de contagem e de cocho só são baixados quando o visitante toca em reproduzir.

@@ -54,11 +54,11 @@ a { color: inherit; }
 
 .wrap { width: 100%; max-width: 72rem; margin: 0 auto; padding: 0 var(--gut); }
 
-/* ---------- preview banner ---------- */
+/* ---------- preview banner: one discreet line ---------- */
 .banner {
-  background: #f8e9a1; color: #3a2f00; text-align: center;
-  font: 700 0.8125rem/1.2 var(--font); letter-spacing: .04em; text-transform: uppercase;
-  padding: 10px var(--gut);
+  background: var(--soft); color: var(--muted); text-align: center;
+  font: 600 0.75rem/1.2 var(--font); letter-spacing: .02em; padding: 8px var(--gut);
+  border-bottom: 1px solid var(--border);
 }
 
 /* ---------- top: bar over the hero (the hero is dark in both themes) ---------- */
@@ -130,16 +130,44 @@ a { color: inherit; }
 .sec h2 { color: var(--title); font-weight: 800; letter-spacing: -.025em; line-height: 1.08; font-size: clamp(1.75rem, 6.4vw, 3rem); text-wrap: balance; max-width: 22ch; }
 .sec-lede { max-width: 40rem; margin-top: 1rem; color: var(--muted); font-size: 1.0625rem; }
 
-/* the labelled gap: material the owner has not picked yet */
-.gap {
-  margin-top: 2rem; padding: 1.25rem; border: 2px dashed var(--border); border-radius: 18px;
-  background: var(--soft);
+/* proof: field video + result panel */
+.proof { display: grid; gap: 1.25rem; margin-top: 2rem; }
+.media { position: relative; margin: 0; overflow: hidden; border-radius: 18px; background: var(--media-bg); border: 1px solid var(--border); aspect-ratio: 16 / 9; isolation: isolate; }
+.media img, .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.media video { opacity: 0; }
+.media.is-playing video { opacity: 1; }
+.chip {
+  position: absolute; left: 12px; bottom: 12px; z-index: 2; padding: 6px 12px; border-radius: 10px;
+  background: rgba(10, 15, 11, .72); color: #dce7c6; font: 600 0.75rem/1.2 var(--mono);
 }
-.gap-tag { font: 700 0.9375rem/1.3 var(--font); color: var(--title); }
-.gap-tag span, .gap-tag-s { font-family: var(--mono); color: var(--accent); }
-.gap-p { margin-top: .5rem; color: var(--muted); }
-.gap-cap { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border); color: var(--text); }
-.gap-tag-s { display: block; margin-bottom: .25rem; font-size: 0.8125rem; font-weight: 600; }
+.play {
+  position: absolute; z-index: 3; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; padding: 0;
+  display: grid; place-items: center; border-radius: 50%; border: 2px solid rgba(231, 237, 218, .8);
+  background: rgba(10, 15, 11, .6); color: #f2f6ea; cursor: pointer;
+}
+.play:hover { background: rgba(10, 15, 11, .8); }
+.play:focus-visible { outline-color: var(--lime); }
+.play .i-s { display: none; }
+.is-playing .play { left: auto; top: auto; right: 12px; bottom: 12px; margin: 0; width: 44px; height: 44px; opacity: .85; }
+.is-playing .play .i-p { display: none; }
+.is-playing .play .i-s { display: block; }
+.media-wide { margin-top: 2.5rem; aspect-ratio: 1508 / 680; }
+
+.panel {
+  padding: 1.25rem; border-radius: 18px; border: 1px solid var(--border);
+  background: var(--surface); box-shadow: 0 18px 44px -30px rgba(20, 45, 32, .35);
+}
+.panel-k { font: 600 0.8125rem/1.3 var(--mono); color: var(--accent); }
+.big { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; margin-top: .75rem; }
+.big-n { color: var(--title); font-weight: 800; letter-spacing: -.04em; line-height: 1; font-size: clamp(3rem, 14vw, 4.5rem); font-variant-numeric: tabular-nums; }
+.big-l { color: var(--muted); font-size: 0.9375rem; line-height: 1.35; max-width: 16rem; }
+.rows { display: grid; gap: 14px; margin-top: 1.25rem; }
+.row-l { display: flex; justify-content: space-between; gap: 12px; font-size: 0.9375rem; color: var(--muted); }
+.row-l strong { color: var(--title); font-variant-numeric: tabular-nums; }
+.meter { height: 10px; margin-top: 6px; border-radius: 6px; background: var(--soft); overflow: hidden; }
+.meter-fill { display: block; height: 100%; border-radius: 6px; background: var(--leaf); transform-origin: left; }
+.row:first-child .meter-fill { background: var(--faint); opacity: .75; }
+.panel-cap { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text); font-size: 0.9375rem; }
 
 /* the three stages as one rail: contagem -> cocho -> alimentação */
 .stages { --rail: 2px; position: relative; list-style: none; margin: 2.5rem 0 0; padding: 0 0 0 2rem; display: grid; gap: 1.75rem; }
@@ -157,6 +185,8 @@ a { color: inherit; }
 .stage:nth-child(3) .node { border-style: dashed; border-color: var(--faint); }
 .stage h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; color: var(--title); font-size: 1.25rem; line-height: 1.25; font-weight: 800; letter-spacing: -.01em; }
 .stage p { margin-top: .5rem; max-width: 30rem; color: var(--muted); }
+.stage .metric { margin-top: .75rem; color: var(--text); font-size: 0.9375rem; }
+.stage .metric strong { display: block; color: var(--title); font-size: 1.75rem; line-height: 1.1; letter-spacing: -.02em; font-weight: 800; }
 .seal {
   display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px;
   font: 700 0.75rem/1 var(--font); letter-spacing: .03em; text-transform: uppercase; border: 2px solid var(--leaf);
@@ -177,8 +207,10 @@ a { color: inherit; }
 
 /* ---------- footer ---------- */
 .foot { padding: 1.75rem 0 2.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.875rem; }
-.foot-in { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-.foot .back { padding-left: 0; color: var(--title); }
+.foot-in { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.foot-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--title); font-weight: 700; }
+.foot-brand img { width: 44px; height: auto; }
+.foot a { display: inline-flex; align-items: center; min-height: 44px; color: var(--title); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- WhatsApp preview toast ---------- */
 .toast {
@@ -198,13 +230,18 @@ a { color: inherit; }
 @keyframes fillY { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes fillX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
+@keyframes growX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
 /* A: browsers with scroll-driven animations — the compositor runs it, no JS involved */
 .sd .rv { animation: rv linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+.sd .panel .meter-fill { animation: growX linear both; animation-timeline: view(); animation-range: entry 20% entry 80%; }
 .sd .stages::after { animation: fillY linear both; animation-timeline: view(); animation-range: entry 20% cover 45%; }
 
 /* B: the rest — IntersectionObserver adds .in once; the transition is the only motion */
 .js:not(.sd) .rv { opacity: 0; transform: translate3d(0, 18px, 0); transition: opacity .45s ease-out, transform .45s ease-out; }
 .js:not(.sd) .rv.in { opacity: 1; transform: none; }
+.js:not(.sd) .panel .meter-fill { transform: scaleX(0); transition: transform .6s ease-out .15s; }
+.js:not(.sd) .panel.in .meter-fill { transform: scaleX(1); }
 .js:not(.sd) .stages::after { transform: scaleY(0); transition: transform .7s ease-out; }
 .js:not(.sd) .stages.in::after { transform: scaleY(1); }
 
@@ -220,6 +257,7 @@ a { color: inherit; }
   .sec { padding: 5rem 0; }
   .sec-contact { padding: 6rem 0; }
   .vctl { bottom: 12px; }
+  .panel { padding: 1.75rem; }
 }
 @media (min-width: 960px) {
   .stages { margin-top: 3.5rem; padding: 2.25rem 0 0; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
@@ -230,12 +268,14 @@ a { color: inherit; }
   .js:not(.sd) .stages::after { transform: scaleX(0); transition-property: transform; }
   .js:not(.sd) .stages.in::after { transform: scaleX(1); }
   .foot-in { flex-direction: row; align-items: center; justify-content: space-between; }
+  .proof { grid-template-columns: 1.35fr 1fr; align-items: center; gap: 1.5rem; }
 }
 
 /* ---------- reduced motion: everything visible, nothing moves, no video ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rv, .sd .rv, .js:not(.sd) .rv { animation: none !important; opacity: 1 !important; transform: none !important; transition: none !important; }
+  .meter-fill, .sd .panel .meter-fill, .js:not(.sd) .panel .meter-fill { animation: none !important; transform: none !important; transition: none !important; }
   .stages::after, .sd .stages::after, .js:not(.sd) .stages::after { animation: none !important; transform: none !important; transition: none !important; }
   .hero-video { display: none; }
 }
