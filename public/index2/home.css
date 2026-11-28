@@ -29,8 +29,8 @@
   --base-hi: #dcdde1;
   --base-lo: #a9abb1;
   --shadow: rgba(10, 12, 20, 0.18);
-  --nav-bg: rgba(255, 255, 255, 0.84);
-  --dock-bg: rgba(29, 29, 31, 0.92);
+  --nav-bg: #ffffff;
+  --dock-bg: #1d1d1f;
   --dock-ink: #f5f5f7;
   --dock-on: #ffffff;
   --dock-on-ink: #1d1d1f;
@@ -48,7 +48,7 @@
   --nav-h: 52px;
   --safe-t: env(safe-area-inset-top, 0px);
   --safe-b: env(safe-area-inset-bottom, 0px);
-  --dock-room: calc(76px + var(--safe-b));
+  --dock-room: calc(68px + var(--safe-b));
   --radius-media: 22px;
   color-scheme: light;
 }
@@ -58,8 +58,8 @@
     --accent: #4da3ff; --cta: #f5f5f7; --on-cta: #000000; --mark: #4da3ff;
     --pending: #ffc964; --pending-bg: #2a2110;
     --bezel: #1a1a1c; --bezel-ring: rgba(255, 255, 255, 0.14); --base-hi: #4a4b50; --base-lo: #26272b;
-    --shadow: rgba(0, 0, 0, 0.6); --nav-bg: rgba(0, 0, 0, 0.78);
-    --dock-bg: rgba(245, 245, 247, 0.94); --dock-ink: #1d1d1f; --dock-on: #1d1d1f; --dock-on-ink: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.6); --nav-bg: #000000;
+    --dock-bg: #f5f5f7; --dock-ink: #1d1d1f; --dock-on: #1d1d1f; --dock-on-ink: #ffffff;
     --wm-light: none; --wm-dark: inline-block;
     color-scheme: dark;
   }
@@ -69,8 +69,8 @@
   --accent: #4da3ff; --cta: #f5f5f7; --on-cta: #000000; --mark: #4da3ff;
   --pending: #ffc964; --pending-bg: #2a2110;
   --bezel: #1a1a1c; --bezel-ring: rgba(255, 255, 255, 0.14); --base-hi: #4a4b50; --base-lo: #26272b;
-  --shadow: rgba(0, 0, 0, 0.6); --nav-bg: rgba(0, 0, 0, 0.78);
-  --dock-bg: rgba(245, 245, 247, 0.94); --dock-ink: #1d1d1f; --dock-on: #1d1d1f; --dock-on-ink: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.6); --nav-bg: #000000;
+  --dock-bg: #f5f5f7; --dock-ink: #1d1d1f; --dock-on: #1d1d1f; --dock-on-ink: #ffffff;
   --wm-light: none; --wm-dark: inline-block;
   color-scheme: dark;
 }
@@ -81,8 +81,8 @@
   --accent: #0b6b62; --cta: #0b6b62; --on-cta: #ffffff; --mark: #b86d14;
   --pending: #7a4a06; --pending-bg: #f6e3bf;
   --bezel: #0d1411; --bezel-ring: rgba(16, 32, 25, 0.1); --base-hi: #d5d9cf; --base-lo: #a3aa9d;
-  --shadow: rgba(16, 32, 25, 0.2); --nav-bg: rgba(241, 242, 236, 0.86);
-  --dock-bg: rgba(16, 32, 25, 0.93); --dock-ink: #e8eee7; --dock-on: #e8eee7; --dock-on-ink: #102019;
+  --shadow: rgba(16, 32, 25, 0.2); --nav-bg: #f1f2ec;
+  --dock-bg: #102019; --dock-ink: #e8eee7; --dock-on: #e8eee7; --dock-on-ink: #102019;
   --wm-light: inline-block; --wm-dark: none;
   --f-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
   --f-text: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -95,8 +95,8 @@
     --accent: #5ccbbd; --cta: #5ccbbd; --on-cta: #062420; --mark: #e3a64a;
     --pending: #f0c070; --pending-bg: #2b2412;
     --bezel: #050a08; --bezel-ring: rgba(232, 238, 231, 0.14); --base-hi: #3d4a43; --base-lo: #1c2621;
-    --shadow: rgba(0, 0, 0, 0.6); --nav-bg: rgba(11, 21, 18, 0.82);
-    --dock-bg: rgba(232, 238, 231, 0.95); --dock-ink: #102019; --dock-on: #102019; --dock-on-ink: #e8eee7;
+    --shadow: rgba(0, 0, 0, 0.6); --nav-bg: #0b1512;
+    --dock-bg: #e8eee7; --dock-ink: #102019; --dock-on: #102019; --dock-on-ink: #e8eee7;
     --wm-light: none; --wm-dark: inline-block;
     color-scheme: dark;
   }
@@ -106,8 +106,8 @@
   --accent: #5ccbbd; --cta: #5ccbbd; --on-cta: #062420; --mark: #e3a64a;
   --pending: #f0c070; --pending-bg: #2b2412;
   --bezel: #050a08; --bezel-ring: rgba(232, 238, 231, 0.14); --base-hi: #3d4a43; --base-lo: #1c2621;
-  --shadow: rgba(0, 0, 0, 0.6); --nav-bg: rgba(11, 21, 18, 0.82);
-  --dock-bg: rgba(232, 238, 231, 0.95); --dock-ink: #102019; --dock-on: #102019; --dock-on-ink: #e8eee7;
+  --shadow: rgba(0, 0, 0, 0.6); --nav-bg: #0b1512;
+  --dock-bg: #e8eee7; --dock-ink: #102019; --dock-on: #102019; --dock-on-ink: #e8eee7;
   --wm-light: none; --wm-dark: inline-block;
   color-scheme: dark;
 }
@@ -167,7 +167,6 @@ a { color: var(--accent); }
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   background: var(--nav-bg);
-  -webkit-backdrop-filter: saturate(1.6) blur(14px); backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
 }
 .brand { display: inline-flex; align-items: center; min-height: 44px; }
@@ -217,45 +216,89 @@ a { color: var(--accent); }
 .ph-screen::after { content: ""; position: absolute; top: 2.2%; left: 36%; right: 36%; height: 3.4%; border-radius: 999px; background: var(--bezel); }
 .render { position: absolute; filter: drop-shadow(0 18px 22px var(--shadow)); }
 
-/* ---------- pinned chapters ---------- */
+/* ---------- pinned chapters ----------
+   Motion runs in two modes, chosen by home.js:
+   .sda  CSS scroll-driven animations bound to each section's view timeline. Only transform and
+         opacity move, so Chromium runs them on the compositor; no script runs per frame.
+   else  (no support, or reduced motion) an IntersectionObserver sets data-step / data-beat and
+         short time-based transitions play each change once.
+   Both modes read the same steps, so the story is identical. */
 .pin { position: relative; }
 .sticky {
   position: sticky; top: calc(var(--safe-t) + var(--nav-h));
   height: calc(100svh - var(--nav-h) - var(--safe-t));
   overflow: hidden;
 }
-html:not(.js) .pin, html:not(.js) .sticky { height: auto; position: relative; top: 0; }
+/* sentinels: step i starts when its top crosses the middle of the screen */
+.steps { position: absolute; left: 0; width: 1px; top: calc(50svh - var(--nav-h)); pointer-events: none; visibility: hidden; }
+.step { height: var(--unit); }
+.step:last-child { height: calc(var(--unit) * var(--tail, 1)); }
 
-/* hero */
-.hero { height: 300svh; }
-.hero .sticky { display: block; }
+/* ---------- hero: 3 steps of 40svh. 1 the frame grows, 2 it flies into the phone ---------- */
+.hero { --unit: 40svh; height: calc(100svh + 3 * var(--unit)); view-timeline: --hero block; view-timeline-inset: calc(var(--nav-h) + var(--safe-t)) 0px; }
 .copy-a, .copy-b {
   position: absolute; left: 0; right: 0; top: 0;
   padding-top: clamp(20px, 4svh, 56px);
   display: grid; gap: 14px; justify-items: center; text-align: center;
-  will-change: opacity, transform;
 }
 .copy-a h1 { font-size: clamp(2.65rem, 11.4vw, 7.25rem); max-width: 12ch; }
 .copy-b h2 { font-size: clamp(2.3rem, 9.6vw, 5.5rem); max-width: 12ch; }
 .copy-a .lede, .copy-b .lede { max-width: 32ch; }
 .copy-b { opacity: 0; }
+/* The frame is laid out at its zoomed size and scaled DOWN, so the phone screen stays sharp
+   at the end of the zoom. home.js measures once per resize and sets the variables. */
 .comp {
-  position: absolute; left: 50%; width: min(100%, 1060px, 128svh);
-  aspect-ratio: 1.45; transform-origin: 50% 50%;
-  translate: -50% 0;
-  top: var(--comp-top, 46%);
+  position: absolute; left: var(--cl, 0px); top: var(--ct, 0px); width: var(--cw, 100%);
+  aspect-ratio: 1.45; transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(var(--t0x, 0px), var(--t0y, 0px), 0) scale(var(--s0, 1));
+  will-change: transform; opacity: 0;
 }
+.measured .comp { opacity: 1; transition: opacity .3s ease; }
 .comp .laptop { left: 9%; top: 0; width: 74%; }
-.ph-slot { position: absolute; right: 4%; bottom: 2%; width: 19%; aspect-ratio: 9 / 19.5; }
+.comp .ph-main { right: 4%; bottom: 2%; width: 19%; }
 .comp .r-bullet { left: 0; bottom: 3%; width: 31%; }
 .comp .r-facial { left: 29%; bottom: 0; width: 10.5%; }
-.fly { left: 0; top: 0; transform-origin: 0 0; will-change: transform; z-index: 3; }
-html:not(.js) .fly { position: relative; width: 40%; margin: 0 auto; }
-.hero-cap { position: absolute; left: 0; right: 0; top: calc(100% + 14px); text-align: center; }
+.hero-cap { position: absolute; left: 0; right: 0; top: var(--capt, 70%); text-align: center; padding-inline: 8px; }
 .cap { color: var(--ink-2); font-size: .8125rem; line-height: 1.4; margin: 0; }
 
-/* capabilities stage */
-.stage { height: calc(100svh + 6.4 * 85svh); }
+/* hero, fallback states */
+html:not(.sda) .comp { transition: transform .9s cubic-bezier(.55, 0, .2, 1), opacity .3s ease; }
+html:not(.sda) .hero .fade, html:not(.sda) .copy-a, html:not(.sda) .copy-b, html:not(.sda) .hero-cap { transition: opacity .45s ease, transform .6s cubic-bezier(.2, .7, .2, 1); }
+html:not(.sda) .hero[data-step="1"] .comp { transform: translate3d(var(--t1x), var(--t1y), 0) scale(var(--s1)); }
+html:not(.sda) .hero[data-step="2"] .comp { transform: translate3d(0, 0, 0) scale(1); }
+html:not(.sda) .hero:not([data-step="0"]) .copy-a, html:not(.sda) .hero:not([data-step="0"]) .hero-cap { opacity: 0; transform: translate3d(0, -28px, 0); }
+html:not(.sda) .hero[data-step="2"] .fade { opacity: 0; }
+html:not(.sda) .hero[data-step="2"] .copy-b { opacity: 1; }
+/* reduced motion: no zoom; the headline changes in place and the frame stays */
+html.reduce .hero[data-step] .comp { transform: translate3d(var(--t0x), var(--t0y), 0) scale(var(--s0)); }
+html.reduce .hero[data-step="1"] .copy-a, html.reduce .hero[data-step="1"] .hero-cap { opacity: 1; transform: none; }
+html.reduce .hero[data-step="2"] .fade { opacity: 1; }
+html.reduce .hero[data-step="2"] .comp { opacity: .12; }
+html.reduce .hero[data-step="2"] .copy-a, html.reduce .hero[data-step="2"] .copy-b { transform: none; }
+
+/* hero, scroll-driven */
+@keyframes heroComp {
+  0% { transform: translate3d(var(--t0x), var(--t0y), 0) scale(var(--s0)); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  30%, 40% { transform: translate3d(var(--t1x), var(--t1y), 0) scale(var(--s1)); animation-timing-function: cubic-bezier(.55, 0, .2, 1); }
+  80%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes liftOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate3d(0, -36px, 0); } }
+@keyframes riseIn { from { opacity: 0; transform: translate3d(0, 28px, 0); } to { opacity: 1; transform: none; } }
+.sda .comp { animation: heroComp linear both; animation-timeline: --hero; animation-range: contain 0% contain 100%; }
+.sda .hero .fade { animation: fadeOut linear both; animation-timeline: --hero; animation-range: contain 44% contain 66%; }
+.sda .copy-a { animation: liftOut linear both; animation-timeline: --hero; animation-range: contain 0% contain 20%; }
+.sda .hero-cap { animation: fadeOut linear both; animation-timeline: --hero; animation-range: contain 0% contain 10%; }
+.sda .copy-b { animation: riseIn linear both; animation-timeline: --hero; animation-range: contain 62% contain 80%; }
+
+/* ---------- stage: 5 beats of 70svh. Each beat does one thing ----------
+   beat   range (contain)   what moves
+   0      0    – 18.9%      the phone slides in beside the laptop
+   1      18.9 – 37.7%      both screens change product
+   2      37.7 – 56.6%      the devices leave; the automation gap appears
+   3      56.6 – 75.5%      the camera photo opens out of a smaller frame
+   4      75.5 – 100%       the access controller rises, then its screen lights up */
+.stage { --unit: 70svh; --tail: 1.3; height: calc(100svh + 5.3 * var(--unit)); view-timeline: --stage block; view-timeline-inset: calc(var(--nav-h) + var(--safe-t)) 0px; }
 .stage .sticky {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -274,7 +317,7 @@ html:not(.js) .fly { position: relative; width: 40%; margin: 0 auto; }
 .rail .bar { display: block; height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
 .rail .bar i { display: block; height: 100%; background: var(--mark); transform-origin: 0 50%; transform: scaleX(0); }
 .media { grid-area: media; position: relative; container-type: size; min-height: 0; }
-.scene { position: absolute; inset: 0; will-change: opacity, transform; }
+.scene { position: absolute; inset: 0; }
 .devices {
   position: absolute; left: 50%; top: 50%; translate: -50% -50%;
   width: min(100cqw, 138cqh); aspect-ratio: 1.38;
@@ -282,13 +325,8 @@ html:not(.js) .fly { position: relative; width: 40%; margin: 0 auto; }
 .devices .laptop { left: 0; top: 3%; width: 84%; }
 .devices .phone { right: 0; bottom: 0; width: 23%; }
 .swap-top { opacity: 0; }
-.photo {
-  position: absolute; inset: 0; overflow: hidden; border-radius: var(--radius-media);
-  background: var(--bg-2);
-}
-.photo img { width: 100%; height: 100%; object-fit: cover; }
-.photo--cam img { object-position: 60% 50%; }
-.photo--acc img { object-position: 66% 50%; }
+.photo { position: absolute; inset: 0; overflow: hidden; border-radius: var(--radius-media); background: var(--bg-2); }
+.photo img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
 .acc-render {
   position: absolute; left: 50%; top: 50%; translate: -50% -50%;
   height: min(96cqh, 190cqw); aspect-ratio: 320 / 640;
@@ -304,18 +342,83 @@ html:not(.js) .fly { position: relative; width: 40%; margin: 0 auto; }
 }
 .gap .display { font-size: clamp(1.6rem, 6.5vw, 3rem); color: var(--pending); }
 .gap p { margin: 0; color: var(--ink-2); max-width: 30ch; font-size: .9375rem; }
-.media-cap { grid-area: cap; min-height: 1.4em; }
+.mcaps { grid-area: cap; display: grid; min-height: 2.8em; }
+.mcap { grid-area: 1 / 1; opacity: 0; }
 .beats { grid-area: beats; display: grid; }
-.beat { grid-area: 1 / 1; display: grid; gap: 10px; align-content: start; }
-.js .beat { opacity: 0; transform: translateY(18px); pointer-events: none; transition: opacity .45s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }
-.js .beat.on { opacity: 1; transform: none; pointer-events: auto; }
-.js .beat.past { transform: translateY(-18px); }
+.beat { grid-area: 1 / 1; display: grid; gap: 10px; align-content: start; opacity: 0; visibility: hidden; }
 .eyebrow { font-size: .8125rem; font-weight: 600; color: var(--accent); letter-spacing: .01em; margin: 0; }
 .beat h2 { font-size: clamp(2.05rem, 8.4vw, 4.6rem); }
 .beat .lede { font-size: clamp(1rem, .92rem + .45vw, 1.3125rem); }
 .beat .actions { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: center; }
-html:not(.js) .stage .sticky { display: block; }
-html:not(.js) .media { height: 60vh; }
+/* the active beat is the only one that can be read, focused or tapped (both modes) */
+.stage[data-beat="0"] .beat:nth-child(1), .stage[data-beat="1"] .beat:nth-child(2), .stage[data-beat="2"] .beat:nth-child(3),
+.stage[data-beat="3"] .beat:nth-child(4), .stage[data-beat="4"] .beat:nth-child(5) { visibility: visible; }
+
+/* stage, fallback states */
+html:not(.sda) .beat, html:not(.sda) .mcap { transition: opacity .4s ease, transform .55s cubic-bezier(.2, .7, .2, 1); transform: translate3d(0, 16px, 0); }
+html:not(.sda) .scene, html:not(.sda) .swap-top, html:not(.sda) .sw-phone, html:not(.sda) .photo, html:not(.sda) .photo img { transition: opacity .5s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }
+html:not(.sda) .rail .bar i { transition: transform .5s ease; }
+html:not(.sda) .screen-off { transition: opacity .5s ease .55s; }
+html:not(.sda) .stage[data-beat="0"] .beat:nth-child(1), html:not(.sda) .stage[data-beat="1"] .beat:nth-child(2),
+html:not(.sda) .stage[data-beat="2"] .beat:nth-child(3), html:not(.sda) .stage[data-beat="3"] .beat:nth-child(4),
+html:not(.sda) .stage[data-beat="4"] .beat:nth-child(5),
+html:not(.sda) .stage[data-beat="0"] .mc-0, html:not(.sda) .stage[data-beat="1"] .mc-1, html:not(.sda) .stage[data-beat="2"] .mc-2,
+html:not(.sda) .stage[data-beat="3"] .mc-3, html:not(.sda) .stage[data-beat="4"] .mc-4 { opacity: 1; transform: none; }
+html:not(.sda) .stage:not([data-beat="0"]):not([data-beat="1"]) .sc-sw { opacity: 0; transform: scale(.9); }
+html:not(.sda) .stage[data-beat="1"] .swap-top { opacity: 1; }
+html:not(.sda) .sc-auto, html:not(.sda) .sc-cam, html:not(.sda) .sc-acc { opacity: 0; }
+html:not(.sda) .sc-cam .photo { transform: scale(.72); }
+html:not(.sda) .sc-cam .photo img { transform: scale(1.38); }
+html:not(.sda) .sc-acc { transform: translate3d(0, 8%, 0) scale(.92); }
+html:not(.sda) .stage[data-beat="2"] .sc-auto,
+html:not(.sda) .stage[data-beat="3"] .sc-cam,
+html:not(.sda) .stage[data-beat="4"] .sc-acc { opacity: 1; transform: none; }
+html:not(.sda) .stage[data-beat="3"] .sc-cam .photo, html:not(.sda) .stage[data-beat="3"] .sc-cam .photo img { transform: none; }
+html:not(.sda) .stage[data-beat="4"] .screen-off { opacity: 0; }
+html:not(.sda) .stage:not([data-beat="0"]) .bar-0 { transform: scaleX(1); }
+html:not(.sda) .stage[data-beat="0"] .bar-0 { transform: scaleX(.5); }
+html:not(.sda) .stage[data-beat="2"] .bar-1, html:not(.sda) .stage[data-beat="3"] .bar-1, html:not(.sda) .stage[data-beat="4"] .bar-1 { transform: scaleX(1); }
+html:not(.sda) .stage[data-beat="3"] .bar-2 { transform: scaleX(.5); }
+html:not(.sda) .stage[data-beat="4"] .bar-2 { transform: scaleX(1); }
+html.reduce .beat, html.reduce .mcap, html.reduce .scene, html.reduce .sc-cam .photo, html.reduce .sc-cam .photo img, html.reduce .sc-acc { transform: none !important; }
+
+/* stage, scroll-driven */
+@keyframes beatFirst { 0%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translate3d(0, -16px, 0); } }
+@keyframes beatMid { 0% { opacity: 0; transform: translate3d(0, 16px, 0); } 15%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translate3d(0, -16px, 0); } }
+@keyframes beatLast { 0% { opacity: 0; transform: translate3d(0, 16px, 0); } 12%, 100% { opacity: 1; transform: none; } }
+@keyframes inOut { 0% { opacity: 0; } 25%, 80% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes holdOut { 0%, 75% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes phoneIn { from { opacity: 0; transform: translate3d(40%, 6%, 0); } to { opacity: 1; transform: none; } }
+@keyframes swOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(.9); } }
+@keyframes autoLife { 0% { opacity: 0; transform: translate3d(0, 16px, 0); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
+@keyframes camLife { 0% { opacity: 0; transform: scale(.72); } 35% { opacity: 1; transform: scale(1); } 88% { opacity: 1; transform: scale(1.03); } 100% { opacity: 0; transform: scale(1.04); } }
+@keyframes camImg { 0% { transform: scale(1.38); } 35%, 100% { transform: scale(1); } }
+@keyframes accIn { from { opacity: 0; transform: translate3d(0, 8%, 0) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.sda .beat:nth-child(1) { animation: beatFirst linear both; animation-timeline: --stage; animation-range: contain 0% contain 18.9%; }
+.sda .beat:nth-child(2) { animation: beatMid linear both; animation-timeline: --stage; animation-range: contain 18.9% contain 37.7%; }
+.sda .beat:nth-child(3) { animation: beatMid linear both; animation-timeline: --stage; animation-range: contain 37.7% contain 56.6%; }
+.sda .beat:nth-child(4) { animation: beatMid linear both; animation-timeline: --stage; animation-range: contain 56.6% contain 75.5%; }
+.sda .beat:nth-child(5) { animation: beatLast linear both; animation-timeline: --stage; animation-range: contain 75.5% contain 100%; }
+.sda .sw-phone { animation: phoneIn linear both; animation-timeline: --stage; animation-range: contain 2% contain 11%; }
+.sda .swap-top { animation: fadeIn linear both; animation-timeline: --stage; animation-range: contain 20.5% contain 26.5%; }
+.sda .sc-sw { animation: swOut linear both; animation-timeline: --stage; animation-range: contain 35% contain 40%; }
+.sda .sc-auto { animation: autoLife linear both; animation-timeline: --stage; animation-range: contain 36.5% contain 57.5%; }
+.sda .sc-cam .photo { animation: camLife linear both; animation-timeline: --stage; animation-range: contain 55.5% contain 77%; }
+.sda .sc-cam .photo img { animation: camImg linear both; animation-timeline: --stage; animation-range: contain 55.5% contain 77%; }
+.sda .sc-acc { animation: accIn linear both; animation-timeline: --stage; animation-range: contain 75% contain 84%; }
+.sda .screen-off { animation: fadeOut linear both; animation-timeline: --stage; animation-range: contain 86% contain 93%; }
+.sda .bar-0 { animation: bar linear both; animation-timeline: --stage; animation-range: contain 0% contain 37.7%; }
+.sda .bar-1 { animation: bar linear both; animation-timeline: --stage; animation-range: contain 37.7% contain 56.6%; }
+.sda .bar-2 { animation: bar linear both; animation-timeline: --stage; animation-range: contain 56.6% contain 94%; }
+.sda .mc-0 { animation: holdOut linear both; animation-timeline: --stage; animation-range: contain 0% contain 26.5%; }
+.sda .mc-1 { animation: inOut linear both; animation-timeline: --stage; animation-range: contain 20.5% contain 40%; }
+.sda .mc-2 { animation: inOut linear both; animation-timeline: --stage; animation-range: contain 36.5% contain 57.5%; }
+.sda .mc-3 { animation: inOut linear both; animation-timeline: --stage; animation-range: contain 55.5% contain 77%; }
+.sda .mc-4 { animation: fadeIn linear both; animation-timeline: --stage; animation-range: contain 75% contain 82%; }
+.sda .sc-cam, .sda .sc-auto, .sda .sc-acc { opacity: 1; }
+html:not(.sda) .sc-auto, html:not(.sda) .sc-cam, html:not(.sda) .sc-acc { will-change: opacity, transform; }
 
 /* blog strip */
 .strip {
@@ -326,34 +429,36 @@ html:not(.js) .media { height: 60vh; }
 .strip p { margin: 0; color: var(--ink-2); }
 .strip strong { color: var(--ink); font-weight: 600; }
 
-/* closing */
+/* closing: the opening frame comes back, settling down to size */
 .close { padding-block: clamp(56px, 10vw, 120px) clamp(40px, 8vw, 96px); max-width: 1180px; margin: 0 auto; display: grid; gap: 28px; }
-.close-media { position: relative; width: min(100%, 760px); margin: 0 auto; aspect-ratio: 1.45; will-change: transform, opacity; }
+.close-media { position: relative; width: min(100%, 760px); margin: 0 auto; aspect-ratio: 1.45; }
 .close-media .laptop { left: 9%; top: 0; width: 74%; }
 .close-media .phone { right: 4%; bottom: 2%; width: 19%; }
 .close-media .r-bullet { left: 0; bottom: 3%; width: 31%; }
 .close-media .r-facial { left: 29%; bottom: 0; width: 10.5%; }
+@keyframes settle { from { opacity: .35; transform: scale(1.2); } to { opacity: 1; transform: none; } }
+.sda .close-media { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
 .close-copy { display: grid; gap: 14px; justify-items: center; text-align: center; }
 .close-copy h2 { font-size: clamp(2.3rem, 9vw, 5.25rem); max-width: 13ch; }
 .close-copy .lede { max-width: 36ch; }
 .choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .choice {
   appearance: none; border: 1px solid var(--line); background: var(--bg-2); color: var(--ink); cursor: pointer;
-  font: inherit; text-align: left; border-radius: 18px; padding: 18px 16px 16px; min-height: 112px;
-  display: grid; align-content: space-between; gap: 18px;
+  font: inherit; text-align: left; border-radius: 18px; padding: 18px 16px 16px; min-height: 124px;
+  display: grid; align-content: space-between; gap: 16px;
   transition: border-color .2s ease, transform .2s ease;
 }
 .choice:hover { border-color: var(--accent); }
 .choice:active { transform: scale(.98); }
 .choice b { font-family: var(--f-display); font-weight: var(--d-weight); letter-spacing: var(--d-track); font-variation-settings: var(--d-opsz); font-size: clamp(1.4rem, 5.6vw, 2rem); line-height: 1; }
-.choice span { color: var(--accent); font-size: .875rem; font-weight: 600; }
-.close-more { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 22px; }
-.phone-num { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.copy-btn { appearance: none; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; font: inherit; font-size: .8125rem; min-height: 44px; padding: 0 14px; cursor: pointer; }
+.choice span { color: var(--accent); font-size: .875rem; font-weight: 600; line-height: 1.3; }
+.close-more { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 22px; }
+.btn--wa { min-height: 52px; padding: 0 26px; font-size: 1rem; }
+.btn--wa svg { width: 20px; height: 20px; }
 
 /* footer */
 footer {
-  max-width: 1180px; margin: 0 auto; padding-block: 28px calc(var(--dock-room) + 12px);
+  max-width: 1180px; margin: 0 auto; padding-block: 28px calc(var(--dock-room) + 16px);
   border-top: 1px solid var(--line); display: grid; gap: 14px; color: var(--ink-2); font-size: .875rem;
 }
 footer .row { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: center; }
@@ -361,28 +466,35 @@ footer a { color: var(--ink); text-decoration: none; min-height: 44px; display: 
 footer a:hover { color: var(--accent); }
 footer .brand img { height: 14px; }
 
-/* ---------- dock (prototype controls) + toast ---------- */
+/* ---------- dock (prototype controls): one small button that opens the switches ---------- */
 .dock {
-  position: fixed; z-index: 70; left: 50%; translate: -50% 0;
-  bottom: calc(12px + var(--safe-b));
-  display: flex; align-items: center; gap: 4px; padding: 4px;
-  background: var(--dock-bg); color: var(--dock-ink); border-radius: 999px;
-  box-shadow: 0 10px 30px -10px var(--shadow);
-  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  position: fixed; z-index: 70;
+  right: max(12px, env(safe-area-inset-right, 0px)); bottom: calc(12px + var(--safe-b));
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
   font-size: .8125rem; white-space: nowrap;
 }
-.dock .lbl { padding: 0 6px 0 10px; opacity: .72; }
-.dock button {
+.dock-toggle, .dock-panel {
+  background: var(--dock-bg); color: var(--dock-ink); border-radius: 999px;
+  box-shadow: 0 10px 30px -10px var(--shadow);
+}
+.dock-toggle {
+  appearance: none; border: 0; font: inherit; font-weight: 600; cursor: pointer;
+  min-height: 44px; padding: 0 14px 0 12px; display: inline-flex; align-items: center; gap: 8px;
+}
+.dock-toggle .aa { font-family: var(--f-display); font-weight: var(--d-weight); font-size: 1rem; letter-spacing: -.02em; }
+.dock-panel { display: flex; align-items: center; gap: 2px; padding: 4px; }
+.dock-panel[hidden] { display: none; }
+.dock-panel button {
   appearance: none; border: 0; background: transparent; color: var(--dock-ink); font: inherit; font-weight: 600;
   min-height: 44px; min-width: 44px; padding: 0 12px; border-radius: 999px; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
 }
-.dock button[aria-pressed="true"] { background: var(--dock-on); color: var(--dock-on-ink); }
+.dock-panel button[aria-pressed="true"] { background: var(--dock-on); color: var(--dock-on-ink); }
 .dock .sep { width: 1px; height: 22px; background: currentColor; opacity: .25; margin: 0 2px; }
 .dock svg { width: 18px; height: 18px; }
 .toast {
   position: fixed; z-index: 80; left: 50%; translate: -50% 0; width: min(calc(100% - 32px), 520px);
-  bottom: calc(72px + var(--safe-b));
+  bottom: calc(68px + var(--safe-b));
   background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 18px;
   box-shadow: 0 20px 50px -18px var(--shadow); padding: 14px 14px 12px; display: grid; gap: 8px;
   opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .25s ease, transform .3s ease;
@@ -392,6 +504,7 @@ footer .brand img { height: 14px; }
 .toast b { color: var(--ink); font-weight: 500; }
 .toast code { display: block; font-size: .8125rem; color: var(--ink); background: var(--bg-2); border-radius: 10px; padding: 8px 10px; word-break: break-all; user-select: all; }
 .toast .row { display: flex; gap: 8px; justify-content: flex-end; }
+.copy-btn { appearance: none; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; font: inherit; font-size: .8125rem; min-height: 44px; padding: 0 14px; cursor: pointer; }
 
 /* ---------- wider screens ---------- */
 @media (min-width: 720px) {
@@ -399,7 +512,6 @@ footer .brand img { height: 14px; }
   .brand img { height: 17px; }
 }
 @media (min-width: 960px) {
-  :root { --dock-room: calc(84px + var(--safe-b)); }
   .stage .sticky {
     max-width: 1320px; margin: 0 auto;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -414,7 +526,3 @@ footer .brand img { height: 14px; }
   .copy-b { justify-items: start; text-align: left; top: 50%; translate: 0 -50%; padding-top: 0; left: max(0px, calc(50% - 640px)); right: auto; width: 44%; }
   .copy-b .lede { max-width: 26ch; }
 }
-
-/* ---------- reduced motion: same story, crossfades only ---------- */
-.reduce .scene, .reduce .swap-top, .reduce .screen-off, .reduce .copy-a, .reduce .copy-b, .reduce .rail .bar i { transition: opacity .35s ease; }
-.reduce .js .beat, .reduce .beat { transform: none !important; transition: opacity .3s ease; }
