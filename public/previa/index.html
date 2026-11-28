@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Devboot · prévia da nova página inicial</title>
+<meta name="description" content="Prévia, para revisão, da nova página inicial da Devboot. Não indexada.">
+<link rel="icon" type="image/svg+xml" href="/img/favicon/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/img/favicon/apple-touch-icon.png">
+<script>
+/* Before first paint: variant, theme (site-wide key devboot-tema), motion, and the active variant's display font preloaded. */
+(function () {
+  var r = document.documentElement, v = 'a';
+  try {
+    var t = localStorage.getItem('devboot-tema');
+    if (t === 'escuro') r.setAttribute('data-theme', 'dark');
+    else if (t === 'claro') r.setAttribute('data-theme', 'light');
+    if (localStorage.getItem('devboot-previa-variante') === 'b') v = 'b';
+    var m = localStorage.getItem('devboot-previa-movimento');
+    if (m === 'menos') r.setAttribute('data-motion', 'menos');
+    else if (m !== 'normal' && matchMedia('(prefers-reduced-motion: reduce)').matches) r.setAttribute('data-motion', 'menos');
+  } catch (e) {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) r.setAttribute('data-motion', 'menos');
+  }
+  r.setAttribute('data-v', v);
+  var l = document.createElement('link');
+  l.rel = 'preload'; l.as = 'font'; l.type = 'font/woff2'; l.crossOrigin = 'anonymous';
+  l.href = v === 'b' ? '/previa/assets/fonts/instrument-serif-latin.woff2' : '/previa/assets/fonts/big-shoulders-display-latin.woff2';
+  document.head.appendChild(l);
+  r.classList.add('js');
+})();
+</script>
+<link rel="stylesheet" href="/previa/assets/home.css">
+<link rel="stylesheet" href="/previa/assets/previa.css">
+<script src="/previa/assets/home.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="proto" role="note">Prévia — dados e textos ilustrativos</div>
+
+<header class="bar">
+  <a class="brand" href="#topo" aria-label="Devboot, início">
+    <img class="wm wm--on-light" src="/img/devboot-wordmark-dark.svg" alt="" width="118" height="14">
+    <img class="wm wm--on-dark" src="/img/devboot-wordmark.svg" alt="" width="118" height="14">
+  </a>
+  <nav class="bar-links" aria-label="Atalhos">
+    <a class="ul" href="#produtos">Produtos</a>
+    <a class="ul" href="/seguranca/">Segurança</a>
+    <a class="ul" href="/loja/">Loja</a>
+    <a class="ul" href="/blog/">Blog</a>
+    <a class="ul" href="#contato">Contato</a>
+  </nav>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="menu-btn-t">Menu</span><span class="menu-btn-i" aria-hidden="true"></span></button>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav class="menu-nav" aria-label="Principal">
+    <a href="#produtos"><span class="mn">01</span><span class="ml">Produtos</span></a>
+    <a href="/seguranca/"><span class="mn">↗</span><span class="ml">Segurança</span></a>
+    <a href="/loja/"><span class="mn">↗</span><span class="ml">Loja</span></a>
+    <a href="/blog/"><span class="mn">↗</span><span class="ml">Blog</span></a>
+    <a href="#contato"><span class="mn">02</span><span class="ml">Contato</span></a>
+  </nav>
+  <div class="menu-foot">
+    <button class="btn" type="button" data-wa="devboot">Falar com a Devboot</button>
+  </div>
+</div>
+
+<main id="conteudo">
+
+  <!-- Abertura · plano §3. H1, texto e botões verbatim. -->
+  <section class="hero" id="topo" aria-labelledby="h-topo">
+    <div class="hero-meta">
+      <p>Devboot — uma empresa de tecnologia</p>
+      <p>Software · Automação · Segurança eletrônica</p>
+    </div>
+    <h1 class="hero-t" id="h-topo">
+      <span class="ln" style="--d:0;--dir:-1"><span class="li">Primeiro</span></span>
+      <span class="ln" style="--d:1;--dir:1"><span class="li">entender.</span></span><br class="br-d">
+      <span class="ln" style="--d:2;--dir:-1"><span class="li">Depois, a</span></span>
+      <span class="ln" style="--d:3;--dir:1"><span class="li"><span class="hl">tecnologia.</span></span></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="lede lede--wide rise" style="--d:5">A Devboot cria software, automação e soluções de segurança eletrônica. Conheça o Devboot One, para gestão empresarial, e a GreenVision, para acompanhar o rebanho com câmeras.</p>
+      <div class="acts rise" style="--d:6">
+        <a class="btn magnet" href="#produtos">Conhecer os produtos <span class="arw" aria-hidden="true">→</span></a>
+        <button class="ul" type="button" data-wa="devboot">Falar com a Devboot</button>
+      </div>
+    </div>
+    <ol class="fronts rise" style="--d:7" aria-label="Nesta página">
+      <li><a href="#produtos"><span class="fn">01</span><span class="ft">Devboot One</span><span class="fd">gestão empresarial</span></a></li>
+      <li><a href="#produtos"><span class="fn">02</span><span class="ft">GreenVision</span><span class="fd">acompanhar o rebanho com câmeras</span></a></li>
+      <li><a href="#servicos"><span class="fn">03</span><span class="ft">Software e automação</span></a></li>
+    </ol>
+  </section>
+
+  <!-- Produtos · plano §3. Dois cartões de peso igual, logo após o herói. Selos de estágio: plano §1, §4 e §5. -->
+  <section class="prods" id="produtos" aria-labelledby="h-produtos">
+    <p class="kicker">Produtos</p>
+    <h2 class="say say--m" id="h-produtos" data-split>O que estamos construindo</h2>
+
+    <div class="prods-grid">
+      <article class="prod rise">
+        <figure class="prod-fig">
+          <div class="demo one-demo" role="group" aria-label="Exemplo: pergunta em linguagem natural e resposta organizada por vencimento e valor">
+            <p class="od-ask">Quais contas vencem esta semana?</p>
+            <div class="od-ans">
+              <p class="od-h">Contas a pagar · 30/11 a 04/12</p>
+              <ul class="od-rows">
+                <li><span>30/11</span><span>Aluguel da sala</span><b>R$ 3.200,00</b></li>
+                <li><span>02/12</span><span>Internet e telefonia</span><b>R$ 389,90</b></li>
+                <li><span>04/12</span><span>Fornecedor de equipamentos</span><b>R$ 4.870,00</b></li>
+              </ul>
+              <p class="od-tot"><span>Total da semana</span><b>R$ 8.459,90</b></p>
+            </div>
+            <p class="od-note">Ilustração · valores de exemplo</p>
+          </div>
+          <figcaption>
+            <ul class="seals" aria-label="Estágio">
+              <li class="seal">Em construção · piloto interno</li>
+            </ul>
+          </figcaption>
+        </figure>
+        <div class="prod-body">
+          <h3 class="prod-name">Devboot One</h3>
+          <p class="prod-tag">O sistema que se adapta à sua empresa.</p>
+          <p class="prod-txt">Estamos construindo um sistema de gestão em que você pode pedir uma visão da operação em linguagem natural. O primeiro piloto começa no financeiro da própria Devboot.</p>
+          <a class="btn btn--line prod-link" href="/previa/devboot-one/">Conhecer o Devboot One <span class="arw" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="prod rise" style="--d:1">
+        <figure class="prod-fig">
+          <div class="prod-img">
+            <picture>
+              <source media="(max-width: 699px)" srcset="/previa/assets/img/gv-rebanho-600.webp" width="600" height="375">
+              <img src="/previa/assets/img/gv-rebanho-900.webp" alt="Rebanho de ovinos caminhando em fila por um carreiro de terra, entre cercas, em um dia de céu aberto" width="900" height="563" loading="lazy">
+            </picture>
+            <p class="gv-res"><span class="gv-k">Contagem ao vivo</span><b class="gv-n">2,6% abaixo</b><span class="gv-s">da conferência manual · 617 passagens registradas à mão</span></p>
+          </div>
+          <figcaption>
+            <ul class="seals" aria-label="Estágio">
+              <li class="seal">Contagem · medida em campo</li>
+              <li class="seal">Cocho · em teste</li>
+              <li class="seal">Alimentação automatizada · em avaliação</li>
+            </ul>
+          </figcaption>
+        </figure>
+        <div class="prod-body">
+          <h3 class="prod-name">GreenVision</h3>
+          <p class="prod-tag">A inteligência que enxerga o seu rebanho.</p>
+          <p class="prod-txt">Câmeras comuns para acompanhar ovinos e caprinos. A contagem já foi medida em campo e o acompanhamento do cocho está em teste.</p>
+          <a class="btn btn--line prod-link" href="/previa/greenvision/">Conhecer a GreenVision <span class="arw" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Faixa: produtos e serviços da home, um laço, peso igual. -->
+  <div class="marquee" aria-hidden="true">
+    <div class="mq-track">
+      <span>Devboot One</span><i>✳</i><span>GreenVision</span><i>✳</i><span>Software</span><i>✳</i><span>Automação</span><i>✳</i>
+      <span>Devboot One</span><i>✳</i><span>GreenVision</span><i>✳</i><span>Software</span><i>✳</i><span>Automação</span><i>✳</i>
+    </div>
+  </div>
+
+  <!-- Método e serviços · plano §3. -->
+  <section class="method" id="servicos" aria-labelledby="h-metodo">
+    <p class="kicker">Método e serviços</p>
+    <h2 class="say" id="h-metodo" data-split>Ouvir quem usa. Medir antes de instalar.</h2>
+    <p class="lede lede--wide">Começamos pela rotina de quem opera. É ela que orienta o sistema, a automação e o projeto de instalação.</p>
+    <ul class="jump" aria-label="Serviços">
+      <li><a class="btn btn--line" href="#software">Software</a></li>
+      <li><a class="btn btn--line" href="#automacao">Automação e IA aplicada</a></li>
+    </ul>
+  </section>
+
+  <section class="chapter" id="software" aria-labelledby="h-software">
+    <header class="ch-head">
+      <span class="ch-n">01 / 02</span>
+      <h2 class="ch-name" id="h-software"><span>Software</span></h2>
+    </header>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <p class="blk">Sistemas web e aplicativos feitos a partir da sua rotina. Conheça também produtos da Devboot, como FrotasPro, ConferePlaca e CamSeek.</p>
+      </div>
+      <figure class="media mask">
+        <picture>
+          <source media="(max-width: 699px)" srcset="/previa/assets/img/scr-cpl-m.webp" width="600" height="1299">
+          <img src="/previa/assets/img/scr-cp-desk.webp" alt="Tela do ConferePlaca, sistema web da Devboot para consulta de veículos pela placa" width="1000" height="625" loading="lazy">
+        </picture>
+        <figcaption>ConferePlaca · sistema web da Devboot</figcaption>
+      </figure>
+    </div>
+
+    <div class="beat beat--list">
+      <ul class="works">
+        <li class="work rise" data-peek="/previa/assets/img/scr-cp-desk.webp">
+          <a href="https://confereplaca.com.br" rel="noopener">
+            <span class="wk-name">ConferePlaca</span>
+            <span class="wk-desc">Débitos, multas e leilão pela placa</span>
+            <img class="wk-thumb" src="/previa/assets/img/scr-cpl-m.webp" alt="" width="600" height="1299" loading="lazy">
+            <span class="arw" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li class="work rise" data-peek="/previa/assets/img/scr-cam-m.webp">
+          <a href="https://camseek.devboot.com.br" rel="noopener">
+            <span class="wk-name">CamSeek</span>
+            <span class="wk-desc">Projeto da cobertura de câmeras, no navegador</span>
+            <img class="wk-thumb" src="/previa/assets/img/scr-cam-m.webp" alt="" width="780" height="1688" loading="lazy">
+            <span class="arw" aria-hidden="true">↗</span>
+          </a>
+        </li>
+        <li class="work rise">
+          <div class="wk-row">
+            <span class="wk-name">FrotasPro</span>
+            <span class="wk-desc">Gestão de frota: imagem ao vivo, motorista e custo por quilômetro</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ch-acts">
+      <button class="btn magnet" type="button" data-wa="software">Falar sobre um sistema <span class="arw" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+
+  <section class="chapter" id="automacao" aria-labelledby="h-automacao">
+    <header class="ch-head">
+      <span class="ch-n">02 / 02</span>
+      <h2 class="ch-name" id="h-automacao"><span>Automação</span></h2>
+      <p class="ch-sub">Automação e IA aplicada</p>
+    </header>
+
+    <div class="beat">
+      <div class="beat-copy">
+        <p class="blk">Mapeamos onde a equipe repete trabalho e avaliamos o que pode virar uma integração, um relatório ou um fluxo de aprovação.</p>
+      </div>
+      <figure class="media">
+        <div class="demo auto-demo" role="group" aria-label="Exemplo: pedido de compra que segue por um fluxo de aprovação">
+          <p class="ad-h"><span>Pedido de compra · nº 1042</span><b>R$ 2.350,00</b></p>
+          <ol class="ad-steps">
+            <li class="done"><span class="ad-dot" aria-hidden="true">✓</span><span>Pedido recebido<small>hoje, 08:52</small></span></li>
+            <li class="done"><span class="ad-dot" aria-hidden="true">✓</span><span>Aprovado pelo gerente<small>hoje, 09:14</small></span></li>
+            <li class="now"><span class="ad-dot" aria-hidden="true">3</span><span>Lançamento no financeiro<small>em andamento</small></span></li>
+          </ol>
+        </div>
+        <figcaption>Exemplo de fluxo de aprovação</figcaption>
+      </figure>
+    </div>
+
+    <!-- Plano §6: texto técnico opcional, na seção de automação. Sem página nem marca própria. -->
+    <div class="beat">
+      <div class="beat-copy">
+        <h3 class="say-s" data-split>IA aplicada aos processos da sua empresa</h3>
+        <p class="blk">A Devboot está desenvolvendo um motor de agentes para interpretar pedidos e acionar funções autorizadas nos sistemas. O primeiro uso em teste é o financeiro da própria Devboot.</p>
+      </div>
+    </div>
+
+    <div class="ch-acts">
+      <button class="btn magnet" type="button" data-wa="automacao">Falar sobre automação <span class="arw" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+
+  <!-- Faixa "Também fazemos" · decisão do Dev (28/11): Segurança tem página própria. Texto ilustrativo. -->
+  <section class="also" aria-labelledby="h-tambem">
+    <div class="also-c">
+      <h2 class="also-t" id="h-tambem">Também fazemos</h2>
+      <p class="also-p">Software e automação sob medida, a partir da sua rotina. E projetos de segurança eletrônica e controle de acesso.</p>
+    </div>
+    <ul class="also-l">
+      <li><a class="btn btn--line" href="#software">Software e automação <span class="arw" aria-hidden="true">→</span></a></li>
+      <li><a class="btn btn--line" href="/seguranca/">Segurança eletrônica <span class="arw" aria-hidden="true">→</span></a></li>
+    </ul>
+  </section>
+
+  <!-- Contato · plano §3. Cada opção compõe a mensagem do assunto (mostrada, nunca aberta). -->
+  <section class="close" id="contato" aria-labelledby="h-contato">
+    <h2 class="say" id="h-contato" data-split>O que você precisa resolver?</h2>
+    <p class="lede lede--wide">Conte como sua equipe trabalha hoje e onde quer melhorar. Você também pode falar com a gente sobre um produto ou pedir um orçamento.</p>
+    <ul class="doors">
+      <li><button type="button" data-wa="one" aria-label="Falar sobre o Devboot One"><span class="dn">01</span><span class="dt">Devboot One</span><span class="arw" aria-hidden="true">→</span></button></li>
+      <li><button type="button" data-wa="greenvision" aria-label="Falar sobre a GreenVision"><span class="dn">02</span><span class="dt">GreenVision</span><span class="arw" aria-hidden="true">→</span></button></li>
+      <li><button type="button" data-wa="software" aria-label="Falar sobre software e automação"><span class="dn">03</span><span class="dt">Software e automação</span><span class="arw" aria-hidden="true">→</span></button></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-cols">
+    <div>
+      <p class="fh">Contato</p>
+      <p class="flinks"><button class="ul" type="button" data-wa="devboot">Falar com a Devboot</button></p>
+    </div>
+    <div>
+      <p class="fh">Produtos</p>
+      <p class="flinks"><a class="ul" href="/previa/devboot-one/">Devboot One</a><a class="ul" href="/previa/greenvision/">GreenVision</a></p>
+    </div>
+    <div>
+      <p class="fh">Site</p>
+      <p class="flinks"><a class="ul" href="/seguranca/">Segurança</a><a class="ul" href="/loja/">Loja</a><a class="ul" href="/blog/">Blog</a></p>
+    </div>
+  </div>
+  <div class="foot-mark">
+    <img class="wm wm--on-light" src="/img/devboot-wordmark-dark.svg" alt="Devboot" width="1007" height="115" loading="lazy">
+    <img class="wm wm--on-dark" src="/img/devboot-wordmark.svg" alt="" width="1007" height="115" loading="lazy">
+  </div>
+  <p class="foot-note">Prévia — para revisão · não indexada</p>
+</footer>
+
+<!-- Ajustes: variante, tema, movimento. -->
+<div class="dial">
+  <button class="dial-btn" type="button" aria-expanded="false" aria-controls="dial-panel"><span aria-hidden="true">Aa</span><span class="sr">Ajustes da prévia</span></button>
+  <div class="dial-panel" id="dial-panel" role="group" aria-label="Ajustes da prévia" hidden>
+    <p class="dial-h">Variante</p>
+    <div class="seg" data-set="v">
+      <button type="button" data-val="a" aria-pressed="true"><b>A · Cartaz</b><small>Big Shoulders, verde-limão</small></button>
+      <button type="button" data-val="b" aria-pressed="false"><b>B · Editorial</b><small>Instrument Serif, violeta</small></button>
+    </div>
+    <p class="dial-h">Tema</p>
+    <div class="seg seg--3" data-set="tema">
+      <button type="button" data-val="auto" aria-pressed="true">Auto</button>
+      <button type="button" data-val="claro" aria-pressed="false">Claro</button>
+      <button type="button" data-val="escuro" aria-pressed="false">Escuro</button>
+    </div>
+    <p class="dial-h">Movimento</p>
+    <div class="seg" data-set="mov">
+      <button type="button" data-val="normal" aria-pressed="true">Normal</button>
+      <button type="button" data-val="menos" aria-pressed="false">Menos</button>
+    </div>
+  </div>
+</div>
+
+<div class="peek" aria-hidden="true"><img alt="" width="1000" height="625"><span></span></div>
+
+<div class="toast" role="status" aria-live="polite" hidden>
+  <p class="toast-h">Na versão publicada, isto abre uma conversa com:</p>
+  <code class="toast-link"></code>
+  <p class="toast-note"><span class="toast-prov">número provisório (W1)</span></p>
+  <button class="toast-x" type="button">Fechar</button>
+</div>
+</body>
+</html>
