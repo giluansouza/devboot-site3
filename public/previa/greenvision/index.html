@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>GreenVision · prévia para revisão</title>
+<meta name="description" content="Prévia para revisão da página da GreenVision. Não publicada.">
+<link rel="icon" type="image/webp" href="assets/logo-mark.webp">
+<script>
+/* Before first paint: theme (site-wide key devboot-tema: 'escuro' | 'claro' | absent = follow the system)
+   and whether the browser can drive reveals from scroll position on the compositor. */
+(function () {
+  var r = document.documentElement;
+  try {
+    var t = localStorage.getItem('devboot-tema');
+    if (t === 'escuro') r.setAttribute('data-theme', 'dark');
+    else if (t === 'claro') r.setAttribute('data-theme', 'light');
+  } catch (e) {}
+  r.classList.add('js');
+  if (window.CSS && CSS.supports && CSS.supports('animation-timeline: view()')) r.classList.add('sd');
+})();
+</script>
+<link rel="stylesheet" href="assets/greenvision.css">
+<script src="assets/greenvision.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="banner" role="note">Prévia — para revisão</div>
+
+<div class="top">
+<header class="bar">
+  <span class="brand">
+    <img src="assets/logo-mark.webp" width="192" height="106" alt="">
+    <span>GreenVision</span>
+  </span>
+  <div class="bar-end">
+    <a class="back" href="/previa/"><span aria-hidden="true">←&nbsp;</span><span class="long">Voltar à prévia da&nbsp;</span>Devboot</a>
+    <button class="theme" type="button" aria-label="Mudar o tema">
+      <svg class="i-moon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero" aria-labelledby="h1">
+  <div class="hero-media" aria-hidden="true">
+    <img class="hero-img" src="assets/hero-800.webp"
+         srcset="assets/hero-800.webp 800w, assets/hero-1590.webp 1590w" sizes="100vw"
+         width="1590" height="900" alt="" fetchpriority="high" decoding="async">
+    <video class="hero-video" muted loop playsinline preload="none" tabindex="-1"
+           data-src="assets/hero.mp4"></video>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="hero-body">
+    <h1 id="h1">A inteligência que enxerga o seu rebanho.</h1>
+    <p class="lede">A GreenVision usa câmeras comuns para acompanhar a rotina de ovinos e caprinos. Já medimos a contagem de passagens em campo e estamos testando o acompanhamento do cocho.</p>
+    <div class="actions">
+      <a class="btn btn-main" href="#contagem">Ver a contagem em campo</a>
+      <button class="btn btn-ghost" type="button" data-wa="gv">Conversar sobre um piloto</button>
+    </div>
+  </div>
+  <button class="vctl" type="button" hidden>Pausar o vídeo</button>
+</section>
+</div>
+
+<main id="conteudo">
+  <section class="sec" id="contagem" aria-labelledby="h-contagem">
+    <div class="wrap">
+      <h2 id="h-contagem" class="rv">A contagem, medida em campo</h2>
+      <p class="sec-lede rv">Veja como a câmera registra a passagem dos animais e como a contagem é comparada com a revisão manual do vídeo.</p>
+
+      <div class="gap rv" role="group" aria-labelledby="gap-t">
+        <p class="gap-tag" id="gap-t"><span>[falta]</span> Material de campo da contagem</p>
+        <p class="gap-p">O dono escolhe o vídeo ou a captura que pode aparecer aqui (D3). Até lá esta seção fica sem placar e sem imagem genérica.</p>
+        <p class="gap-cap"><span class="gap-tag-s">[pendente D3 · legenda condicionada à liberação]</span>
+          Em um teste com 617 passagens registradas à mão, a contagem ao vivo ficou 2,6% abaixo da conferência manual.</p>
+      </div>
+
+      <ol class="stages">
+        <li class="stage rv">
+          <span class="node" aria-hidden="true"></span>
+          <h3><span class="st-name">Contagem</span><span class="sr"> · </span><span class="seal seal-field">medida em campo</span></h3>
+          <p>Acompanhe a demonstração de contagem na passagem do rebanho.</p>
+        </li>
+        <li class="stage rv">
+          <span class="node" aria-hidden="true"></span>
+          <h3><span class="st-name">Cocho</span><span class="sr"> · </span><span class="seal seal-test">em teste</span></h3>
+          <p>Estamos medindo a presença do lote no cocho ao longo dos tratos.</p>
+        </li>
+        <li class="stage rv">
+          <span class="node" aria-hidden="true"></span>
+          <h3><span class="st-name">Alimentação automatizada</span><span class="sr"> · </span><span class="seal seal-eval">em avaliação</span></h3>
+          <p>Estamos avaliando como integrar o monitoramento a equipamentos de alimentação.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec-contact" id="contato" aria-labelledby="h-contato">
+    <div class="contact-media" aria-hidden="true">
+      <img src="assets/campo-800.webp" srcset="assets/campo-800.webp 800w, assets/campo-1200.webp 1200w" sizes="100vw"
+           width="1200" height="750" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="contact-scrim" aria-hidden="true"></div>
+    <div class="wrap contact-body">
+      <h2 id="h-contato" class="rv">Conte como você acompanha o rebanho hoje e o que gostaria de medir na sua propriedade.</h2>
+      <div class="actions rv">
+        <button class="btn btn-main" type="button" data-wa="gv">Conversar sobre um piloto</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="back" href="/previa/">Voltar à prévia da Devboot</a>
+    <p>Prévia — para revisão. Imagens e identidade do site greenvision.agr.br.</p>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite" hidden>
+  <p class="toast-h">No site real, isto abre o WhatsApp com:</p>
+  <code class="toast-link"></code>
+  <p class="toast-note">Número provisório (W1)</p>
+  <button class="toast-x" type="button">Fechar</button>
+</div>
+</body>
+</html>
